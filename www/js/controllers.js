@@ -66,6 +66,12 @@ angular.module('starter.controllers', ['starter.services'])
   });
 })
 
+.controller('SpeakerCtrl', function($scope, $stateParams, Persistence) {
+  Persistence.getSpeaker($stateParams.speakerId).then(function(speaker) {
+    $scope.speaker = speaker;
+  });
+})
+
 .controller('PlannerCtrl', function($scope) {
 })
 
@@ -83,5 +89,4 @@ angular.module('starter.controllers', ['starter.services'])
 
 .controller('MapCtrl', function($scope) {
 })
-
 ;

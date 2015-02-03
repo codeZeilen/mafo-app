@@ -51,6 +51,16 @@ angular.module('starter.services', ['ngResource'])
         persistence.flush();
       },
 
+      getSpeaker: function(speakerId, successCallback) {
+        var speakerResult = $q.defer();
+
+        entities.Speaker.all().filter('serverId', '=', speakerId).one(function(speaker) {
+          speakerResult.resolve(speaker);
+        });
+
+        return speakerResult.promise;
+      },
+
       refreshSpeakers: refreshSpeakers,
 
       listSpeakers: function() {
