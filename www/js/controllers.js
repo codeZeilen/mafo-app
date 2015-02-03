@@ -1,8 +1,13 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['starter.services'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
   // Form data for the login modal
   $scope.loginData = {};
+  $scope.visibleSubMenus = {
+      'eventInfo' : true,
+      'personal' : false,
+      'socialMedia' : false
+  };
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -19,6 +24,14 @@ angular.module('starter.controllers', [])
   // Open the login modal
   $scope.login = function() {
     $scope.modal.show();
+  };
+
+  $scope.toggleSubMenuVisibility = function(subMenuName) {
+    $scope.visibleSubMenus[subMenuName] = !$scope.visibleSubMenus[subMenuName];
+  };
+
+  $scope.subMenuVisible = function(subMenuName) {
+    return $scope.visibleSubMenus[subMenuName];
   };
 
   // Perform the login action when the user submits the login form
@@ -45,4 +58,8 @@ angular.module('starter.controllers', [])
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
+})
+
+.controller('SpeakersCtrl', function($scope, Speaker) {
+  $scope.speakers = Speaker.query();
 });

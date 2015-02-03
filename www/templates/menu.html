@@ -17,7 +17,61 @@
       <h1 class="title">Left</h1>
     </ion-header-bar>
     <ion-content>
-      <ion-list>
+        <div class="item item-divider" nav-clear ng-click="toggleSubMenuVisibility('personal')" >
+        Dein Bereich
+        </div>
+        <ion-item nav-clear menu-close href="#/app/playlists" ng-show="subMenuVisible('personal')">
+            Planner
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/playlists" ng-show="subMenuVisible('personal')">
+            News
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/playlists" ng-show="subMenuVisible('personal')">
+            Kontakt/Mitmachen
+        </ion-item>
+
+
+        <div class="item item-divider" nav-clear ng-click="toggleSubMenuVisibility('eventInfo')" >
+            Mannheim Forum 2015
+        </div>
+        <ion-item nav-clear menu-close href="#/app/playlists" ng-show="subMenuVisible('eventInfo')">
+            Programm
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/playlists" ng-show="subMenuVisible('eventInfo')">
+            Referenten
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/playlists" ng-show="subMenuVisible('eventInfo')">
+            Partner
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/playlists" ng-show="subMenuVisible('eventInfo')">
+            Lageplan
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/playlists" ng-show="subMenuVisible('eventInfo')">
+            FAQ
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/playlists" ng-show="subMenuVisible('eventInfo')">
+            Eventinformationen
+        </ion-item>
+
+        <div class="item item-divider" nav-clear ng-click="toggleSubMenuVisibility('socialMedia')" >
+            Social Media
+        </div>
+        <ion-item nav-clear menu-close href="https://www.facebook.com/MannheimForum?fref=ts" ng-show="subMenuVisible('socialMedia')">
+            Facebook
+        </ion-item>
+        <ion-item nav-clear menu-close href="https://www.facebook.com/events/309686525893607/?fref=ts" ng-show="subMenuVisible('socialMedia')">
+            Facebook Event
+        </ion-item>
+        <ion-item nav-clear menu-close href="https://www.youtube.com/channel/UCqbs5sy_vxt-12SNdYGMPBA" ng-show="subMenuVisible('socialMedia')">
+            Youtube
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/playlists" ng-show="subMenuVisible('socialMedia')">
+            LinkedIn
+        </ion-item>
+
+        <div class="item item-divider" nav-clear ng-click="toggleSubMenuVisibility('socialMedia')" >
+            Old Dev Stuff
+        </div>
         <ion-item nav-clear menu-close ng-click="login()">
           Login
         </ion-item>
@@ -27,10 +81,8 @@
         <ion-item nav-clear menu-close href="#/app/browse">
           Browse
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/playlists">
-          Playlists
-        </ion-item>
       </ion-list>
     </ion-content>
   </ion-side-menu>
+
 </ion-side-menus>
