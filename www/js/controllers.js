@@ -60,8 +60,10 @@ angular.module('starter.controllers', ['starter.services'])
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
-.controller('SpeakersCtrl', function($scope, Speaker) {
-  $scope.speakers = Speaker.query();
+.controller('SpeakersCtrl', function($scope, Persistence) {
+  Persistence.listSpeakers().then(function(speakers) {
+    $scope.speakers = speakers;
+  });
 })
 
 .controller('PlannerCtrl', function($scope) {
