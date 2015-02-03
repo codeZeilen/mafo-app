@@ -4,7 +4,11 @@ angular.module('starter.services', ['ngResource'])
     return $resource('https://www.mannheim-forum.org/api/mannheim-forum-schedule/speakers/:speakerId');
 })
 
-  .factory('Persistence', function($q, SpeakerAPI) {
+.factory('EventAPI', function($resource) {
+  return $resource('https://www.mannheim-forum.org/api/mannheim-forum-schedule/events/:eventId');
+})
+
+  .factory('Persistence', function($q, SpeakerAPI, EventAPI) {
     // Credits to https://github.com/bgoetzmann/ionic-persistence/
 
     persistence.store.cordovasql.config(persistence, 'mafo_app_db', '0.0.1', 'Cache for program data of mafo', 10 * 1024 * 1024, 0);
@@ -20,28 +24,94 @@ angular.module('starter.services', ['ngResource'])
       picturePath: 'TEXT'
     });
 
+    entities.Event = persistence.define('Event', {
+      serverId: 'INT',
+      name: 'TEXT',
+      shortDescription: 'TEXT',
+      longDescription: 'TEXT',
+      startTime: 'TEXT',
+      endTime: 'TEXT',
+      roomId: 'INT',
+      categoryId: 'INT',
+      companyId: 'INT',
+      picturePath: 'TEXT',
+      eventType: 'TEXT'
+    });
+    entities.EVENT_TYPES = {
+      MAIN: 'main',
+      EVENING: 'evening',
+      VERTIEFUNGSWORKSHOP: 'vworkshop',
+      UNTERNEHMENSWORKSHOP: 'uworkshop'
+    };
+
     persistence.debug = true;
     persistence.schemaSync();
 
     var refreshSpeakers = function(speakers) {
-        if(speakers.length == 0) {
-          // Safe-guard against wrong data. TODO: Maybe stronger
-          return false;
-        } else {
-          entities.Speaker.all().destroyAll();
-          persistence.flush(function() {
-            angular.forEach(speakers, function(speaker) {
-              persistence.add(new entities.Speaker(speaker));
-            });
-          });
-        }
-      };
+      return refreshAllOf(entities.Speaker, speakers);
+    };
 
     var getAllSpeakers = function(speakersResult) {
-      entities.Speaker.all().list(null, function (speakers) {
-        speakersResult.resolve(speakers);
+      return getAllOf(entities.Speaker, speakersResult);
+    };
+
+    var refreshEvents = function(events) {
+      return refreshAllOf(entities.Event, events);
+    };
+
+    var getAllEvents = function(events) {
+      return getAllOf(entities.Event, events);
+    };
+
+
+    var refreshAllOf = function(entityClass, individuals) {
+      if(individuals.length == 0) {
+        // Safe-guard against wrong data. TODO: Maybe stronger
+        return false;
+      } else {
+        entityClass.all().destroyAll();
+        persistence.flush(function() {
+          angular.forEach(individuals, function(individual) {
+            persistence.add(new entityClass(individual));
+          });
+        });
+      }
+    };
+
+    var getAllOf = function(entityClass, deferred) {
+      entityClass.all().list(null, function (speakers) {
+        deferred.resolve(speakers);
       });
-    }
+    };
+
+    var listing = function(ResourceApi, entityClass, refreshFn, getAllFn) {
+      var result = $q.defer();
+
+      entityClass.all().count(null, function (speakersCount) {
+        if(speakersCount == 0) {
+          // Refresh the cache
+          var speakers = ResourceApi.query(function(speakers) {
+            // TODO: check response
+            refreshFn(speakers);
+            getAllFn(result);
+          });
+        } else {
+          getAllFn(result);
+        }
+      });
+
+      return result.promise;
+    };
+
+    var getting = function(entityClass, speakerId) {
+        var result = $q.defer();
+
+        entityClass.all().filter('serverId', '=', speakerId).one(function(individual) {
+          result.resolve(individual);
+        });
+
+        return result.promise;
+    };
 
     return {
       Entities: entities,
@@ -51,35 +121,22 @@ angular.module('starter.services', ['ngResource'])
         persistence.flush();
       },
 
-      getSpeaker: function(speakerId, successCallback) {
-        var speakerResult = $q.defer();
-
-        entities.Speaker.all().filter('serverId', '=', speakerId).one(function(speaker) {
-          speakerResult.resolve(speaker);
-        });
-
-        return speakerResult.promise;
+      /* Speakers */
+      refreshSpeakers: refreshSpeakers,
+      getSpeaker: function(speakerId) {
+        return getting(entities.Speaker, speakerId);
+      },
+      listSpeakers: function() {
+        return listing(SpeakerAPI, entities.Speaker, refreshSpeakers, getAllSpeakers);
       },
 
-      refreshSpeakers: refreshSpeakers,
-
-      listSpeakers: function() {
-        var speakersResult = $q.defer();
-
-        entities.Speaker.all().count(null, function (speakersCount) {
-          if(speakersCount == 0) {
-            // Refresh the cache
-            var speakers = SpeakerAPI.query(function(speakers) {
-              // TODO: check response
-              refreshSpeakers(speakers);
-              getAllSpeakers(speakersResult);
-            });
-          } else {
-            getAllSpeakers(speakersResult);
-          }
-        });
-
-        return speakersResult.promise;
+      /* Events */
+      refreshEvents: refreshEvents,
+      getEvent: function(eventId) {
+        return getting(entities.Event, eventId);
+      },
+      listEvents: function() {
+        return listing(EventAPI, entities.Event, refreshEvents, getAllEvents);
       }
     };
   })

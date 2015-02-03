@@ -72,6 +72,66 @@ angular.module('starter.controllers', ['starter.services'])
   });
 })
 
+.controller('ProgramCtrl', function($scope, Persistence) {
+
+    $scope.events = [];
+    $scope.days = [];
+
+    Persistence.listEvents().then(function(events) {
+      $scope.events = events;
+      $scope.updateDays();
+    });
+
+    $scope.isWorkshop = function(event) {
+      return [Persistence.Entities.EVENT_TYPES.UNTERNEHMENSWORKSHOP, Persistence.Entities.EVENT_TYPES.VERTIEFUNGSWORKSHOP]
+              .indexOf(event.eventType) > 0;
+    };
+
+    var groupDays = function() {
+      var days = {};
+      angular.forEach($scope.events, function(event) {
+        var startTime = moment(event.startTime);
+        var day = moment(startTime);
+        day.startOf('day');
+        if(!(day in days)) {
+          days[day] = {};
+        }
+        if(!(startTime in days[day])) {
+          days[day][startTime] = [];
+        }
+        days[day][startTime].push(event);
+
+      });
+      return days;
+    };
+
+    var daysToObjects = function(days) {
+      var resultDays = [];
+      angular.forEach(Object.keys(days), function(day) {
+        var slots = [];
+        angular.forEach(Object.keys(days[day]), function(timeslot) {
+          slots.push({
+            'displayName' : moment(timeslot).format("HH:mm").concat(" Uhr"),
+            'events' :  days[day][timeslot]
+          });
+        });
+        resultDays.push({
+          'displayName' : moment(day).format("dd, D.MMM"),
+          'slots' : slots
+        });
+      });
+
+      return resultDays;
+    };
+
+    $scope.updateDays = function() {
+      var days = groupDays();
+      days = daysToObjects(days);
+      $scope.days = days;
+    };
+
+})
+
 .controller('PlannerCtrl', function($scope) {
 })
 
@@ -79,9 +139,6 @@ angular.module('starter.controllers', ['starter.services'])
 })
 
 .controller('ContactCtrl', function($scope) {
-})
-
-.controller('ProgramCtrl', function($scope) {
 })
 
 .controller('PartnerCtrl', function($scope) {

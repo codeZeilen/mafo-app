@@ -1,5 +1,21 @@
 <ion-view>
     <ion-content>
         <h1>Programm</h1>
+        <div>
+            <div ng-repeat="day in days" title="{{day.displayName}}">
+                <ion-list>
+                    <div ng-repeat-start="timeslot in day.slots" class="item item-divider">
+                        {{timeslot.displayName}}
+                    </div>
+                    <ion-item ng-repeat="event in timeslot.events">
+                        <div ng-if="isWorkshop(event)">
+                            Workshop
+                        </div>
+                        {{event.name}}
+                    </ion-item>
+                    <div ng-repeat-end></div>
+                </ion-list>
+            </div>
+        </div>
     </ion-content>
 </ion-view>
