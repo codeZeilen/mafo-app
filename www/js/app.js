@@ -30,6 +30,106 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     controller: 'AppCtrl'
   })
 
+
+    /*
+    Personal states
+     */
+    .state('app.planner', {
+      url: "/planner",
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/personal/planner.html',
+          controller: 'PlannerCtrl'
+        }
+      }
+    })
+
+    .state('app.news', {
+      url: "/news",
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/personal/news.html',
+          controller: 'NewsCtrl'
+        }
+      }
+    })
+
+    .state('app.contact', {
+      url: "/contact",
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/personal/contact.html',
+          controller: 'ContactCtrl'
+        }
+      }
+    })
+
+    /*
+    Program states
+     */
+    .state('app.program', {
+      url: "/program",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/program/program.html",
+          controller: 'ProgramCtrl'
+        }
+      }
+    })
+
+    .state('app.speakers', {
+      url: "/speakers",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/program/speakers.html",
+          controller: 'SpeakersCtrl'
+        }
+      }
+    })
+
+    .state('app.partner', {
+      url: "/partner",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/program/partner.html",
+          controller: 'PartnerCtrl'
+        }
+      }
+    })
+
+    .state('app.map', {
+      url: "/map",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/program/map.html",
+          controller: 'MapCtrl'
+        }
+      }
+    })
+
+    .state('app.faq', {
+      url: "/faq",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/program/faq.html"
+        }
+      }
+    })
+
+    .state('app.info', {
+      url: "/info",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/program/info.html"
+        }
+      }
+    })
+
+
+
+
+
+
   .state('app.search', {
     url: "/search",
     views: {
@@ -57,16 +157,6 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
       }
     })
-    
-  .state('app.speakers', {
-    url: "/speakers",
-    views: {
-      'menuContent': {
-         templateUrl: "templates/speakers.html",
-         controller: 'SpeakersCtrl' 
-       }
-    } 
-  })
 
   .state('app.single', {
     url: "/playlists/:playlistId",

@@ -62,4 +62,24 @@ angular.module('starter.controllers', ['starter.services'])
 
 .controller('SpeakersCtrl', function($scope, Speaker) {
   $scope.speakers = Speaker.query();
-});
+})
+
+.controller('PlannerCtrl', function($scope) {
+})
+
+.controller('NewsCtrl', function($scope) {
+})
+
+.controller('ContactCtrl', function($scope) {
+})
+
+.controller('ProgramCtrl', function($scope) {
+})
+
+.controller('PartnerCtrl', function($scope) {
+})
+
+.controller('MapCtrl', function($scope) {
+})
+
+;
