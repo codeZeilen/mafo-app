@@ -1,1 +1,20 @@
 /* Empty. Add your own CSS if you like */
+
+.bar.bar-stable.nav-bar {
+    background-color: rgb(103, 20, 15);
+    color: #FFFFFF;
+}
+
+.bar.bar-stable .button {
+    color: #FFFFFF;
+}
+
+.bar.bar-stable .title {
+    color: #FFFFFF;
+}
+
+/* Tabs */
+.mafo-tabs {
+    background-color: rgb(103, 20, 15);
+    color: #FFFFFF;
+}
