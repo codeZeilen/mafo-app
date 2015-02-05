@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['starter.services'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $location) {
   // Form data for the login modal
   $scope.loginData = {};
   $scope.visibleSubMenus = {
@@ -44,6 +44,11 @@ angular.module('starter.controllers', ['starter.services'])
       $scope.closeLogin();
     }, 1000);
   };
+
+  $scope.toAppHome = function() {
+    $location.path('/app/planner');
+    //TODO: Clear the history
+  }
 })
 
 .controller('PlaylistsCtrl', function($scope) {
