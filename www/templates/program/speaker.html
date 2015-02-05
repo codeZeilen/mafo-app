@@ -1,6 +1,22 @@
-<ion-view>
+<ion-view title="Referenten">
     <ion-content>
-        <h1>{{speaker.title}} {{speaker.name}}</h1>
+        <div class="card">
+            <div class="item">
+                <h2>{{speaker.title}} {{speaker.name}}</h2>
+                <p class="speaker-short-description">{{speaker.shortDescription}}</p>
+            </div>
+            <div class="item item-image">
+                <span class="ion-person" style="font-size:8em; margin-left:auto; margin-right: auto;"/>
+                <!--<img src="" class="ion-person">-->
+            </div>
 
+            <div class="item" ng-if="speaker.longDescription">
+                {{speaker.longDescription}}
+            </div>
+
+            <div class="item">
+                {{eventsForSpeaker(speaker)}}
+            </div>
+        </div>
     </ion-content>
 </ion-view>

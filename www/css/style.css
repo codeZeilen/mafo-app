@@ -18,3 +18,9 @@
     background-color: rgb(103, 20, 15);
     color: #FFFFFF;
 }
+
+/* Speaker View */
+p.speaker-short-description {
+    overflow: auto;
+    white-space: normal;
+}
