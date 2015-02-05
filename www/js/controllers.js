@@ -74,12 +74,13 @@ angular.module('starter.controllers', ['starter.services'])
 
 .controller('ProgramCtrl', function($scope, Persistence) {
 
-    $scope.events = [];
     $scope.days = [];
 
+    $scope.dates = 'day';
+    $scope.startTimes = 'startTime';
+
     Persistence.listEvents().then(function(events) {
-      $scope.events = events;
-      $scope.updateDays();
+      $scope.updateDays(events);
     });
 
     $scope.isWorkshop = function(event) {
@@ -87,9 +88,9 @@ angular.module('starter.controllers', ['starter.services'])
               .indexOf(event.eventType) > 0;
     };
 
-    var groupDays = function() {
+    var groupDays = function(events) {
       var days = {};
-      angular.forEach($scope.events, function(event) {
+      angular.forEach(events, function(event) {
         var startTime = moment(event.startTime);
         var day = moment(startTime);
         day.startOf('day');
@@ -111,11 +112,13 @@ angular.module('starter.controllers', ['starter.services'])
         var slots = [];
         angular.forEach(Object.keys(days[day]), function(timeslot) {
           slots.push({
+            'startTime': moment(timeslot),
             'displayName' : moment(timeslot).format("HH:mm").concat(" Uhr"),
             'events' :  days[day][timeslot]
           });
         });
         resultDays.push({
+          'day': moment(day),
           'displayName' : moment(day).format("dd, D.MMM"),
           'slots' : slots
         });
@@ -124,11 +127,22 @@ angular.module('starter.controllers', ['starter.services'])
       return resultDays;
     };
 
-    $scope.updateDays = function() {
-      var days = groupDays();
+    $scope.updateDays = function(events) {
+      var days = groupDays(events);
       days = daysToObjects(days);
       $scope.days = days;
     };
+
+    $scope.$on('tab.shown', function() {
+      $scope.loading = true; // Hide content and show spinner
+      $scope.days = Items.get(function () {
+        $scope.loading = false; // Show content and hide spinner
+      });
+    });
+
+    $scope.$on('tab.hidden', function () {
+      $scope.days = []; // Tear down
+    });
 
 })
 
