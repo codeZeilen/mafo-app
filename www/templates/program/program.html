@@ -1,9 +1,12 @@
-<ion-view>
-    <ion-tabs class="tabs-positive">
+<ion-view title="Programm">
+
+    <ion-tabs class="tabs-royal">
         <ion-tab ng-repeat="day in days | orderBy:dates" title="{{day.displayName}}">
-            <h1>Programm</h1>
+            <ion-content>
             <ion-list>
-                <div ng-repeat-start="timeslot in day.slots | orderBy:startTimes" class="item item-divider">
+                <div ng-repeat-start="timeslot in day.slots | orderBy:startTimes"></div>
+                <div></div>
+                <div class="item item-divider">
                     {{timeslot.displayName}}
                 </div>
                 <ion-item ng-repeat="event in timeslot.events">
@@ -14,6 +17,7 @@
                 </ion-item>
                 <div ng-repeat-end></div>
             </ion-list>
+            </ion-content>
         </ion-tab>
     </ion-tabs>
 </ion-view>
