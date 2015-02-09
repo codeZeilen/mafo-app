@@ -25,7 +25,7 @@
 }
 
 /* Speaker View */
-p.speaker-short-description {
+p.item-long-description, p.item-short-description {
     overflow: auto;
-    white-space: normal;
+    white-space: pre;
 }
