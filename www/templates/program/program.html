@@ -1,23 +1,71 @@
 <ion-view title="Programm">
+        <ion-tabs class="tabs-royal">
 
-    <ion-tabs class="tabs-royal">
-        <ion-tab ng-repeat="day in days | orderBy:dates" title="{{day.displayName}}">
+        <ion-tab title="Do">
+            <ion-view>
             <ion-content>
-            <ion-list>
-                <div ng-repeat-start="timeslot in day.slots | orderBy:startTimes"></div>
-                <div></div>
-                <div class="item item-divider">
-                    {{timeslot.displayName}}
-                </div>
-                <ion-item ng-repeat="event in timeslot.events">
+
+                <ion-list>
+                   <div ng-repeat-start="timeslot in days[0].slots | orderBy:startTimes"></div>
+                    <div class="item item-divider">
+                        {{timeslot.displayName}}
+                    </div>
+                    <ion-item ng-repeat="event in timeslot.events">
                     <span ng-if="isWorkshop(event)">
                         Workshop:
                     </span>
-                    {{event.name}}
-                </ion-item>
-                <div ng-repeat-end></div>
-            </ion-list>
+                        {{event.name}}
+                    </ion-item>
+                    <div ng-repeat-end></div>
+                </ion-list>
+
             </ion-content>
+            </ion-view>
         </ion-tab>
+
+        <ion-tab title="Fr">
+            <ion-view>
+            <ion-content>
+
+                <ion-list>
+                    <div ng-repeat-start="timeslot in days[1].slots | orderBy:startTimes"></div>
+                    <div class="item item-divider">
+                        {{timeslot.displayName}}
+                    </div>
+                    <ion-item ng-repeat="event in timeslot.events">
+                    <span ng-if="isWorkshop(event)">
+                        Workshop:
+                    </span>
+                        {{event.name}}
+                    </ion-item>
+                    <div ng-repeat-end></div>
+                </ion-list>
+
+            </ion-content>
+            </ion-view>
+        </ion-tab>
+
+        <ion-tab title="Sa">
+            <ion-view>
+                <ion-content>
+
+                <ion-list>
+                    <div ng-repeat-start="timeslot in days[2].slots | orderBy:startTimes"></div>
+                    <div class="item item-divider">
+                        {{timeslot.displayName}}
+                    </div>
+                    <ion-item ng-repeat="event in timeslot.events">
+                    <span ng-if="isWorkshop(event)">
+                        Workshop:
+                    </span>
+                        {{event.name}}
+                    </ion-item>
+                    <div ng-repeat-end></div>
+                </ion-list>
+
+                </ion-content>
+            </ion-view>
+        </ion-tab>
+
     </ion-tabs>
 </ion-view>

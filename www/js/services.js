@@ -8,7 +8,11 @@ angular.module('starter.services', ['ngResource'])
   return $resource('https://www.mannheim-forum.org/api/mannheim-forum-schedule/events/:eventId');
 })
 
-  .factory('Persistence', function($q, SpeakerAPI, EventAPI) {
+  .factory('EventHBTMSpeakerAPI', function($resource) {
+    return $resource('https://www.mannheim-forum.org/api/mannheim-forum-schedule/event_speakers/:eventId');
+  })
+
+  .factory('Persistence', function($q, SpeakerAPI, EventAPI, EventHBTMSpeakerAPI) {
     // Credits to https://github.com/bgoetzmann/ionic-persistence/
 
     persistence.store.cordovasql.config(persistence, 'mafo_app_db', '0.0.1', 'Cache for program data of mafo', 10 * 1024 * 1024, 0);
@@ -43,6 +47,11 @@ angular.module('starter.services', ['ngResource'])
       VERTIEFUNGSWORKSHOP: 'vworkshop',
       UNTERNEHMENSWORKSHOP: 'uworkshop'
     };
+
+    entities.EventHBTMSpeaker = persistence.define('EventHBTMSpeaker', {
+      speakerServerId: 'INT',
+      eventServerId: 'INT'
+    });
 
     persistence.debug = true;
     persistence.schemaSync();

@@ -135,19 +135,10 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.updateDays = function(events) {
       var days = groupDays(events);
       days = daysToObjects(days);
-      $scope.days = days;
-    };
-
-    $scope.$on('tab.shown', function() {
-      $scope.loading = true; // Hide content and show spinner
-      $scope.days = Items.get(function () {
-        $scope.loading = false; // Show content and hide spinner
+      $scope.days = days.sort(function(day1, day2) {
+        return day1.day > day2.day;
       });
-    });
-
-    $scope.$on('tab.hidden', function () {
-      $scope.days = []; // Tear down
-    });
+    };
 
 })
 
