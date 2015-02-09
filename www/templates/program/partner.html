@@ -1,24 +1,20 @@
 <ion-header-bar class="bar bar-subheader">
-    <h2 class="title">Referenten</h2>
+    <h2 class="title">Partner</h2>
 </ion-header-bar>
 <ion-view>
     <ion-content>
         <div class="card">
             <div class="item">
-                <h2>{{speaker.title}} {{speaker.name}}</h2>
-                <p class="speaker-short-description">{{speaker.shortDescription}}</p>
+                <h2>{{partner.name}}</h2>
+                <p class="item-short-description">{{partner.shortDescription}}</p>
             </div>
             <div class="item item-image">
                 <span class="ion-person" style="font-size:8em; margin-left:auto; margin-right: auto;"/>
                 <!--<img src="" class="ion-person">-->
             </div>
 
-            <div class="item" ng-if="speaker.longDescription">
-                {{speaker.longDescription}}
-            </div>
-
-            <div class="item">
-                {{eventsForSpeaker(speaker)}}
+            <div class="item" ng-if="partner.longDescription">
+                <p class="item-long-description">{{partner.longDescription}}</p>
             </div>
         </div>
     </ion-content>

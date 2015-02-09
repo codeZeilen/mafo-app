@@ -157,6 +157,12 @@ angular.module('starter.controllers', ['starter.services'])
     });
 })
 
+.controller('PartnerCtrl', function($scope, $stateParams, Persistence) {
+  Persistence.getPartner($stateParams.partnerId).then(function(partner) {
+    $scope.partner = partner;
+  });
+})
+
 .controller('MapCtrl', function($scope) {
 })
 ;

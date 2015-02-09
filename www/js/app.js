@@ -109,6 +109,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     })
 
+    .state('app.partner', {
+      url: "/partners/:partnerId",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/program/partner.html",
+          controller: 'PartnerCtrl'
+        }
+      }
+    })
+
     .state('app.map', {
       url: "/map",
       views: {

@@ -4,7 +4,7 @@
 <ion-view>
     <ion-content>
         <ion-list>
-            <ion-item ng-repeat="partner in partners">
+            <ion-item ng-repeat="partner in partners" href="#/app/partners/{{partner.serverId}}">
                 {{partner.name}}
             </ion-item>
         </ion-list>
