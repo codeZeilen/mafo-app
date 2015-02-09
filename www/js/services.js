@@ -72,16 +72,28 @@ angular.module('starter.services', ['ngResource'])
     persistence.debug = true;
     persistence.schemaSync();
 
-    var refreshSpeakers = function(speakers) {
-      return refreshAllOf(entities.Speaker, speakers);
+    var refreshSpeakers = function() {
+      var result = $q.defer();
+      refreshAllOf(SpeakerAPI, entities.Speaker).then(function() {
+        refreshAllOf(EventHBTMSpeakerAPI, entities.EventHBTMSpeaker).then(function() {
+          result.resolve();
+        });
+      });
+      return result.promise;
     };
 
     var getAllSpeakers = function(speakersResult) {
       return getAllOf(entities.Speaker, speakersResult);
     };
 
-    var refreshEvents = function(events) {
-      return refreshAllOf(entities.Event, events);
+    var refreshEvents = function() {
+      var result = $q.defer();
+      refreshAllOf(EventAPI, entities.Event).then(function(){
+        refreshAllOf(EventHBTMSpeakerAPI, entities.EventHBTMSpeaker).then(function() {
+          result.resolve()
+        });
+      });
+      return result.promise;
     };
 
     var getAllEvents = function(events) {
@@ -89,25 +101,31 @@ angular.module('starter.services', ['ngResource'])
     };
 
     var refreshPartners = function(partners) {
-      return refreshAllOf(entities.Partner, partners);
+      return refreshAllOf(PartnerAPI, entities.Partner);
     };
 
     var getAllPartners = function(partnersResult) {
       return getAllOf(entities.Partner, partnersResult);
     };
 
-    var refreshAllOf = function(entityClass, individuals) {
-      if(individuals.length == 0) {
-        // Safe-guard against wrong data. TODO: Maybe stronger
-        return false;
-      } else {
-        entityClass.all().destroyAll();
-        persistence.flush(function() {
-          angular.forEach(individuals, function(individual) {
-            persistence.add(new entityClass(individual));
+    var refreshAllOf = function(ResourceApi, entityClass) {
+      var result = $q.defer();
+      ResourceApi.query(function(individuals) {
+        //TODO: check response
+        if(individuals.length == 0) {
+          // Safe-guard against wrong data. TODO: Maybe stronger
+          return false;
+        } else {
+          entityClass.all().destroyAll();
+          persistence.flush(function() {
+            angular.forEach(individuals, function(individual) {
+              persistence.add(new entityClass(individual));
+            });
+            result.resolve();
           });
-        });
-      }
+        }
+      });
+      return result.promise;
     };
 
     var getAllOf = function(entityClass, deferred) {
@@ -116,15 +134,13 @@ angular.module('starter.services', ['ngResource'])
       });
     };
 
-    var listing = function(ResourceApi, entityClass, refreshFn, getAllFn) {
+    var listing = function(entityClass, refreshFn, getAllFn) {
       var result = $q.defer();
 
       entityClass.all().count(null, function (speakersCount) {
         if(speakersCount == 0) {
           // Refresh the cache
-          var speakers = ResourceApi.query(function(speakers) {
-            // TODO: check response
-            refreshFn(speakers);
+          refreshFn().then(function() {
             getAllFn(result);
           });
         } else {
@@ -159,17 +175,16 @@ angular.module('starter.services', ['ngResource'])
         return getting(entities.Speaker, speakerId);
       },
       listSpeakers: function() {
-        return listing(SpeakerAPI, entities.Speaker, refreshSpeakers, getAllSpeakers);
+        return listing(entities.Speaker, refreshSpeakers, getAllSpeakers);
       },
       eventsForSpeaker: function(speakerId) {
         var result = $q.defer();
         entities.EventHBTMSpeaker.all().filter('speakerServerId', '=', speakerId).list(function(eventServerIds) {
           if(eventServerIds.length > 0) {
-            var query = entities.Event.all();
-            angular.forEach(eventServerIds, function (eventServerId) {
-              query = query.or(query.filter('serverId', '=', eventServerId));
+            var ids = eventServerIds.map(function(eventServerId) {
+              return eventServerId.eventServerId;
             });
-            query.list(function (events) {
+            entities.Event.all().filter('serverId', 'in', ids).list(null, function(events) {
               result.resolve(events);
             });
           } else {
@@ -185,7 +200,7 @@ angular.module('starter.services', ['ngResource'])
         return getting(entities.Event, eventId);
       },
       listEvents: function() {
-        return listing(EventAPI, entities.Event, refreshEvents, getAllEvents);
+        return listing(entities.Event, refreshEvents, getAllEvents);
       },
 
       /* Partner */
@@ -194,7 +209,7 @@ angular.module('starter.services', ['ngResource'])
         return getting(entities.Partner, partnerId);
       },
       listPartners: function() {
-        return listing(PartnerAPI, entities.Partner, refreshPartners, getAllPartners);
+        return listing(entities.Partner, refreshPartners, getAllPartners);
       }
     };
   });
