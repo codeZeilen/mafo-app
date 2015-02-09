@@ -66,15 +66,24 @@ angular.module('starter.controllers', ['starter.services'])
 })
 
 .controller('SpeakersCtrl', function($scope, Persistence) {
+  $scope.speakers = [];
   Persistence.listSpeakers().then(function(speakers) {
     $scope.speakers = speakers;
   });
 })
 
 .controller('SpeakerCtrl', function($scope, $stateParams, Persistence) {
+  $scope.eventsForSpeaker = [];
+  $scope.speaker = [];
+
   Persistence.getSpeaker($stateParams.speakerId).then(function(speaker) {
     $scope.speaker = speaker;
   });
+
+  Persistence.eventsForSpeaker($stateParams.speakerId)
+    .then(function(events) {
+      $scope.eventsForSpeaker = events;
+    });
 })
 
 .controller('ProgramCtrl', function($scope, Persistence) {

@@ -161,6 +161,23 @@ angular.module('starter.services', ['ngResource'])
       listSpeakers: function() {
         return listing(SpeakerAPI, entities.Speaker, refreshSpeakers, getAllSpeakers);
       },
+      eventsForSpeaker: function(speakerId) {
+        var result = $q.defer();
+        entities.EventHBTMSpeaker.all().filter('speakerServerId', '=', speakerId).list(function(eventServerIds) {
+          if(eventServerIds.length > 0) {
+            var query = entities.Event.all();
+            angular.forEach(eventServerIds, function (eventServerId) {
+              query = query.or(query.filter('serverId', '=', eventServerId));
+            });
+            query.list(function (events) {
+              result.resolve(events);
+            });
+          } else {
+            result.resolve([]);
+          }
+        });
+        return result.promise;
+      },
 
       /* Events */
       refreshEvents: refreshEvents,

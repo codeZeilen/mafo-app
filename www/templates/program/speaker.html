@@ -17,8 +17,12 @@
                 <p class="item-long-description">{{speaker.longDescription}}</p>
             </div>
 
-            <div class="item">
-                {{eventsForSpeaker(speaker)}}
+            <div class="item" ng-if="eventsForSpeaker.length > 0">
+                <ion-list>
+                    <ion-item ng-repeat="event in eventsForSpeaker">
+                        {{event.name}}
+                    </ion-item>
+                </ion-list>
             </div>
         </div>
     </ion-content>
