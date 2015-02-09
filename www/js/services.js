@@ -12,7 +12,11 @@ angular.module('starter.services', ['ngResource'])
     return $resource('https://www.mannheim-forum.org/api/mannheim-forum-schedule/event_speakers/:eventId');
   })
 
-  .factory('Persistence', function($q, SpeakerAPI, EventAPI, EventHBTMSpeakerAPI) {
+  .factory('PartnerAPI', function($resource) {
+    return $resource('https://www.mannheim-forum.org/api/mannheim-forum-schedule/partners/:partnerId');
+  })
+
+  .factory('Persistence', function($q, SpeakerAPI, EventAPI, EventHBTMSpeakerAPI, PartnerAPI) {
     // Credits to https://github.com/bgoetzmann/ionic-persistence/
 
     persistence.store.cordovasql.config(persistence, 'mafo_app_db', '0.0.1', 'Cache for program data of mafo', 10 * 1024 * 1024, 0);
@@ -48,6 +52,18 @@ angular.module('starter.services', ['ngResource'])
       UNTERNEHMENSWORKSHOP: 'uworkshop'
     };
 
+    entities.Partner = persistence.define('Partner', {
+      serverId: 'INT',
+      name: 'TEXT',
+      shortDescription: 'TEXT',
+      longDescription: 'TEXT',
+      website: 'TEXT',
+      email: 'TEXT',
+      nameOfContact: 'TEXT',
+      address: 'TEXT',
+      logoPath: 'TEXT'
+    });
+
     entities.EventHBTMSpeaker = persistence.define('EventHBTMSpeaker', {
       speakerServerId: 'INT',
       eventServerId: 'INT'
@@ -72,6 +88,13 @@ angular.module('starter.services', ['ngResource'])
       return getAllOf(entities.Event, events);
     };
 
+    var refreshPartners = function(partners) {
+      return refreshAllOf(entities.Partner, partners);
+    };
+
+    var getAllPartners = function(partnersResult) {
+      return getAllOf(entities.Partner, partnersResult);
+    };
 
     var refreshAllOf = function(entityClass, individuals) {
       if(individuals.length == 0) {
@@ -146,6 +169,15 @@ angular.module('starter.services', ['ngResource'])
       },
       listEvents: function() {
         return listing(EventAPI, entities.Event, refreshEvents, getAllEvents);
+      },
+
+      /* Partner */
+      refreshPartners: refreshPartners,
+      getPartner: function(partnerId) {
+        return getting(entities.Partner, partnerId);
+      },
+      listPartners: function() {
+        return listing(PartnerAPI, entities.Partner, refreshPartners, getAllPartners);
       }
     };
-  })
+  });

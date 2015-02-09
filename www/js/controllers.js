@@ -151,7 +151,10 @@ angular.module('starter.controllers', ['starter.services'])
 .controller('ContactCtrl', function($scope) {
 })
 
-.controller('PartnerCtrl', function($scope) {
+.controller('PartnersCtrl', function($scope, Persistence) {
+    Persistence.listPartners().then(function(partners) {
+      $scope.partners = partners;
+    });
 })
 
 .controller('MapCtrl', function($scope) {

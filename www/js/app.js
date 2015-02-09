@@ -99,12 +99,12 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     })
 
-    .state('app.partner', {
-      url: "/partner",
+    .state('app.partners', {
+      url: "/partners",
       views: {
         'menuContent': {
-          templateUrl: "templates/program/partner.html",
-          controller: 'PartnerCtrl'
+          templateUrl: "templates/program/partners.html",
+          controller: 'PartnersCtrl'
         }
       }
     })
