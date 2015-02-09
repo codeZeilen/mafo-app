@@ -8,8 +8,8 @@
                 <h2>{{speaker.title}} {{speaker.name}}</h2>
                 <p class="item-short-description">{{speaker.shortDescription}}</p>
             </div>
-            <div class="item item-image speaker-view-icon">
-                <i class="ion-person speaker-view-icon"></i>
+            <div class="item item-image">
+                <i class="ion-person speaker-view-icon" ng-if="!speaker.picturePath"></i>
                 <!--<img src="" class="ion-person">-->
             </div>
 
