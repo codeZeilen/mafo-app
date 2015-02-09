@@ -13,6 +13,11 @@
     color: #FFFFFF;
 }
 
+.nav-title-image {
+    margin-top: 8px;
+    height: 27px;
+}
+
 /* Tabs */
 .mafo-tabs {
     background-color: rgb(103, 20, 15);
