@@ -97,6 +97,8 @@ angular.module('starter.controllers', ['starter.services'])
 
     $scope.dates = 'day';
     $scope.startTimes = 'startTime';
+    $scope.categoryColors = {};
+    $scope.categoryNames = {};
 
     Persistence.listEvents().then(function(events) {
       $scope.updateDays(events);
@@ -106,6 +108,13 @@ angular.module('starter.controllers', ['starter.services'])
       return [Persistence.Entities.EVENT_TYPES.UNTERNEHMENSWORKSHOP, Persistence.Entities.EVENT_TYPES.VERTIEFUNGSWORKSHOP]
               .indexOf(event.eventType) > 0;
     };
+
+    Persistence.listCategories().then(function(categories) {
+      angular.forEach(categories, function(category) {
+        $scope.categoryColors[category.serverId] = '#' + category.color;
+        $scope.categoryNames[category.serverId] = category.name;
+      });
+    });
 
     var groupDays = function(events) {
       var days = {};

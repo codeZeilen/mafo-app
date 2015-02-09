@@ -16,7 +16,11 @@ angular.module('starter.services', ['ngResource'])
     return $resource('https://www.mannheim-forum.org/api/mannheim-forum-schedule/partners/:partnerId');
   })
 
-  .factory('Persistence', function($q, SpeakerAPI, EventAPI, EventHBTMSpeakerAPI, PartnerAPI) {
+  .factory('TopicCateogryAPI', function($resource) {
+    return $resource('https://www.mannheim-forum.org/api/mannheim-forum-schedule/topic_categories/:partnerId');
+  })
+
+  .factory('Persistence', function($q, SpeakerAPI, EventAPI, EventHBTMSpeakerAPI, PartnerAPI, TopicCateogryAPI) {
     // Credits to https://github.com/bgoetzmann/ionic-persistence/
 
     persistence.store.cordovasql.config(persistence, 'mafo_app_db', '0.0.1', 'Cache for program data of mafo', 10 * 1024 * 1024, 0);
@@ -64,6 +68,12 @@ angular.module('starter.services', ['ngResource'])
       logoPath: 'TEXT'
     });
 
+    entities.TopicCategory = persistence.define('TopicCategory', {
+      serverId: 'INT',
+      name: 'TEXT',
+      color: 'TEXT'
+    });
+
     entities.EventHBTMSpeaker = persistence.define('EventHBTMSpeaker', {
       speakerServerId: 'INT',
       eventServerId: 'INT'
@@ -108,12 +118,20 @@ angular.module('starter.services', ['ngResource'])
       };
     };
 
-    var refreshPartners = function(partners) {
+    var refreshPartners = function() {
       return refreshAllOf(PartnerAPI, entities.Partner);
     };
 
     var getAllPartners = function(partnersResult) {
       return getAllOf(entities.Partner, partnersResult);
+    };
+
+    var refreshCategories = function() {
+      return refreshAllOf(TopicCateogryAPI, entities.TopicCategory);
+    };
+
+    var getAllCategories = function(categoriesResult) {
+      return getAllOf(entities.TopicCategory, categoriesResult);
     };
 
     var refreshAllOf = function(ResourceApi, entityClass) {
@@ -221,6 +239,30 @@ angular.module('starter.services', ['ngResource'])
       },
       getWorkshopsOfPartner: function(partnerId) {
         return listing(entities.Event, refreshEvents, getEventsForPartner(partnerId));
+      },
+
+      /* Topic category */
+      refreshCategories: refreshCategories,
+      listCategories: function() {
+        return listing(entities.TopicCategory, refreshCategories, getAllCategories);
+      },
+      getCategory: function(categoryServerId) {
+        var result = $q.defer();
+        entities.TopicCategory.all().count(null, function (speakersCount) {
+          var intermediate_defer = $q.defer();
+          var intermediate_result = intermediate_defer.promise;
+          if(speakersCount == 0) {
+            intermediate_result = refreshAllOf(TopicCateogryAPI, entities.TopicCategory);
+          } else {
+            intermediate_defer.resolve();
+          }
+          intermediate_result.then(function() {
+            getting(entities.TopicCategory, categoryServerId).then(function(category) {
+              result.resolve(category);
+            })
+          });
+        });
+        return result.promise;
       }
     };
   });

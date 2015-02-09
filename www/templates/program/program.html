@@ -14,10 +14,28 @@
                         {{timeslot.displayName}}
                     </div>
                     <ion-item ng-repeat="event in timeslot.events">
-                    <span ng-if="isWorkshop(event)">
-                        Workshop:
-                    </span>
-                        {{event.name}}
+                        <div class="program-category-indicator"
+                             ng-if="event.categoryId"
+                             ng-style="{'background-color': categoryColors[event.categoryId]};">
+                            &#8203;
+                        </div>
+                        <div class="program-title-description">
+                            <div class="program-event-name">{{event.name}}</div>
+                            <div>
+                                <p>
+                                    <span ng-if="event.categoryId">
+                                        {{categoryNames[event.categoryId]}}
+                                    </span>
+                                    <span ng-if="isWorkshop(event)">
+                                        Workshop
+                                    </span>
+                                </p>
+
+                            </div>
+                        </div>
+                        <div class="program-favorite-event">
+                            <i class="ion-icon ion-ios-star-outline"></i>
+                        </div>
                     </ion-item>
                     <div ng-repeat-end></div>
                 </ion-list>
@@ -36,10 +54,28 @@
                         {{timeslot.displayName}}
                     </div>
                     <ion-item ng-repeat="event in timeslot.events">
-                    <span ng-if="isWorkshop(event)">
-                        Workshop:
-                    </span>
-                        {{event.name}}
+                        <div class="program-category-indicator"
+                             ng-if="event.categoryId"
+                             ng-style="{'background-color': categoryColors[event.categoryId]};">
+                            &#8203;
+                        </div>
+                        <div class="program-title-description">
+                            <div class="program-event-name">{{event.name}}</div>
+                            <div>
+                                <p>
+                                    <span ng-if="event.categoryId">
+                                        {{categoryNames[event.categoryId]}}
+                                    </span>
+                                    <span ng-if="isWorkshop(event)">
+                                        Workshop
+                                    </span>
+                                </p>
+
+                            </div>
+                        </div>
+                        <div class="program-favorite-event">
+                            <i class="ion-icon ion-ios-star"></i>
+                        </div>
                     </ion-item>
                     <div ng-repeat-end></div>
                 </ion-list>
@@ -58,10 +94,28 @@
                         {{timeslot.displayName}}
                     </div>
                     <ion-item ng-repeat="event in timeslot.events">
-                    <span ng-if="isWorkshop(event)">
-                        Workshop:
-                    </span>
-                        {{event.name}}
+                        <div class="program-category-indicator"
+                             ng-if="event.categoryId"
+                             ng-style="{'background-color': categoryColors[event.categoryId]};">
+                            &#8203;
+                        </div>
+                        <div class="program-title-description">
+                            <div class="program-event-name">{{event.name}}</div>
+                            <div>
+                                <p>
+                                    <span ng-if="event.categoryId">
+                                        {{categoryNames[event.categoryId]}}
+                                    </span>
+                                    <span ng-if="isWorkshop(event)">
+                                        Workshop
+                                    </span>
+                                </p>
+
+                            </div>
+                        </div>
+                        <div class="program-favorite-event">
+                            <i class="ion-icon ion-star"></i>
+                        </div>
                     </ion-item>
                     <div ng-repeat-end></div>
                 </ion-list>
