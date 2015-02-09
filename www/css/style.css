@@ -24,8 +24,12 @@
     color: #FFFFFF;
 }
 
-/* Speaker View */
+/* Item View */
 p.item-long-description, p.item-short-description {
     overflow: auto;
     white-space: pre;
+}
+
+.item-image {
+    padding: 10px;
 }
