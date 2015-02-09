@@ -4,12 +4,35 @@
 <ion-view>
     <ion-content>
         <div class="card">
-            <div class="item">
+            <div class="item partner-name">
                 <h2>{{partner.name}}</h2>
-                <p class="item-short-description">{{partner.shortDescription}}</p>
             </div>
             <div class="item item-image">
                 <img ng-cache src="https://www.mannheim-forum.org/sites/default/files/mfschedule/company/{{partner.logoPath}}" />
+            </div>
+
+            <div class="item item-icon-left">
+                <i class="icon ion-laptop"></i>
+                <a ng-href="http://{{partner.website||'www.google.de'}}">Website</a>
+            </div>
+
+            <div class="item item-icon-left">
+                <i class="icon ion-home"></i>
+                {{partner.address||'N/A'}}
+            </div>
+
+            <div class="item item-icon-left">
+                <i class="icon ion-person"></i>
+                {{partner.nameOfContact||'N/A'}}
+            </div>
+
+            <div class="item item-icon-left">
+                <i class="icon ion-email"></i>
+                {{partner.email||'N/A'}}
+            </div>
+
+            <div class="item item-divider">
+                Beschreibung
             </div>
 
             <div class="item" ng-if="partner.longDescription">

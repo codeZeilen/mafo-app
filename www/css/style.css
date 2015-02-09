@@ -18,6 +18,11 @@
     height: 27px;
 }
 
+.bar-subheader .title {
+    width: 100%;
+    text-align: center;
+}
+
 /* Tabs */
 .mafo-tabs {
     background-color: rgb(103, 20, 15);
@@ -32,4 +37,20 @@ p.item-long-description, p.item-short-description {
 
 .item-image {
     padding: 10px;
+}
+
+.item-image img {
+    width:auto !important;
+    height: 80px;
+}
+
+.card .item h2 {
+    font-weight: bold;
+}
+
+/* Partner view */
+.partner-name h2 {
+    overflow: auto;
+    white-space: pre-wrap;
+
 }
