@@ -4,7 +4,9 @@
 <ion-view>
     <ion-content>
         <ion-list>
-            <ion-item ng-class="{'item-icon-left': !speaker.picturePath}" ng-repeat="speaker in speakers" href="#/app/speakers/{{speaker.serverId}}">
+            <ion-item ng-class="{'item-icon-left': !speaker.picturePath}"
+                      ng-repeat="speaker in speakers | orderBy : lastName"
+                      ng-href="#/app/speakers/{{speaker.serverId}}">
                 <i class="icon ion-person speaker-list-icon" ng-if="!speaker.picturePath"></i>
                 {{speaker.title}} {{speaker.name}}
             </ion-item>

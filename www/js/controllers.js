@@ -67,6 +67,11 @@ angular.module('starter.controllers', ['starter.services'])
 
 .controller('SpeakersCtrl', function($scope, Persistence) {
   $scope.speakers = [];
+
+  $scope.lastName = function(speaker) {
+    return speaker.name.split(' ').slice(-1)[0];
+  };
+
   Persistence.listSpeakers().then(function(speakers) {
     $scope.speakers = speakers;
   });
@@ -161,6 +166,10 @@ angular.module('starter.controllers', ['starter.services'])
 })
 
 .controller('PartnersCtrl', function($scope, Persistence) {
+  $scope.partners = [];
+
+  $scope.partnerName = 'name';
+
     Persistence.listPartners().then(function(partners) {
       $scope.partners = partners;
     });
