@@ -8,8 +8,8 @@
                 <h2>{{speaker.title}} {{speaker.name}}</h2>
                 <p class="item-short-description">{{speaker.shortDescription}}</p>
             </div>
-            <div class="item item-image">
-                <span class="ion-person" style="font-size:8em; margin-left:auto; margin-right: auto;"/>
+            <div class="item item-image speaker-view-icon">
+                <i class="ion-person speaker-view-icon"></i>
                 <!--<img src="" class="ion-person">-->
             </div>
 
@@ -21,13 +21,10 @@
                 Veranstaltungen
             </div>
 
-            <div class="item" ng-if="eventsForSpeaker.length > 0">
-                <ion-list>
-                    <ion-item ng-repeat="event in eventsForSpeaker" ng-href="#/app/events/{{event.serverId}}">
-                        {{event.name}}
-                    </ion-item>
-                </ion-list>
-            </div>
+            <ion-item ng-repeat="event in eventsForSpeaker" ng-href="#/app/events/{{event.serverId}}">
+                {{event.name}}
+            </ion-item>
+
         </div>
     </ion-content>
 </ion-view>

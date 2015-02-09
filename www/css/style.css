@@ -59,3 +59,8 @@ p.item-long-description, p.item-short-description {
     overflow: auto;
     white-space: pre-wrap;
 }
+
+/* Person view symbol */
+.speaker-view-icon {
+    font-size:3em; margin-left:auto; margin-right: auto;
+}
