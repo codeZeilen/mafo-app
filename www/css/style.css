@@ -32,7 +32,7 @@
 /* Item View */
 p.item-long-description, p.item-short-description {
     overflow: auto;
-    white-space: pre;
+    white-space: pre-wrap;
 }
 
 .item-image {
@@ -48,9 +48,14 @@ p.item-long-description, p.item-short-description {
     font-weight: bold;
 }
 
+/* Partner list */
+.partners-list-item a {
+    overflow: auto;
+    white-space: normal;
+}
+
 /* Partner view */
 .partner-name h2 {
     overflow: auto;
     white-space: pre-wrap;
-
 }

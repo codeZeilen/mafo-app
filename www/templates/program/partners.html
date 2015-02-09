@@ -4,10 +4,10 @@
 <ion-view>
     <ion-content>
         <ion-list>
-            <ion-item class="item-avatar" ng-repeat="partner in partners" href="#/app/partners/{{partner.serverId}}">
+            <ion-item class="partners-list-item item-thumbnail-left" ng-repeat="partner in partners" href="#/app/partners/{{partner.serverId}}">
                 <img ng-cache ng-src="https://www.mannheim-forum.org/sites/default/files/mfschedule/company/thumbs/{{partner.logoPath}}" />
                 {{partner.name}}
-                <p>{{partner.shortDescription}}</p>
+                <p>{{partner.longDescription}}</p>
             </ion-item>
         </ion-list>
     </ion-content>
