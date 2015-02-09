@@ -31,6 +31,14 @@
                 {{partner.email||'N/A'}}
             </div>
 
+            <div class="item item-divider" ng-if="workshopsOfPartner">
+                Workshops
+            </div>
+
+            <ion-item ng-repeat="workshop in workshopsOfPartner" ng-href="#/app/events/{{workshop.serverId}}">
+                {{workshop.name}}
+            </ion-item>
+
             <div class="item item-divider">
                 Beschreibung
             </div>

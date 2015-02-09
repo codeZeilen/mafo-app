@@ -100,6 +100,14 @@ angular.module('starter.services', ['ngResource'])
       return getAllOf(entities.Event, events);
     };
 
+    var getEventsForPartner = function(partnerId) {
+      return function(result) {
+        entities.Event.all().filter('companyId', '=', partnerId).list(null, function(events){
+          result.resolve(events);
+        })
+      };
+    };
+
     var refreshPartners = function(partners) {
       return refreshAllOf(PartnerAPI, entities.Partner);
     };
@@ -210,6 +218,9 @@ angular.module('starter.services', ['ngResource'])
       },
       listPartners: function() {
         return listing(entities.Partner, refreshPartners, getAllPartners);
+      },
+      getWorkshopsOfPartner: function(partnerId) {
+        return listing(entities.Event, refreshEvents, getEventsForPartner(partnerId));
       }
     };
   });

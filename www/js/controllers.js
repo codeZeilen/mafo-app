@@ -167,9 +167,16 @@ angular.module('starter.controllers', ['starter.services'])
 })
 
 .controller('PartnerCtrl', function($scope, $stateParams, Persistence) {
+  $scope.partner = {};
+  $scope.workshopsOfPartner = [];
+
   Persistence.getPartner($stateParams.partnerId).then(function(partner) {
     $scope.partner = partner;
   });
+
+  Persistence.getWorkshopsOfPartner($stateParams.partnerId).then(function(workshops) {
+    $scope.workshopsOfPartner = workshops;
+  })
 })
 
 .controller('MapCtrl', function($scope) {
