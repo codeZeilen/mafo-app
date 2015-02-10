@@ -66,17 +66,17 @@
         <div class="item item-divider" nav-clear ng-click="toggleSubMenuVisibility('socialMedia')" >
             Social Media
         </div>
-        <ion-item nav-clear menu-close href="https://www.facebook.com/MannheimForum?fref=ts" ng-show="subMenuVisible('socialMedia')">
+        <ion-item nav-clear menu-close stopEvent ng-click="toFacebook()" ng-show="subMenuVisible('socialMedia')">
             Facebook
         </ion-item>
-        <ion-item nav-clear menu-close href="https://www.facebook.com/events/309686525893607/?fref=ts" ng-show="subMenuVisible('socialMedia')">
+        <ion-item nav-clear menu-close stopEvent ng-click="toFacebookEvent()" ng-show="subMenuVisible('socialMedia')">
             Facebook Event
         </ion-item>
-        <ion-item nav-clear menu-close href="https://www.youtube.com/channel/UCqbs5sy_vxt-12SNdYGMPBA" ng-show="subMenuVisible('socialMedia')">
+        <ion-item nav-clear menu-close stopEvent ng-click="toYoutube()" ng-show="subMenuVisible('socialMedia')">
             Youtube
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/playlists" ng-show="subMenuVisible('socialMedia')">
-            LinkedIn
+        <ion-item nav-clear menu-close stopEvent ng-click="toXing()" ng-show="subMenuVisible('socialMedia')">
+            Xing
         </ion-item>
 
         <div class="item item-divider" nav-clear ng-click="toggleSubMenuVisibility('socialMedia')" >

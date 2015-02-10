@@ -51,7 +51,23 @@ angular.module('starter.controllers', ['starter.services'])
       disableAnimate: false,
       disableBack: true
     });
-  }
+  };
+
+  $scope.toYoutube = function() {
+    window.open('https://www.youtube.com/channel/UCqbs5sy_vxt-12SNdYGMPBA', '_system', 'location=no');
+  };
+
+  $scope.toFacebookEvent = function() {
+    window.open('https://www.facebook.com/events/309686525893607/?fref=ts', '_system', 'location=no');
+  };
+
+  $scope.toFacebookPage = function() {
+    window.open('https://www.facebook.com/MannheimForum?fref=ts', '_system', 'location=no');
+  };
+
+  $scope.toXing = function() {
+    window.open('https://www.xing.com/communities/groups/mannheim-forum-6e17-1006016/about', '_system', 'location=no');
+  };  
 })
 
 .controller('PlaylistsCtrl', function($scope) {
