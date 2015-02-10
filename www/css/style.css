@@ -9,9 +9,15 @@
     color: #FFFFFF;
 }
 
-.nav-title-image {
+img.nav-title-image {
     margin-top: 8px;
-    height: 27px;
+    height: 25px;
+}
+
+@media (max-width: 360px) {
+    img.nav-title-image {
+        height: 21px;
+    }
 }
 
 .bar-subheader .title {
