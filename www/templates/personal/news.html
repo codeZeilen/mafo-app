@@ -4,17 +4,15 @@
 <ion-view>
     <ion-content>
         <ion-list>
-            <ion-item class="card" ng-repeat="newsItem in news | orderBy : 'creationDate' | limitTo : 7">
+            <div class="card" ng-repeat="newsItem in news | orderBy : 'creationDate' | limitTo : 7">
                 <ion-item>
                     <h2>{{newsItem.title}}</h2>
                     <p>{{dateFormat(newsItem.createdAt)}}</p>
                 </ion-item>
                 <ion-item >
-                    <p class="item-long-description" ng-bind-html="newsItem.content">
-
-                    </p>
+                    <p class="item-long-description" ng-bind-html="newsItem.content"></p>
                 </ion-item>
-            </ion-item>
+            </div>
         </ion-list>
     </ion-content>
 </ion-view>
