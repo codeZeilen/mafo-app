@@ -11,27 +11,27 @@
                 <img ng-cache src="https://www.mannheim-forum.org/sites/default/files/mfschedule/company/{{partner.logoPath}}" />
             </div>
 
-            <div class="item item-icon-left">
+            <div class="item item-icon-left" ng-if="partner.website">
                 <i class="icon ion-laptop"></i>
                 <a ng-href="http://{{partner.website||'www.google.de'}}">Website</a>
             </div>
 
-            <div class="item item-icon-left">
+            <div class="item item-icon-left" ng-if="partner.address">
                 <i class="icon ion-home"></i>
                 {{partner.address||'N/A'}}
             </div>
 
-            <div class="item item-icon-left">
+            <div class="item item-icon-left" ng-if="partner.nameOfContact">
                 <i class="icon ion-person"></i>
                 {{partner.nameOfContact||'N/A'}}
             </div>
 
-            <div class="item item-icon-left">
+            <div class="item item-icon-left" ng-if="partner.email">
                 <i class="icon ion-email"></i>
                 {{partner.email||'N/A'}}
             </div>
 
-            <div class="item item-divider" ng-if="workshopsOfPartner">
+            <div class="item item-divider" ng-if="workshopsOfPartner.length > 0">
                 Workshops
             </div>
 
