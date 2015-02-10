@@ -228,7 +228,12 @@ angular.module('starter.controllers', ['starter.services'])
       });
       $scope.news = news;
 
-    })
+    });
+
+    $scope.dateFormat = function(timeStampString) {
+      var time = moment(timeStampString, "X");
+      return time.format("DD. MMM YYYY, HH").concat(" Uhr");
+    };
 })
 
 .controller('ContactCtrl', function($scope) {
