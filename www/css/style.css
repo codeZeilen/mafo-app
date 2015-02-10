@@ -5,11 +5,7 @@
     color: #FFFFFF;
 }
 
-.bar.bar-stable .button {
-    color: #FFFFFF;
-}
-
-.bar.bar-stable .title {
+.bar.bar-stable .button, .bar.bar-stable .title {
     color: #FFFFFF;
 }
 
@@ -30,7 +26,9 @@
 }
 
 /* Item View */
-p.item-long-description, p.item-short-description, .item-view-association-list a {
+p.item-long-description, p.item-short-description,
+p.item-long-description p,
+.item-view-association-list a {
     overflow: auto;
     white-space: normal;
 }
@@ -48,6 +46,11 @@ p.item-long-description, p.item-short-description, .item-view-association-list a
     font-weight: bold;
     overflow: auto;
     white-space: normal;
+}
+
+p.item-long-description p
+{
+    margin-bottom: 1em;
 }
 
 /* Partner list */

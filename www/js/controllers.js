@@ -77,11 +77,12 @@ angular.module('starter.controllers', ['starter.services'])
   });
 })
 
-.controller('SpeakerCtrl', function($scope, $stateParams, Persistence) {
+.controller('SpeakerCtrl', function($scope, $stateParams, Persistence, $sce) {
   $scope.eventsForSpeaker = [];
   $scope.speaker = [];
 
   Persistence.getSpeaker($stateParams.speakerId).then(function(speaker) {
+    speaker.longDescription = $sce.trustAsHtml(speaker.longDescription);
     $scope.speaker = speaker;
   });
 
@@ -170,13 +171,14 @@ angular.module('starter.controllers', ['starter.services'])
 
 })
 
-.controller('EventCtrl', function($scope, $stateParams, Persistence) {
+.controller('EventCtrl', function($scope, $stateParams, Persistence, $sce) {
     $scope.event = {};
     $scope.categoryColors = {};
     $scope.categoryNames = {};
     $scope.speakersForEvent = [];
 
     Persistence.getEvent($stateParams.eventId).then(function(event) {
+      event.longDescription = $sce.trustAsHtml(event.longDescription);
       $scope.event = event;
     });
 
