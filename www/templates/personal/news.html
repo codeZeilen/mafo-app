@@ -3,6 +3,17 @@
 </ion-header-bar>
 <ion-view>
     <ion-content>
+        <ion-list>
+            <ion-item class="card" ng-repeat="newsItem in news | orderBy : 'creationDate' | limitTo : 7">
+                <ion-item>
+                    <h2>{{newsItem.title}}</h2>
+                </ion-item>
+                <ion-item >
+                    <p class="item-long-description" ng-bind-html="newsItem.content">
 
+                    </p>
+                </ion-item>
+            </ion-item>
+        </ion-list>
     </ion-content>
 </ion-view>

@@ -217,7 +217,18 @@ angular.module('starter.controllers', ['starter.services'])
 .controller('PlannerCtrl', function($scope) {
 })
 
-.controller('NewsCtrl', function($scope) {
+.controller('NewsCtrl', function($scope, Persistence, $sce) {
+    $scope.news = [];
+
+    Persistence.listNews().then(function(news) {
+      angular.forEach(news, function(newsItem) {
+        newsItem.content = newsItem.content.replace(/img/, "img ng-cache");
+        newsItem.content = newsItem.content.replace(/\/sites\/default\//, "https://www.mannheim-forum.org/sites/default/");
+        newsItem.content = $sce.trustAsHtml(newsItem.content);
+      });
+      $scope.news = news;
+
+    })
 })
 
 .controller('ContactCtrl', function($scope) {

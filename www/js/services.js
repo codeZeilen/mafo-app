@@ -24,7 +24,38 @@ angular.module('starter.services', ['ngResource'])
     return $resource('https://www.mannheim-forum.org/api/mannheim-forum-schedule/rooms/:roomId');
   })
 
-  .factory('Persistence', function($q, SpeakerAPI, EventAPI, EventHBTMSpeakerAPI, PartnerAPI, TopicCateogryAPI, RoomAPI) {
+  .factory('NewsAPI', function($http, $q) {
+    return {
+      'query': function(callback) {
+        var result = $q.defer();
+
+        $http.get('https://www.mannheim-forum.org/api/mannheim-forum-schedule/news')
+          .success(function(requestResult) {
+            result.resolve(angular.fromJson(requestResult));
+          })
+          .error(function() {
+            result.resolve([]);
+          });
+
+        return result.promise.then(callback);
+      },
+      'refreshFrom': function($timestamp) {
+        var result = $q.defer();
+
+        $http.get('https://www.mannheim-forum.org/api/mannheim-forum-schedule/news_since/' + $timestamp)
+          .success(function(requestResult) {
+            result.resolve(angular.fromJson(requestResult));
+          })
+          .error(function() {
+            result.resolve([]);
+          });
+
+        return result.promise;
+      }
+    };
+  })
+
+  .factory('Persistence', function($q, SpeakerAPI, EventAPI, EventHBTMSpeakerAPI, PartnerAPI, TopicCateogryAPI, RoomAPI, NewsAPI) {
     // Credits to https://github.com/bgoetzmann/ionic-persistence/
 
     persistence.store.cordovasql.config(persistence, 'mafo_app_db', '0.0.1', 'Cache for program data of mafo', 10 * 1024 * 1024, 0);
@@ -83,6 +114,13 @@ angular.module('starter.services', ['ngResource'])
       name: 'TEXT',
       capacity: 'INT',
       mapImagePath: 'TEXT'
+    });
+
+    entities.News = persistence.define('News', {
+      serverId: 'INT',
+      title: 'TEXT',
+      content: 'TEXT',
+      createdAt: 'TEXT'
     });
 
     entities.EventHBTMSpeaker = persistence.define('EventHBTMSpeaker', {
@@ -151,6 +189,14 @@ angular.module('starter.services', ['ngResource'])
 
     var getAllRooms = function(roomsResult) {
       return getAllOf(entities.Room, roomsResult);
+    };
+
+    var refreshAllNews = function() {
+      return refreshAllOf(NewsAPI, entities.News);
+    };
+
+    var getAllNews = function(newsResult) {
+      return getAllOf(entities.News, newsResult);
     };
 
     var refreshAllOf = function(ResourceApi, entityClass) {
@@ -302,6 +348,11 @@ angular.module('starter.services', ['ngResource'])
       },
       getRoom: function(roomId) {
         return getting(entities.Room, roomId);
+      },
+
+      /* News */
+      listNews: function() {
+        return listing(entities.News, refreshAllNews, getAllNews);
       }
     };
   });
