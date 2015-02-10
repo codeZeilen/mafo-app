@@ -21,9 +21,9 @@
                 {{timeFormat(event.startTime)}} - {{timeFormat(event.endTime)}}
             </div>
 
-            <div class="item item-icon-left" ng-if="2">
+            <div class="item item-icon-left" ng-if="event.roomId" ng-href="#/app/rooms/{{event.roomId}}">
                 <i class="icon ion-ios-home-outline"></i>
-                Raum 2
+                {{eventRoom.name}}
             </div>
 
             <div class="item item-divider" ng-if="event.longDescription">

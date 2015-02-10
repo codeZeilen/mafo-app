@@ -179,10 +179,17 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.categoryColors = {};
     $scope.categoryNames = {};
     $scope.speakersForEvent = [];
+    $scope.eventRoom = null;
 
     Persistence.getEvent($stateParams.eventId).then(function(event) {
       event.longDescription = $sce.trustAsHtml(event.longDescription);
       $scope.event = event;
+
+      if(event.roomId) {
+        Persistence.getRoom(event.roomId).then(function(room) {
+          $scope.eventRoom = room;
+        });
+      }
     });
 
     Persistence.listCategories().then(function(categories) {
