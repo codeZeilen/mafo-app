@@ -95,6 +95,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     /*
     Personal states
      */
+    .state('app.starter', {
+      url: "/starter",
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/starter.html',
+          controller: 'StarterCtrl'
+        }
+      }
+    })
+
     .state('app.planner', {
       url: "/planner",
       views: {
@@ -221,6 +231,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 
 
 
+
   .state('app.search', {
     url: "/search",
     views: {
@@ -259,5 +270,5 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/app/starter');
 });

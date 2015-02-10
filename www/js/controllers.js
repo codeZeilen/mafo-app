@@ -254,4 +254,7 @@ angular.module('starter.controllers', ['starter.services'])
     });
 
 })
+
+.controller('StarterCtrl', function($scope) {
+})
 ;
