@@ -239,6 +239,12 @@ angular.module('starter.controllers', ['starter.services'])
   })
 })
 
-.controller('MapCtrl', function($scope) {
+.controller('MapCtrl', function($scope, Persistence) {
+    $scope.rooms = [];
+
+    Persistence.listRooms().then(function(rooms) {
+      $scope.rooms = rooms;
+    });
+
 })
 ;

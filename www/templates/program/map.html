@@ -1,5 +1,13 @@
+<ion-header-bar class="bar bar-subheader">
+    <h2 class="title">Lageplan</h2>
+</ion-header-bar>
 <ion-view>
     <ion-content>
-        <h1>Lageplan</h1>
+        <ion-list>
+            <ion-item ng-repeat="room in rooms"
+                      ng-href="#/app/rooms/{{room.serverId}}">
+                {{room.name}}
+            </ion-item>
+        </ion-list>
     </ion-content>
 </ion-view>
