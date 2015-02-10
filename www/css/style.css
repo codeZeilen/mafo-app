@@ -14,14 +14,14 @@ img.nav-title-image {
     height: 25px;
 }
 
-@media (max-width: 360px) {
+@media (max-width: 359px) {
     img.nav-title-image {
         height: 21px;
+        margin-top:12px;
     }
 }
 
 .bar-subheader .title {
-    width: 100%;
     text-align: center;
 }
 
