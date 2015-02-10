@@ -132,13 +132,14 @@ angular.module('starter.services', ['ngResource'])
     persistence.schemaSync();
 
     var refreshSpeakers = function() {
-      var result = $q.defer();
-      refreshAllOf(SpeakerAPI, entities.Speaker).then(function() {
-        refreshAllOf(EventHBTMSpeakerAPI, entities.EventHBTMSpeaker).then(function() {
-          result.resolve();
-        });
-      });
-      return result.promise;
+      return $q.all([
+        refreshAllOf(SpeakerAPI, entities.Speaker),
+        refreshAllOf(EventHBTMSpeakerAPI, entities.EventHBTMSpeaker),
+        refreshAllOf(RoomAPI, entities.Room),
+        refreshAllOf(TopicCateogryAPI, entities.TopicCategory),
+        refreshAllOf(EventAPI, entities.Event)
+      ]);
+
     };
 
     var getAllSpeakers = function(speakersResult) {
@@ -146,13 +147,13 @@ angular.module('starter.services', ['ngResource'])
     };
 
     var refreshEvents = function() {
-      var result = $q.defer();
-      refreshAllOf(EventAPI, entities.Event).then(function(){
-        refreshAllOf(EventHBTMSpeakerAPI, entities.EventHBTMSpeaker).then(function() {
-          result.resolve()
-        });
-      });
-      return result.promise;
+      return $q.all([
+        refreshAllOf(EventAPI, entities.Event),
+        refreshAllOf(EventHBTMSpeakerAPI, entities.EventHBTMSpeaker),
+        refreshAllOf(SpeakerAPI, entities.Speaker),
+        refreshAllOf(RoomAPI, entities.Room),
+        refreshAllOf(TopicCateogryAPI, entities.TopicCategory),
+      ]);
     };
 
     var getAllEvents = function(events) {
@@ -184,7 +185,13 @@ angular.module('starter.services', ['ngResource'])
     };
 
     var refreshRooms = function() {
-      return refreshAllOf(RoomAPI, entities.Room);
+      return $q.all([
+        refreshAllOf(EventAPI, entities.Event),
+        refreshAllOf(EventHBTMSpeakerAPI, entities.EventHBTMSpeaker),
+        refreshAllOf(SpeakerAPI, entities.Speaker),
+        refreshAllOf(RoomAPI, entities.Room),
+        refreshAllOf(TopicCateogryAPI, entities.TopicCategory),
+      ]);
     };
 
     var getAllRooms = function(roomsResult) {
