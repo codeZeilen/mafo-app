@@ -20,7 +20,11 @@ angular.module('starter.services', ['ngResource'])
     return $resource('https://www.mannheim-forum.org/api/mannheim-forum-schedule/topic_categories/:partnerId');
   })
 
-  .factory('Persistence', function($q, SpeakerAPI, EventAPI, EventHBTMSpeakerAPI, PartnerAPI, TopicCateogryAPI) {
+  .factory('RoomAPI', function($resource) {
+    return $resource('https://www.mannheim-forum.org/api/mannheim-forum-schedule/rooms/:roomId');
+  })
+
+  .factory('Persistence', function($q, SpeakerAPI, EventAPI, EventHBTMSpeakerAPI, PartnerAPI, TopicCateogryAPI, RoomAPI) {
     // Credits to https://github.com/bgoetzmann/ionic-persistence/
 
     persistence.store.cordovasql.config(persistence, 'mafo_app_db', '0.0.1', 'Cache for program data of mafo', 10 * 1024 * 1024, 0);
@@ -72,6 +76,13 @@ angular.module('starter.services', ['ngResource'])
       serverId: 'INT',
       name: 'TEXT',
       color: 'TEXT'
+    });
+
+    entities.Room = persistence.define('Room', {
+      serverId: 'INT',
+      name: 'TEXT',
+      capacity: 'INT',
+      mapImagePath: 'TEXT'
     });
 
     entities.EventHBTMSpeaker = persistence.define('EventHBTMSpeaker', {
@@ -132,6 +143,14 @@ angular.module('starter.services', ['ngResource'])
 
     var getAllCategories = function(categoriesResult) {
       return getAllOf(entities.TopicCategory, categoriesResult);
+    };
+
+    var refreshRooms = function() {
+      return refreshAllOf(RoomAPI, entities.Room);
+    };
+
+    var getAllRooms = function(roomsResult) {
+      return getAllOf(entities.Room, roomsResult);
     };
 
     var refreshAllOf = function(ResourceApi, entityClass) {
@@ -274,6 +293,15 @@ angular.module('starter.services', ['ngResource'])
           });
         });
         return result.promise;
+      },
+
+      /* Rooms */
+      refreshRooms: refreshRooms,
+      listRooms: function() {
+        return listing(entities.Room, refreshRooms, getAllRooms);
+      },
+      getRoom: function(roomId) {
+        return getting(entities.Room, roomId);
       }
     };
   });
