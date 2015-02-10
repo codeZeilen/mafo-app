@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['starter.services'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $location) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $ionicHistory) {
   // Form data for the login modal
   $scope.loginData = {};
   $scope.visibleSubMenus = {
@@ -46,8 +46,11 @@ angular.module('starter.controllers', ['starter.services'])
   };
 
   $scope.toAppHome = function() {
-    $location.path('/app/planner');
-    //TODO: Clear the history
+    $ionicHistory.clearHistory();
+    $ionicHistory.nextViewOptions({
+      disableAnimate: false,
+      disableBack: true
+    });
   }
 })
 

@@ -12,8 +12,10 @@
         <img class="nav-title-image" src="img/mafo_logo_white.png" />
             </ion-nav-title>
         <ion-nav-buttons side="right">
-            <button class="button button-icon button-clear ion-home" ng-click="toAppHome()">
-            </button>
+            <a class="button button-icon button-clear ion-home"
+               nav-direction="exit" href="#/app/planner"
+               ng-click="toAppHome()">
+            </a>
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-nav-view name="menuContent"></ion-nav-view>
