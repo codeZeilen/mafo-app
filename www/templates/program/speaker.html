@@ -21,7 +21,7 @@
                 Veranstaltungen
             </div>
 
-            <ion-item ng-repeat="event in eventsForSpeaker" ng-href="#/app/events/{{event.serverId}}">
+            <ion-item class="item item-view-association-list" ng-repeat="event in eventsForSpeaker" ng-href="#/app/events/{{event.serverId}}">
                 {{event.name}}
             </ion-item>
 

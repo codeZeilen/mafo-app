@@ -36,7 +36,7 @@
             <div class="item item-divider" ng-if="speakersForEvent.length > 0">
                 Sprecher
             </div>
-            <ion-item ng-repeat="speaker in speakersForEvent" ng-href="#/app/speakers/{{speaker.serverId}}">
+            <ion-item class="item item-view-association-list"  ng-repeat="speaker in speakersForEvent" ng-href="#/app/speakers/{{speaker.serverId}}">
                 {{speaker.title}} {{speaker.name}}
             </ion-item>
 

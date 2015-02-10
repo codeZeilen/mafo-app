@@ -30,7 +30,7 @@
 }
 
 /* Item View */
-p.item-long-description, p.item-short-description {
+p.item-long-description, p.item-short-description, .item-view-association-list a {
     overflow: auto;
     white-space: normal;
 }
