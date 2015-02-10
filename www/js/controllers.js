@@ -67,7 +67,7 @@ angular.module('starter.controllers', ['starter.services'])
 
   $scope.toXing = function() {
     window.open('https://www.xing.com/communities/groups/mannheim-forum-6e17-1006016/about', '_system', 'location=no');
-  };  
+  };
 })
 
 .controller('PlaylistsCtrl', function($scope) {
@@ -101,7 +101,6 @@ angular.module('starter.controllers', ['starter.services'])
   $scope.speaker = [];
 
   Persistence.getSpeaker($stateParams.speakerId).then(function(speaker) {
-    speaker.longDescription = $sce.trustAsHtml(speaker.longDescription);
     $scope.speaker = speaker;
   });
 
@@ -238,9 +237,9 @@ angular.module('starter.controllers', ['starter.services'])
 
     Persistence.listNews().then(function(news) {
       angular.forEach(news, function(newsItem) {
-        newsItem.content = newsItem.content.replace(/img/, "img ng-cache");
         newsItem.content = newsItem.content.replace(/\/sites\/default\//, "https://www.mannheim-forum.org/sites/default/");
-        newsItem.content = $sce.trustAsHtml(newsItem.content);
+        newsItem.content = newsItem.content.replace(/img/, "img ng-cache");
+        newsItem.content = newsItem.content.replace(/src=/, "ng-src=");
       });
       $scope.news = news;
 

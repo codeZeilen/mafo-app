@@ -79,6 +79,19 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   };
 })
 
+.directive('dynamicContent', function ($compile) {
+  return {
+    restrict: 'A',
+    replace: true,
+    link: function (scope, ele, attrs) {
+      scope.$watch(attrs.dynamicContent, function(html) {
+        ele.html(html);
+        $compile(ele.contents())(scope);
+      });
+    }
+  };
+})
+
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
   $ionicConfigProvider.tabs.position('bottom');
   $ionicConfigProvider.navBar.alignTitle('center');
@@ -271,5 +284,5 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/news');
+  $urlRouterProvider.otherwise('/app/starter');
 });
