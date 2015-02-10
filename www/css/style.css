@@ -32,7 +32,7 @@
 /* Item View */
 p.item-long-description, p.item-short-description {
     overflow: auto;
-    white-space: pre-wrap;
+    white-space: normal;
 }
 
 .item-image {
@@ -46,18 +46,14 @@ p.item-long-description, p.item-short-description {
 
 .card .item h2 {
     font-weight: bold;
+    overflow: auto;
+    white-space: normal;
 }
 
 /* Partner list */
 .partners-list-item a {
     overflow: auto;
     white-space: normal;
-}
-
-/* Partner view */
-.partner-name h2 {
-    overflow: auto;
-    white-space: pre-wrap;
 }
 
 /* Person view symbol */
@@ -81,6 +77,11 @@ p.item-long-description, p.item-short-description {
     display:table-cell;
     padding-left: 1ex;
     width: 100%;
+}
+
+.program-title-description a {
+    text-decoration: none;
+    color: inherit;
 }
 
 .program-favorite-event {

@@ -1,0 +1,45 @@
+<ion-header-bar class="bar bar-subheader">
+    <h2 class="title">Programm</h2>
+</ion-header-bar>
+<ion-view>
+    <ion-content>
+        <div class="card">
+            <div class="item">
+                <h2>{{event.name}}</h2>
+                <p class="item-short-description">
+                    <span ng-if="event.categoryId" ng-style="{color: categoryColors[event.categoryId]}">
+                        {{categoryNames[event.categoryId]}}
+                    </span>
+                    <span ng-if="isWorkshop(event)">
+                        Workshop
+                    </span>
+                </p>
+            </div>
+
+            <div class="item item-icon-left" ng-if="event.startTime && event.endTime">
+                <i class="icon ion-ios-clock-outline"></i>
+                {{timeFormat(event.startTime)}} - {{timeFormat(event.endTime)}}
+            </div>
+
+            <div class="item item-icon-left" ng-if="2">
+                <i class="icon ion-ios-home-outline"></i>
+                Raum 2
+            </div>
+
+            <div class="item item-divider" ng-if="event.longDescription">
+                Beschreibung
+            </div>
+            <div class="item" ng-if="event.longDescription">
+                <p class="item-long-description">{{event.longDescription}}</p>
+            </div>
+
+            <div class="item item-divider" ng-if="speakersForEvent.length > 0">
+                Sprecher
+            </div>
+            <ion-item ng-repeat="speaker in speakersForEvent" ng-href="#/app/speakers/{{speaker.serverId}}">
+                {{speaker.title}} {{speaker.name}}
+            </ion-item>
+
+        </div>
+    </ion-content>
+</ion-view>

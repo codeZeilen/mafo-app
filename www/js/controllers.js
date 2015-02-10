@@ -163,6 +163,43 @@ angular.module('starter.controllers', ['starter.services'])
       });
     };
 
+    $scope.favoriteEvent = function(event) {
+      alert('Favorite: ' + event.name);
+      return false;
+    };
+
+})
+
+.controller('EventCtrl', function($scope, $stateParams, Persistence) {
+    $scope.event = {};
+    $scope.categoryColors = {};
+    $scope.categoryNames = {};
+    $scope.speakersForEvent = [];
+
+    Persistence.getEvent($stateParams.eventId).then(function(event) {
+      $scope.event = event;
+    });
+
+    Persistence.listCategories().then(function(categories) {
+      angular.forEach(categories, function(category) {
+        $scope.categoryColors[category.serverId] = '#' + category.color;
+        $scope.categoryNames[category.serverId] = category.name;
+      });
+    });
+
+    Persistence.listSpeakersForEvent($stateParams.eventId).then(function(speakers) {
+      $scope.speakersForEvent = speakers;
+    });
+
+    $scope.isWorkshop = function(event) {
+      return [Persistence.Entities.EVENT_TYPES.UNTERNEHMENSWORKSHOP, Persistence.Entities.EVENT_TYPES.VERTIEFUNGSWORKSHOP]
+          .indexOf(event.eventType) > 0;
+    };
+
+    $scope.timeFormat = function(timeStampString) {
+      var time = moment(timeStampString);
+      return time.format("HH:mm").concat(" Uhr");
+    }
 })
 
 .controller('PlannerCtrl', function($scope) {

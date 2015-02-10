@@ -68,6 +68,17 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   };
 })
 
+.directive('stopEvent', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+      element.bind('click', function (e) {
+        e.stopPropagation();
+      });
+    }
+  };
+})
+
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
     $ionicConfigProvider.tabs.position('bottom');
 
@@ -123,6 +134,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         'menuContent': {
           templateUrl: "templates/program/program.html",
           controller: 'ProgramCtrl'
+        }
+      }
+    })
+
+    .state('app.event', {
+      url: "/events/:eventId",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/program/event.html",
+          controller: 'EventCtrl'
         }
       }
     })

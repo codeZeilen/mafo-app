@@ -20,21 +20,23 @@
                             &#8203;
                         </div>
                         <div class="program-title-description">
-                            <div class="program-event-name">{{event.name}}</div>
-                            <div>
-                                <p>
-                                    <span ng-if="event.categoryId">
-                                        {{categoryNames[event.categoryId]}}
-                                    </span>
-                                    <span ng-if="isWorkshop(event)">
-                                        Workshop
-                                    </span>
-                                </p>
+                            <a ng-href="#/app/events/{{event.serverId}}">
+                                <div class="program-event-name">{{event.name}}</div>
+                                <div>
+                                    <p>
+                                        <span ng-if="event.categoryId">
+                                            {{categoryNames[event.categoryId]}}
+                                        </span>
+                                        <span ng-if="isWorkshop(event)">
+                                            Workshop
+                                        </span>
+                                    </p>
 
-                            </div>
+                                </div>
+                            </a>
                         </div>
                         <div class="program-favorite-event">
-                            <i class="ion-icon ion-ios-star-outline"></i>
+                            <i class="ion-icon ion-ios-star-outline" ng-click="favoriteEvent(event);" stopEvent></i>
                         </div>
                     </ion-item>
                     <div ng-repeat-end></div>
@@ -60,21 +62,23 @@
                             &#8203;
                         </div>
                         <div class="program-title-description">
-                            <div class="program-event-name">{{event.name}}</div>
-                            <div>
-                                <p>
-                                    <span ng-if="event.categoryId">
-                                        {{categoryNames[event.categoryId]}}
-                                    </span>
-                                    <span ng-if="isWorkshop(event)">
-                                        Workshop
-                                    </span>
-                                </p>
+                            <a ng-href="#/app/events/{{event.serverId}}">
+                                <div class="program-event-name">{{event.name}}</div>
+                                <div>
+                                    <p>
+                                        <span ng-if="event.categoryId">
+                                            {{categoryNames[event.categoryId]}}
+                                        </span>
+                                        <span ng-if="isWorkshop(event)">
+                                            Workshop
+                                        </span>
+                                    </p>
 
-                            </div>
+                                </div>
+                            </a>
                         </div>
                         <div class="program-favorite-event">
-                            <i class="ion-icon ion-ios-star"></i>
+                            <i class="ion-icon ion-ios-star-outline" ng-click="favoriteEvent(event);" stopEvent></i>
                         </div>
                     </ion-item>
                     <div ng-repeat-end></div>
@@ -100,21 +104,23 @@
                             &#8203;
                         </div>
                         <div class="program-title-description">
-                            <div class="program-event-name">{{event.name}}</div>
-                            <div>
-                                <p>
-                                    <span ng-if="event.categoryId">
-                                        {{categoryNames[event.categoryId]}}
-                                    </span>
-                                    <span ng-if="isWorkshop(event)">
-                                        Workshop
-                                    </span>
-                                </p>
+                            <a ng-href="#/app/events/{{event.serverId}}">
+                                <div class="program-event-name">{{event.name}}</div>
+                                <div>
+                                    <p>
+                                        <span ng-if="event.categoryId">
+                                            {{categoryNames[event.categoryId]}}
+                                        </span>
+                                        <span ng-if="isWorkshop(event)">
+                                            Workshop
+                                        </span>
+                                    </p>
 
-                            </div>
+                                </div>
+                            </a>
                         </div>
                         <div class="program-favorite-event">
-                            <i class="ion-icon ion-star"></i>
+                            <i class="ion-icon ion-ios-star-outline" ng-click="favoriteEvent(event);" stopEvent></i>
                         </div>
                     </ion-item>
                     <div ng-repeat-end></div>

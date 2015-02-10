@@ -177,6 +177,23 @@ angular.module('starter.services', ['ngResource'])
       return result.promise;
     };
 
+    var listingViaHBTM = function(hbtmEntity, sourceId, sourceAttribute, targetEntity, targetAttribute) {
+      var result = $q.defer();
+      hbtmEntity.all().filter(sourceAttribute, '=', sourceId).list(function(eventServerIds) {
+        if(eventServerIds.length > 0) {
+          var ids = eventServerIds.map(function(eventServerId) {
+            return eventServerId[targetAttribute];
+          });
+          targetEntity.all().filter('serverId', 'in', ids).list(null, function(events) {
+            result.resolve(events);
+          });
+        } else {
+          result.resolve([]);
+        }
+      });
+      return result.promise;
+    };
+
     var getting = function(entityClass, speakerId) {
         var result = $q.defer();
 
@@ -204,20 +221,9 @@ angular.module('starter.services', ['ngResource'])
         return listing(entities.Speaker, refreshSpeakers, getAllSpeakers);
       },
       eventsForSpeaker: function(speakerId) {
-        var result = $q.defer();
-        entities.EventHBTMSpeaker.all().filter('speakerServerId', '=', speakerId).list(function(eventServerIds) {
-          if(eventServerIds.length > 0) {
-            var ids = eventServerIds.map(function(eventServerId) {
-              return eventServerId.eventServerId;
-            });
-            entities.Event.all().filter('serverId', 'in', ids).list(null, function(events) {
-              result.resolve(events);
-            });
-          } else {
-            result.resolve([]);
-          }
-        });
-        return result.promise;
+        return listingViaHBTM(entities.EventHBTMSpeaker,
+                              speakerId, 'speakerServerId',
+                              entities.Event, 'eventServerId');
       },
 
       /* Events */
@@ -227,6 +233,11 @@ angular.module('starter.services', ['ngResource'])
       },
       listEvents: function() {
         return listing(entities.Event, refreshEvents, getAllEvents);
+      },
+      listSpeakersForEvent: function(eventId) {
+        return listingViaHBTM(entities.EventHBTMSpeaker,
+          eventId, 'eventServerId',
+          entities.Speaker, 'speakerServerId');
       },
 
       /* Partner */
