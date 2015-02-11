@@ -231,6 +231,17 @@ angular.module('starter.controllers', ['starter.services'])
 })
 
 .controller('ContactCtrl', function($scope) {
+
+    $scope.sendMessage = function(message) {
+      if(this.contactForm && this.contactForm.$valid) {
+        message.firstName = "";
+        message.lastName = "";
+        message.email = "";
+        message.message = "";
+
+        this.contactForm.$setPristine();
+      }
+    };
 })
 
 .controller('PartnersCtrl', function($scope, Persistence, NewsInterval) {

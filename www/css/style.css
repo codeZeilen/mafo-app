@@ -102,3 +102,15 @@ p.item-long-description p
     font-size: 2em;
     color: orange;
 }
+
+/* Contact form */
+.form-errors.ng-inactive {
+    display: none;
+}
+
+.form-errors {
+    font-size: 0.9em;
+    color: #a13208;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}

@@ -1,27 +1,60 @@
 <ion-header-bar class="bar bar-subheader">
     <h2 class="title">Kontakt</h2>
 </ion-header-bar>
+
 <ion-view>
     <ion-content>
-        <div class="list list-inset">
+        <form
+             name="contactForm"
+             ng-submit="sendMessage(message)"
+             class="list list-inset"
+             novalidate="">
+
             <div class="item item-divider item-text-wrap">
                 Schreib uns wenn du mithelfen möchtest das Mannheim Forum 2016 umzusetzen.
+                <div class="form-errors"
+                     ng-messages="contactForm.$error"
+                     ng-show="contactForm.$submitted">
+                    <div class="form-error" ng-message="required">Alle Felder müssen ausgefüllt sein.</div>
+                </div>
             </div>
+
             <label class="item item-input">
-                <input type="text" placeholder="Vorname">
-            </label>
-            <label class="item item-input">
-                <input type="text" placeholder="Nachname">
-            </label>
-            <label class="item item-input">
-                <input type="text" placeholder="EMail">
-            </label>
-            <label class="item item-input">
-                <textarea placeholder="Warum möchtest du mithelfen das Mannheim Forum 2016 umzusetzen?" rows="4"></textarea>
+                <input type="text"
+                       name="firstname"
+                       placeholder="Vorname"
+                       ng-model="message.firstName"
+                       ng-required="true" />
             </label>
 
-            <button class="button button-block button-positive activated">Submit</button>
-        </div>
+            <label class="item item-input">
+                <input type="text"
+                       name="lastname"
+                       placeholder="Nachname"
+                       ng-model="message.lastName"
+                       ng-required="true" />
+            </label>
+
+            <label class="item item-input">
+                <input type="text"
+                       name="email"
+                       placeholder="EMail"
+                       ng-model="message.email"
+                       ng-required="true" />
+
+            </label>
+
+            <label class="item item-input">
+                <textarea placeholder="Warum möchtest du mithelfen das Mannheim Forum 2016 umzusetzen?"
+                          name="messageContent"
+                          rows="4"
+                          ng-required="true"
+                          ng-model="message.message"></textarea>
+            </label>
+
+            <input type="submit" value="Absenden" class="button button-block button-positive activated" />
+
+        </form>
 
         <div class="card">
             <div class="item item-divider item-text-wrap">
