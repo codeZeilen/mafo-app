@@ -91,7 +91,8 @@ angular.module('starter.services', ['ngResource'])
       title: 'TEXT',
       shortDescription: 'TEXT',
       longDescription: 'TEXT',
-      picturePath: 'TEXT'
+      picturePath: 'TEXT',
+      isShownInList: 'INT'
     });
 
     entities.Event = persistence.define('Event', {

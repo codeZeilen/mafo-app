@@ -63,6 +63,10 @@ angular.module('starter.controllers', ['starter.services'])
     return speaker.name.split(' ').slice(-1)[0];
   };
 
+  $scope.shouldBeShown = function(speaker) {
+    return speaker.isShownInList;
+  };
+
   Persistence.listSpeakers().then(function(speakers) {
     $scope.speakers = speakers;
   });
