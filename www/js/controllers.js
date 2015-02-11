@@ -204,7 +204,7 @@ angular.module('starter.controllers', ['starter.services'])
 .controller('PlannerCtrl', function($scope) {
 })
 
-.controller('NewsCtrl', function($scope, Persistence, $sce) {
+.controller('NewsCtrl', function($scope, Persistence, NewsInterval) {
     $scope.news = [];
 
     Persistence.listNews().then(function(news) {
@@ -214,7 +214,10 @@ angular.module('starter.controllers', ['starter.services'])
         newsItem.content = newsItem.content.replace(/src=/, "ng-src=");
       });
       $scope.news = news;
-
+      NewsInterval.start(function(newsItems) {
+        $scope.news = newsItems;
+        console.log(moment().format('HH:mm:ss: ') + 'Reloaded news');
+      });
     });
 
     $scope.dateFormat = function(timeStampString) {
@@ -226,7 +229,7 @@ angular.module('starter.controllers', ['starter.services'])
 .controller('ContactCtrl', function($scope) {
 })
 
-.controller('PartnersCtrl', function($scope, Persistence) {
+.controller('PartnersCtrl', function($scope, Persistence, NewsInterval) {
   $scope.partners = [];
 
   $scope.partnerName = 'name';

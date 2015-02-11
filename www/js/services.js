@@ -1,5 +1,28 @@
 angular.module('starter.services', ['ngResource'])
 
+.factory('NewsInterval', function($interval, Persistence) {
+  var intervalPromise;
+
+  return {
+    start : function(callback) {
+      if(!angular.isDefined(intervalPromise)){
+        intervalPromise = $interval(function() {
+          Persistence.incrementalRefreshNews().then(function() {
+            Persistence.listNews().then(function(newsItems) {
+              callback(newsItems);
+            });
+          });
+        }, 0.5/*m*/ * 60/*s*/ * 1000 /*ms*/);
+      }
+    },
+    stop : function() {
+      if(angular.isDefined(intervalPromise)) {
+        $interval.cancel(intervalPromise);
+      }
+    }
+  };
+})
+
 .factory('SpeakerAPI', function($resource) {
     return $resource('https://www.mannheim-forum.org/api/mannheim-forum-schedule/speakers/:speakerId');
 })
@@ -202,6 +225,21 @@ angular.module('starter.services', ['ngResource'])
       return refreshAllOf(NewsAPI, entities.News);
     };
 
+    var incrementalRefreshNews = function() {
+      var result = $q.defer();
+      var intermediateResult = $q.defer();
+      getAllNews(intermediateResult);
+      intermediateResult.promise.then(function(news) {
+        var creationTimestamps = news.map(function(newsItem) {
+          return newsItem.createdAt;
+        });
+        var latestNewsTimestamp = Math.max.apply(null, creationTimestamps);
+        NewsAPI.refreshFrom(latestNewsTimestamp).then(result.resolve);
+      });
+
+      return result.promise;
+    };
+
     var getAllNews = function(newsResult) {
       return getAllOf(entities.News, newsResult);
     };
@@ -358,6 +396,7 @@ angular.module('starter.services', ['ngResource'])
       },
 
       /* News */
+      incrementalRefreshNews: incrementalRefreshNews,
       listNews: function() {
         return listing(entities.News, refreshAllNews, getAllNews);
       }
