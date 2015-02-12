@@ -1,6 +1,6 @@
 <script id="search-modal.html" type="text/ng-template">
     <div class="modal">
-        <div class="bar bar-header item-input-inset">
+        <ion-header-bar class="bar bar-header item-input-inset">
             <label class="item-input-wrapper">
                 <i class="icon ion-ios7-search placeholder-icon"></i>
                 <input ng-model="searchTerm" type="search" placeholder="Suche">
@@ -8,13 +8,13 @@
             <button ng-click="stopSearch()" class="button button-clear">
                 Cancel
             </button>
-        </div>
+        </ion-header-bar>
         <ion-content>
-        <ion-list>
-            <ion-item class="item-text-wrap" ng-repeat="item in items | filter : searchTerm">
-                {{item.name}}
-            </ion-item>
-        </ion-list>
+            <ion-list>
+                <ion-item class="item-text-wrap" ng-repeat="item in items | filter : searchTerm">
+                    {{item.name}}
+                </ion-item>
+            </ion-list>
         </ion-content>
     </div>
 </script>
@@ -23,7 +23,7 @@
     <ion-content>
 
     </ion-content>
-    <div class="bar-footer item-input-inset">
+    <ion-footer-bar class="item-input-inset">
         <label class="item-input-wrapper">
             <i class="icon ion-ios7-search placeholder-icon"></i>
             <input ng-model="searchTerm" type="search" placeholder="Suche">
@@ -31,6 +31,6 @@
         <button ng-click="startSearch()" class="button button-clear">
             Suchen
         </button>
-    </div>
+    </ion-footer-bar>
 </ion-view>
 
