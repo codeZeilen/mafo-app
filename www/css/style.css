@@ -44,8 +44,10 @@ p.item-long-description p,
 }
 
 .item-image img {
-    width:auto !important;
-    height: 80px;
+    max-height: 100px;
+    height: 100%;
+    width: 100%;
+    max-width: inherit;
 }
 
 .card .item h2 {

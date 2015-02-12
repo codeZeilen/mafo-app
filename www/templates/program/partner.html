@@ -4,29 +4,31 @@
 <ion-view>
     <ion-content>
         <div class="card">
-            <div class="item partner-name">
-                <h2>{{partner.name}}</h2>
-            </div>
+
             <div class="item item-image">
                 <img ng-cache src="https://www.mannheim-forum.org/sites/default/files/mfschedule/company/{{partner.logoPath}}" />
             </div>
 
-            <div class="item item-icon-left" ng-if="partner.website">
-                <i class="icon ion-laptop"></i>
-                <a ng-href="http://{{partner.website||'www.google.de'}}">Website</a>
+            <div class="item partner-name">
+                <h2>{{partner.name}}</h2>
             </div>
 
-            <div class="item item-icon-left" ng-if="partner.address">
+            <div class="item item-icon-left item-text-wrap" ng-if="partner.website">
+                <i class="icon ion-laptop"></i>
+                <a onClick="window.open(this.href, '_system', 'location=yes'); return false;" ng-href="http://{{partner.website}}">Website</a>
+            </div>
+
+            <div class="item item-icon-left item-text-wrap" ng-if="partner.address">
                 <i class="icon ion-home"></i>
                 {{partner.address||'N/A'}}
             </div>
 
-            <div class="item item-icon-left" ng-if="partner.nameOfContact">
+            <div class="item item-icon-left item-text-wrap" ng-if="partner.nameOfContact">
                 <i class="icon ion-person"></i>
                 {{partner.nameOfContact||'N/A'}}
             </div>
 
-            <div class="item item-icon-left" ng-if="partner.email">
+            <div class="item item-icon-left item-text-wrap" ng-if="partner.email">
                 <i class="icon ion-email"></i>
                 {{partner.email||'N/A'}}
             </div>
@@ -35,11 +37,11 @@
                 Workshops
             </div>
 
-            <ion-item ng-repeat="workshop in workshopsOfPartner" ng-href="#/app/events/{{workshop.serverId}}">
+            <ion-item class="item-text-wrap" ng-repeat="workshop in workshopsOfPartner" ng-href="#/app/events/{{workshop.serverId}}">
                 {{workshop.name}}
             </ion-item>
 
-            <div class="item item-divider">
+            <div class="item item-divider" ng-if="partner.longDescription">
                 Beschreibung
             </div>
 
