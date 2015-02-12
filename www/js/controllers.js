@@ -308,5 +308,22 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.modal.hide();
   };
 
+  /* Frankenstein code to cater for all types of items */
+  $scope.itemConfigurations = {
+    categoryColors : {},
+    categoryNames : {}
+  };
+
+  Persistence.listCategories().then(function(categories) {
+    angular.forEach(categories, function(category) {
+      $scope.itemConfigurations.categoryColors[category.serverId] = '#' + category.color;
+      $scope.itemConfigurations.categoryNames[category.serverId] = category.name;
+    });
+  });
+
+  $scope.isWorkshop = function(event) {
+    return [Persistence.Entities.EVENT_TYPES.UNTERNEHMENSWORKSHOP, Persistence.Entities.EVENT_TYPES.VERTIEFUNGSWORKSHOP]
+        .indexOf(event.eventType) > 0;
+  };
 })
 ;
