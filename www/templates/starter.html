@@ -12,18 +12,18 @@
         </ion-header-bar>
         <ion-content>
             <ion-list>
-                <ion-item
-                        ng-repeat="item in items | filter : searchTerm"
-                        ng-class="{'item-thumbnail-left' : item._type == 'Partner'}">
 
-                    <div ng-if="item._type == 'Event'">
+                <ion-item
+                        ng-click="exitSearch()"
+                        ng-repeat="item in events | filter : searchConfig.term">
+                    <div>
                         <div class="program-category-indicator"
                              ng-if="item.categoryId"
                              ng-style="{'background-color': itemConfigurations.categoryColors[item.categoryId]};">
                             &#8203;
                         </div>
                         <div class="program-title-description">
-                            <a ng-href="#/app/events/{{item.serverId}}">
+                            <a class="text-link" ng-href="#/app/events/{{item.serverId}}">
                                 <div class="program-event-name">{{item.name}}</div>
                                 <div>
                                     <p>
@@ -42,29 +42,39 @@
                             </a>
                         </div>
                     </div>
+                </ion-item>
+
+                <ion-item
+                        ng-click="exitSearch()"
+                        ng-repeat="item in speakers | filter : searchConfig.term"
+                        ng-href="#/app/speakers/{{item.serverId}}" >
 
                     <div ng-if="item._type == 'Speaker'" class="item-avatar" >
-                        <a ng-href="#/app/speakers/{{speaker.serverId}}">
                             <img ng-cache
                                  ng-src="https://www.mannheim-forum.org/sites/default/files/mfschedule/speaker/thumbs/{{item.picturePath}}"
                                  ng-if="item.picturePath" />
                             <img ng-cache
                                  ng-src="img/person_placeholder_thumb.png"
                                  ng-if="!item.picturePath" />
-                            {{item.title}} {{item.name}}
-                            <p>{{item.shortDescription}}</p>
-                        </a>
+
+                                {{item.title}} {{item.name}}
+                                <p>{{item.shortDescription}}</p>
+
                     </div>
 
-                    <img ng-cache
-                         ng-if="item._type == 'Partner'"
-                         ng-src="https://www.mannheim-forum.org/sites/default/files/mfschedule/company/thumbs/{{item.logoPath}}" />
-                    <span ng-if="item._type == 'Partner'" ng-href="#/app/partners/{{item.serverId}}">
-                        {{item.name}}
-                        <p>{{item.longDescription}}</p>
-                    </span>
-
                 </ion-item>
+
+                <a ng-click="exitSearch()"
+                   ng-repeat="item in partners | filter : searchConfig.term"
+                   class="item item-thumbnail-left" ng-href="#/app/partners/{{item.serverId}}">
+                    <img ng-cache
+                         ng-src="https://www.mannheim-forum.org/sites/default/files/mfschedule/company/thumbs/{{item.logoPath}}" />
+                    <span>
+                            {{item.name}}
+                            <p>{{item.longDescription}}</p>
+
+                    </span>
+                </a>
 
             </ion-list>
         </ion-content>

@@ -284,7 +284,10 @@ angular.module('starter.controllers', ['starter.services'])
 .controller('StarterCtrl', function($scope, $ionicModal, Persistence, $q) {
 
   $scope.searchConfig = {"term" : ""};
-  $scope.items = [];
+  $scope.events = [];
+  $scope.speakers = [];
+  $scope.partners = [];
+
 
   $ionicModal.fromTemplateUrl('search-modal.html', {
     scope: $scope,
@@ -297,7 +300,9 @@ angular.module('starter.controllers', ['starter.services'])
     Persistence.listPartners(),
     Persistence.listRooms(),
     Persistence.listSpeakers()]).then(function(results) {
-    $scope.items = $scope.items.concat.apply($scope.items, results);
+    $scope.events = results[0];
+    $scope.partners = results[1];
+    $scope.speakers = results[3];
   });
 
   $scope.startSearch = function() {
@@ -305,6 +310,10 @@ angular.module('starter.controllers', ['starter.services'])
   };
 
   $scope.stopSearch = function() {
+    $scope.modal.hide();
+  };
+
+  $scope.exitSearch = function() {
     $scope.modal.hide();
   };
 
