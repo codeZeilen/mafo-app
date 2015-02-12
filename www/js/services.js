@@ -23,6 +23,58 @@ angular.module('starter.services', ['ngResource'])
   };
 })
 
+.factory('ContactRequestOutbox', function($interval, Persistence, $http, $q) {
+  var intervalPromise;
+
+  var sending = function(afterAllCallback) {
+    Persistence.listContactRequests().then(function(requests) {
+      var promises = requests.map(function(request) {
+        var result = $q.defer();
+        $http.post("https://www.mannheim-forum.org/api/app_contact_request", request)
+          .success(function() {
+            Persistence.removeContactRequest(request);
+            result.resolve();
+          })
+          .error(function() {
+            startRetry();
+            result.resolve();
+          });
+        return result.promise;
+      });
+      $q.all(promises).then(afterAllCallback);
+    });
+  };
+
+  var startRetry = function() {
+    if(!angular.isDefined(intervalPromise)){
+      intervalPromise = $interval(function() {
+
+        sending(function() {
+          Persistence.listContactRequests().then(function(requests) {
+            if(requests.length == 0) {
+              stopRetry();
+            }
+          })
+        });
+
+      }, 5/*m*/ * 60/*s*/ * 1000 /*ms*/);
+    }
+  };
+
+  var stopRetry = function() {
+    if(angular.isDefined(intervalPromise)) {
+      $interval.cancel(intervalPromise);
+    }
+  };
+
+  return {
+    send : function() {
+      sending(function() {});
+    },
+    stopRetry : stopRetry
+  };
+})
+
 .factory('SpeakerAPI', function($resource) {
     return $resource('https://www.mannheim-forum.org/api/mannheim-forum-schedule/speakers/:speakerId');
 })
@@ -163,6 +215,13 @@ angular.module('starter.services', ['ngResource'])
     entities.EventHBTMSpeaker = persistence.define('EventHBTMSpeaker', {
       speakerServerId: 'INT',
       eventServerId: 'INT'
+    });
+
+    entities.ContactRequest = persistence.define('ContactRequest', {
+      firstName: "TEXT",
+      lastName: "TEXT",
+      email: "TEXT",
+      message: "TEXT"
     });
 
     persistence.debug = true;
@@ -413,6 +472,24 @@ angular.module('starter.services', ['ngResource'])
       incrementalRefreshNews: incrementalRefreshNews,
       listNews: function() {
         return listing(entities.News, refreshAllNews, getAllNews);
+      },
+      /* ContactRequest */
+      addContactRequest: function(message) {
+        var result = $q.defer();
+        persistence.add(new entities.ContactRequest(message));
+        persistence.flush(function() {
+          result.resolve();
+        });
+        return result.promise;
+      },
+      removeContactRequest: function(request) {
+        persistence.remove(request);
+        persistence.flush();
+      },
+      listContactRequests: function() {
+        var result = $q.defer();
+        getAllOf(entities.ContactRequest, result);
+        return result.promise;
       }
     };
   });

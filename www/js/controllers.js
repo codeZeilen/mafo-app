@@ -72,7 +72,7 @@ angular.module('starter.controllers', ['starter.services'])
   });
 })
 
-.controller('SpeakerCtrl', function($scope, $stateParams, Persistence, $sce) {
+.controller('SpeakerCtrl', function($scope, $stateParams, Persistence) {
   $scope.eventsForSpeaker = [];
   $scope.speaker = [];
 
@@ -225,21 +225,26 @@ angular.module('starter.controllers', ['starter.services'])
     };
 })
 
-.controller('ContactCtrl', function($scope) {
+.controller('ContactCtrl', function($scope, Persistence, ContactRequestOutbox) {
 
     $scope.sendMessage = function(message) {
       if(this.contactForm && this.contactForm.$valid) {
-        message.firstName = "";
-        message.lastName = "";
-        message.email = "";
-        message.message = "";
+        var that = this;
+        Persistence.addContactRequest(angular.copy(message)).then(function() {
+          ContactRequestOutbox.send();
 
-        this.contactForm.$setPristine();
+          message.firstName = "";
+          message.lastName = "";
+          message.email = "";
+          message.message = "";
+
+          that.contactForm.$setPristine();
+        });
       }
     };
 })
 
-.controller('PartnersCtrl', function($scope, Persistence, NewsInterval) {
+.controller('PartnersCtrl', function($scope, Persistence) {
   $scope.partners = [];
 
   $scope.partnerName = 'name';
