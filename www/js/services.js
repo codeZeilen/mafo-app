@@ -47,14 +47,15 @@ angular.module('starter.services', ['ngResource'])
     return $resource('https://www.mannheim-forum.org/api/mannheim-forum-schedule/rooms/:roomId');
   })
 
-  .factory('NewsAPI', function($http, $q) {
+  .factory('NewsAPI', function($http, $q, $sanitize) {
     var processNewsItemConents = function(newsItems) {
       angular.forEach(newsItems, function(newsItem) {
+        newsItem.content = $sanitize(newsItem.content);
         newsItem.content = newsItem.content.replace(/\/sites\/default\//, "https://www.mannheim-forum.org/sites/default/");
         newsItem.content = newsItem.content.replace(/img/, "img ng-cache");
         newsItem.content = newsItem.content.replace(/src=/, "ng-src=");
-        newsItem.content = newsItem.content.replace(/target=".*"/, "");
-        newsItem.content = newsItem.content.replace(/<a/, "<a target=\"_system\"");
+        var regex = /href="([\S]+)"/g;
+        newsItem.content = newsItem.content.replace(regex, "href=\"#\" onClick=\"window.open('$1', '_system', 'location=yes')\"");
       });
 
       return newsItems;
