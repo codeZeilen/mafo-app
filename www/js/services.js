@@ -48,13 +48,23 @@ angular.module('starter.services', ['ngResource'])
   })
 
   .factory('NewsAPI', function($http, $q) {
+    var processNewsItemConents = function(newsItems) {
+      angular.forEach(newsItems, function(newsItem) {
+        newsItem.content = newsItem.content.replace(/\/sites\/default\//, "https://www.mannheim-forum.org/sites/default/");
+        newsItem.content = newsItem.content.replace(/img/, "img ng-cache");
+        newsItem.content = newsItem.content.replace(/src=/, "ng-src=");
+      });
+
+      return newsItems;
+    };
+
     return {
       'query': function(callback) {
         var result = $q.defer();
 
         $http.get('https://www.mannheim-forum.org/api/mannheim-forum-schedule/news')
           .success(function(requestResult) {
-            result.resolve(angular.fromJson(requestResult));
+            result.resolve(processNewsItemConents(angular.fromJson(requestResult)));
           })
           .error(function() {
             result.resolve([]);
@@ -67,7 +77,7 @@ angular.module('starter.services', ['ngResource'])
 
         $http.get('https://www.mannheim-forum.org/api/mannheim-forum-schedule/news_since/' + $timestamp)
           .success(function(requestResult) {
-            result.resolve(angular.fromJson(requestResult));
+            result.resolve(processNewsItemConents(angular.fromJson(requestResult)));
           })
           .error(function() {
             result.resolve([]);

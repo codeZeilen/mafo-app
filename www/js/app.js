@@ -39,24 +39,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
       el[0].src = loadingDefault;
       var elImg = angular.element('<img />');
 
-      attrs.$observe('ngSrc', function(src) {
+      attrs.$observe('src', function(src) {
           var localSrc = src.replace("https://www.mannheim-forum.org/sites/default/files/", "");
 
           $http.get('img/assets/' + localSrc).
             success(function(data, status, headers, config) {
-              // this callback will be called asynchronously
-              // when the response is available
               el[0].src = 'img/assets/' + localSrc;
             }).
             error(function(data, status, headers, config) {
               ImgCache.isCached(src, function (path, success) {
                 if (success) {
-                  ImgCache.useCachedFile(elImg);
-                  el[0].src = elImg.src;
+                  ImgCache.useCachedFile(el[0]);
                 } else {
                   ImgCache.cacheFile(src, function () {
-                    ImgCache.useCachedFile(elImg);
-                    el[0].src = elImg.src;
+                    ImgCache.useCachedFile(el[0]);
                   });
                 }
               });
