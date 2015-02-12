@@ -108,11 +108,18 @@ p.item-long-description p
     display: none;
 }
 
-.form-errors {
+.form-errors, .form-success {
     font-size: 0.9em;
-    color: #a13208;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
+}
+
+.form-errors {
+    color: #ef473a;
+}
+
+.form-success {
+    color: #33cd5f;
 }
 
 /* News items */

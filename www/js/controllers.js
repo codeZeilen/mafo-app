@@ -227,10 +227,13 @@ angular.module('starter.controllers', ['starter.services'])
 
 .controller('ContactCtrl', function($scope, Persistence, ContactRequestOutbox) {
 
+    $scope.dataWasSaved = false;
+
     $scope.sendMessage = function(message) {
       if(this.contactForm && this.contactForm.$valid) {
         var that = this;
         Persistence.addContactRequest(angular.copy(message)).then(function() {
+          $scope.dataWasSaved = true;
           ContactRequestOutbox.send();
 
           message.firstName = "";
@@ -240,6 +243,8 @@ angular.module('starter.controllers', ['starter.services'])
 
           that.contactForm.$setPristine();
         });
+      } else {
+        $scope.dataWasSaved = false;
       }
     };
 })
