@@ -281,6 +281,32 @@ angular.module('starter.controllers', ['starter.services'])
 
 })
 
-.controller('StarterCtrl', function($scope) {
+.controller('StarterCtrl', function($scope, $ionicModal, Persistence, $q) {
+
+  $scope.searchTerm = "";
+  $scope.items = [];
+
+  $ionicModal.fromTemplateUrl('search-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal
+  });
+
+  $q.all([Persistence.listEvents(),
+    Persistence.listPartners(),
+    Persistence.listRooms(),
+    Persistence.listSpeakers()]).then(function(results) {
+    $scope.items = $scope.items.concat.apply($scope.items, results);
+  });
+
+  $scope.startSearch = function() {
+    $scope.modal.show();
+  };
+
+  $scope.stopSearch = function() {
+    $scope.modal.hide();
+  }
+
 })
 ;
