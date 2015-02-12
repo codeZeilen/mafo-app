@@ -330,7 +330,9 @@ angular.module('starter.services', ['ngResource'])
             angular.forEach(individuals, function(individual) {
               persistence.add(new entityClass(individual));
             });
-            result.resolve();
+            persistence.flush(function() {
+              result.resolve();
+            });
           });
         }
       });
