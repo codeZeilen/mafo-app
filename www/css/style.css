@@ -43,11 +43,14 @@ p.item-long-description p,
     padding: 10px;
 }
 
-.item-image img {
+.item-image img.item-partner {
     max-height: 100px;
-    height: 100%;
-    width: 100%;
-    max-width: inherit;
+    width: inherit;
+}
+
+.item-image img.item-speaker {
+    max-height: 250px;
+    width: inherit;
 }
 
 .card .item h2 {

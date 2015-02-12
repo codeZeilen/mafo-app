@@ -4,11 +4,20 @@
 <ion-view>
     <ion-content>
         <ion-list>
-            <ion-item ng-class="{'item-icon-left': !speaker.picturePath}"
+            <ion-item class="item-avatar"
                       ng-repeat="speaker in speakers | filter : shouldBeShown | orderBy : lastName"
                       ng-href="#/app/speakers/{{speaker.serverId}}">
-                <i class="icon ion-person speaker-list-icon" ng-if="!speaker.picturePath"></i>
+                <!--<img src="" class="icon ion-person speaker-list-icon" ng-if="!speaker.picturePath" />
+
+                ng-class="{'item-icon-left': !speaker.picturePath, 'item-avatar' : speaker.picturePath}"-->
+                <img ng-cache
+                     ng-src="https://www.mannheim-forum.org/sites/default/files/mfschedule/speaker/thumbs/{{speaker.picturePath}}"
+                     ng-if="speaker.picturePath" />
+                <img ng-cache
+                     ng-src="img/person_placeholder_thumb.png"
+                     ng-if="!speaker.picturePath" />
                 {{speaker.title}} {{speaker.name}}
+                <p>{{speaker.shortDescription}}</p>
             </ion-item>
         </ion-list>
     </ion-content>
