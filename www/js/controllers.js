@@ -283,14 +283,14 @@ angular.module('starter.controllers', ['starter.services'])
 
 .controller('StarterCtrl', function($scope, $ionicModal, Persistence, $q) {
 
-  $scope.searchTerm = "";
+  $scope.searchConfig = {"term" : ""};
   $scope.items = [];
 
   $ionicModal.fromTemplateUrl('search-modal.html', {
     scope: $scope,
     animation: 'slide-in-up'
   }).then(function(modal) {
-    $scope.modal = modal
+    $scope.modal = modal;
   });
 
   $q.all([Persistence.listEvents(),
@@ -306,7 +306,7 @@ angular.module('starter.controllers', ['starter.services'])
 
   $scope.stopSearch = function() {
     $scope.modal.hide();
-  }
+  };
 
 })
 ;
