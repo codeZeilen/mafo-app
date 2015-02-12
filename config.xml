@@ -2,7 +2,8 @@
 <widget id="com.ionicframework.mafoapp"
         version="0.1"
         xmlns="http://www.w3.org/ns/widgets"
-        xmlns:cdv="http://cordova.apache.org/ns/1.0">
+        xmlns:cdv="http://cordova.apache.org/ns/1.0"
+        xmlns:gap   = "http://phonegap.com/ns/1.0">
     <name>Mannheim Forum</name>
     <description>
         An Ionic Framework and Cordova project.
@@ -39,4 +40,9 @@
         <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
         <param name="ios-package" value="CDVInAppBrowser" />
     </feature>
+
+    <gap:plugin name="org.apache.cordova.device.Device" source="plugins.cordova.io" />
+    <gap:plugin name="org.apache.cordova.file.FileUtils" source="plugins.cordova.io" />
+    <gap:plugin name="org.apache.cordova.filetransfer.FileTransfer" source="plugins.cordova.io" />
+    <gap:plugin name="org.apache.cordova.inappbrowser.InAppBrowser" source="plugins.cordova.io" />
 </widget>
