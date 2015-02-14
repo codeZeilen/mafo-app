@@ -1,5 +1,19 @@
+<ion-header-bar class="bar bar-subheader">
+    <h2 class="title">
+        FAQ
+    </h2>
+</ion-header-bar>
 <ion-view>
     <ion-content>
-        <h1>FAQ</h1>
+        <ion-list>
+            <div class="card" ng-repeat="question in questions">
+                <div class="item item-divider item-text-wrap">
+                    {{question.question}}
+                </div>
+                <div class="item item-text-wrap">
+                    {{question.answer}}
+                </div>
+            </div>
+        </ion-list>
     </ion-content>
 </ion-view>

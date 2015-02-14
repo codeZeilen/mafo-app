@@ -221,7 +221,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
       url: "/faq",
       views: {
         'menuContent': {
-          templateUrl: "templates/program/faq.html"
+          templateUrl: "templates/program/faq.html",
+          controller: 'FAQCtrl'
         }
       }
     })
