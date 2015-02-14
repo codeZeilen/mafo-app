@@ -36,6 +36,10 @@ a.text-link {
     color: #FFFFFF;
 }
 
+.tabs-striped.tabs-royal .tab-item.tab-item-active, .tabs-striped.tabs-royal .tab-item.active, .tabs-striped.tabs-royal .tab-item.activated {
+    border-color: #B2514C;
+}
+
 /* Item View */
 p.item-long-description, p.item-short-description,
 p.item-long-description p,
