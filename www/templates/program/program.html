@@ -13,7 +13,7 @@
                     <div class="item item-divider">
                         {{timeslot.displayName}}
                     </div>
-                    <ion-item ng-repeat="event in timeslot.events">
+                    <ion-item ng-repeat="event in timeslot.events" class="item-text-wrap">
                         <div class="program-category-indicator"
                              ng-if="event.categoryId"
                              ng-style="{'background-color': categoryColors[event.categoryId]};">
@@ -55,7 +55,7 @@
                     <div class="item item-divider">
                         {{timeslot.displayName}}
                     </div>
-                    <ion-item ng-repeat="event in timeslot.events">
+                    <ion-item ng-repeat="event in timeslot.events" class="item-text-wrap">
                         <div class="program-category-indicator"
                              ng-if="event.categoryId"
                              ng-style="{'background-color': categoryColors[event.categoryId]};">
@@ -97,7 +97,7 @@
                     <div class="item item-divider">
                         {{timeslot.displayName}}
                     </div>
-                    <ion-item ng-repeat="event in timeslot.events">
+                    <ion-item ng-repeat="event in timeslot.events" class="item-text-wrap">
                         <div class="program-category-indicator"
                              ng-if="event.categoryId"
                              ng-style="{'background-color': categoryColors[event.categoryId]};">
