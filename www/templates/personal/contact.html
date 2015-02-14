@@ -3,77 +3,113 @@
 </ion-header-bar>
 
 <ion-view>
-    <ion-content>
-        <form
-             name="contactForm"
-             ng-submit="sendMessage(message)"
-             class="list list-inset"
-             novalidate="">
+    <ion-tabs class="tabs-royal">
+        <ion-tab title="Kontakt">
+            <ion-view>
+                <ion-content>
+                    <div class="card">
+                        <div class="item item-icon-left item-text-wrap">
+                            <i class="icon ion-ios7-telephone"></i>
+                            Bei Notfällen erreichst du uns immer über unsere „Nummer gegen Kummer“: <strong>0157/54812371</strong>.
+                        </div>
+                    </div>
 
-            <div class="item item-divider item-text-wrap">
-                Schreib uns wenn du mithelfen möchtest das Mannheim Forum 2016 umzusetzen.
-                <div class="form-errors"
-                     ng-messages="contactForm.$error"
-                     ng-show="contactForm.$submitted">
-                    <div class="form-error" ng-message="required">Alle Felder müssen ausgefüllt sein.</div>
-                </div>
-                <div class="form-success" ng-show="dataWasSaved">Ihre Daten wurden gespeichert.</div>
+                    <div class="card">
+                        <div class="item item-divider">
+                            <strong>Mannheim Forum e.V.</strong>
+                        </div>
+                        <div class="item item-icon-left item-text-wrap">
+                            <i class="icon ion-home"></i>
+                            Schloss, Postfach 9
+                            68131 Mannheim
+                        </div>
+                        <div class="item item-icon-left item-text-wrap">
+                            <i class="icon ion-ios7-telephone"></i>
+                            0157/54812371
+                        </div>
+                        <div class="item item-divider">
+                            Vorstand
+                        </div>
+                        <div class="item item-text-wrap">
+                            Ben Christian, Nina Böhm, Gabriel Bartke, Sarah Lämmlin
+                        </div>
+                        <div class="item item-divider">
+                            Registernummer
+                        </div>
+                        <div class="item item-text-wrap">
+                            VR 700518, Vereinregister Mannheim
+                        </div>
+                    </div>
+                </ion-content>
+            </ion-view>
+        </ion-tab>
 
-            </div>
+        <ion-tab title="Mitmachen">
+            <ion-view>
+                <ion-content>
+                    <form
+                         name="contactForm"
+                         ng-submit="sendMessage(message)"
+                         class="list list-inset"
+                         novalidate="">
 
-            <label class="item item-input">
-                <input type="text"
-                       name="firstname"
-                       placeholder="Vorname"
-                       ng-model="message.firstName"
-                       ng-required="true" />
-            </label>
+                        <div class="item item-divider ">
+                            Du möchtest mitmachen?
+                        </div>
 
-            <label class="item item-input">
-                <input type="text"
-                       name="lastname"
-                       placeholder="Nachname"
-                       ng-model="message.lastName"
-                       ng-required="true" />
-            </label>
+                        <div class="item item-text-wrap">
+                            <p>Dir gefällt das Mannheim Forum und du möchtest auch gerne bei der Organisation des Events
+                            mitwirken? Schreibe uns einfach über dieses Kontaktformular, wir freuen uns auf deine Nachricht.
+                            Über die E-Mail, die du in dem Kontaktformular angibst, werden wir uns zeitnah nach dem Forum mit
+                            dir in Verbindung setzen.</p>
+                        </div>
 
-            <label class="item item-input">
-                <input type="text"
-                       name="email"
-                       placeholder="EMail"
-                       ng-model="message.email"
-                       ng-required="true" />
+                        <div class="item form-errors"
+                             ng-messages="contactForm.$error"
+                             ng-show="contactForm.$submitted">
+                            <div class="form-error" ng-message="required">Alle Felder müssen ausgefüllt sein.</div>
+                        </div>
+                        <div class="form-success" ng-show="dataWasSaved">Ihre Daten wurden gespeichert.</div>
 
-            </label>
 
-            <label class="item item-input">
-                <textarea placeholder="Warum möchtest du mithelfen das Mannheim Forum 2016 umzusetzen?"
-                          name="messageContent"
-                          rows="4"
-                          ng-required="true"
-                          ng-model="message.message"></textarea>
-            </label>
+                        <label class="item item-input">
+                            <input type="text"
+                                   name="firstname"
+                                   placeholder="Vorname"
+                                   ng-model="message.firstName"
+                                   ng-required="true" />
+                        </label>
 
-            <input type="submit" value="Absenden" class="button button-block button-positive activated" />
+                        <label class="item item-input">
+                            <input type="text"
+                                   name="lastname"
+                                   placeholder="Nachname"
+                                   ng-model="message.lastName"
+                                   ng-required="true" />
+                        </label>
 
-        </form>
+                        <label class="item item-input">
+                            <input type="text"
+                                   name="email"
+                                   placeholder="EMail"
+                                   ng-model="message.email"
+                                   ng-required="true" />
 
-        <div class="card">
-            <div class="item item-divider item-text-wrap">
-                Direkter Kontakt bei Fragen und Wünschen
-            </div>
-            <div class="item item-text-wrap">
-                participants@mannheim-forum.org
-            </div>
-        </div>
+                        </label>
 
-        <div class="card">
-            <div class="item item-divider">
-                Mannheim Forum e.V. Kontakt
-            </div>
-            <div class="item item-text-wrap">
-                This is a basic Card with some text.
-            </div>
-        </div>
-    </ion-content>
+                        <label class="item item-input">
+                            <textarea placeholder="Warum möchtest du mithelfen das Mannheim Forum 2016 umzusetzen?"
+                                      name="messageContent"
+                                      rows="4"
+                                      ng-required="true"
+                                      ng-model="message.message"></textarea>
+                        </label>
+
+                        <input type="submit" value="Absenden" class="button button-block button-positive activated" />
+
+                    </form>
+                </ion-content>
+            </ion-view>
+        </ion-tab>
+    </ion-tabs>
 </ion-view>
