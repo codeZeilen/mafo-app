@@ -287,7 +287,7 @@ angular.module('starter.controllers', ['starter.services'])
   $scope.events = [];
   $scope.speakers = [];
   $scope.partners = [];
-
+  $scope.news = [];
 
   $ionicModal.fromTemplateUrl('search-modal.html', {
     scope: $scope,
@@ -296,6 +296,14 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.modal = modal;
   });
 
+    Persistence.listNews().then(function(news) {
+      $scope.news = news;
+      NewsInterval.start(function(newsItems) {
+        $scope.news = newsItems;
+        console.log(moment().format('HH:mm:ss: ') + 'Reloaded news');
+      });
+    });
+
   $q.all([Persistence.listEvents(),
     Persistence.listPartners(),
     Persistence.listRooms(),
@@ -303,6 +311,10 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.events = results[0];
     $scope.partners = results[1];
     $scope.speakers = results[3];
+  });
+
+  Persistence.listNews().then(function(news) {
+    $scope.news = news;
   });
 
   $scope.startSearch = function() {
@@ -379,7 +391,7 @@ angular.module('starter.controllers', ['starter.services'])
       },{
         question: "Was ist das Kasino? Wie sollte ich mich vorbereiten?",
         answer  : "Am Samstag hast Du bei unserem Kasino die exklusive Möglichkeit, mit unseren Partnerunternehmen in Kontakt zu treten. Von zehn bis 14 Uhr kannst  Du Dich in der Aula an den Ständen der Unternehmen über Karrieremöglichkeiten oder das Unternehmen allgemein zu informieren." +
-        "Zur Vorbereitung kannst Du Dir hier einmal unsere Partnerunternehmen ansehen."
+        "Zur Vorbereitung kannst Du Dir <a href='#/app/partners'>hier</a> einmal unsere Partnerunternehmen ansehen."
       },{
         question: "Wie erfahre ich von möglichen Terminänderungen?",
         answer  : "Über unseren App-Newsticker oder am Info-Point erfährst Du alle Änderungen und wichtigen Ereignisse."
