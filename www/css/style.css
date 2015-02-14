@@ -25,6 +25,11 @@ img.nav-title-image {
     text-align: center;
 }
 
+a.text-link {
+    text-decoration: none;
+    color: inherit;
+}
+
 /* Tabs */
 .mafo-tabs {
     background-color: rgb(103, 20, 15);
@@ -88,14 +93,9 @@ p.item-long-description p
 }
 
 .program-title-description {
-    display:table-cell;
+    display: table-cell;
     padding-left: 1ex;
     width: 100%;
-}
-
-.program-title-description a {
-    text-decoration: none;
-    color: inherit;
 }
 
 .program-favorite-event {
