@@ -24,11 +24,11 @@
                                 <div class="program-event-name">{{event.name}}</div>
                                 <div>
                                     <p>
+                                        <strong>
+                                            {{eventCategoryName(event)}}
+                                        </strong>
                                         <span ng-if="event.categoryId">
                                             {{categoryNames[event.categoryId]}}
-                                        </span>
-                                        <span ng-if="isWorkshop(event)">
-                                            Workshop
                                         </span>
                                     </p>
 
@@ -66,11 +66,11 @@
                                 <div class="program-event-name">{{event.name}}</div>
                                 <div>
                                     <p>
+                                        <strong>
+                                            {{eventCategoryName(event)}}
+                                        </strong>
                                         <span ng-if="event.categoryId">
                                             {{categoryNames[event.categoryId]}}
-                                        </span>
-                                        <span ng-if="isWorkshop(event)">
-                                            Workshop
                                         </span>
                                     </p>
 
@@ -108,11 +108,11 @@
                                 <div class="program-event-name">{{event.name}}</div>
                                 <div>
                                     <p>
+                                        <strong>
+                                            {{eventCategoryName(event)}}
+                                        </strong>
                                         <span ng-if="event.categoryId">
                                             {{categoryNames[event.categoryId]}}
-                                        </span>
-                                        <span ng-if="isWorkshop(event)">
-                                            Workshop
                                         </span>
                                     </p>
 

@@ -27,14 +27,11 @@
                                 <div class="program-event-name">{{item.name}}</div>
                                 <div>
                                     <p>
-                                        <span ng-if="item.categoryId">
-                                            {{itemConfigurations.categoryNames[item.categoryId]}}
-                                        </span>
-                                        <span ng-if="isWorkshop(item)">
-                                            Workshop
-                                        </span>
-                                        <span ng-if="!isWorkshop(item)">
-                                            Hauptevent
+                                        <strong>
+                                            {{eventCategoryName(item)}}
+                                        </strong>
+                                        <span ng-if="event.categoryId">
+                                            {{categoryNames[event.categoryId]}}
                                         </span>
                                     </p>
 

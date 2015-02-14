@@ -99,11 +99,6 @@ angular.module('starter.controllers', ['starter.services'])
       $scope.updateDays(events);
     });
 
-    $scope.isWorkshop = function(event) {
-      return [Persistence.Entities.EVENT_TYPES.UNTERNEHMENSWORKSHOP, Persistence.Entities.EVENT_TYPES.VERTIEFUNGSWORKSHOP]
-              .indexOf(event.eventType) > 0;
-    };
-
     Persistence.listCategories().then(function(categories) {
       angular.forEach(categories, function(category) {
         $scope.categoryColors[category.serverId] = '#' + category.color;
@@ -161,6 +156,16 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.favoriteEvent = function(event) {
       alert('Favorite: ' + event.name);
       return false;
+    };
+
+    $scope.eventCategoryNames = {};
+    $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.UNTERNEHMENSWORKSHOP] = 'Unternehmensworkshop';
+    $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.VERTIEFUNGSWORKSHOP] = 'Vertiefungsworkshop';
+    $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.MAIN] = 'Vertiefungsworkshop';
+    $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.EVENING] = 'Vertiefungsworkshop';
+
+    $scope.eventCategoryName = function(event) {
+      return $scope.eventCategoryNames[event.eventType];
     };
 
 })
@@ -342,9 +347,14 @@ angular.module('starter.controllers', ['starter.services'])
     });
   });
 
-  $scope.isWorkshop = function(event) {
-    return [Persistence.Entities.EVENT_TYPES.UNTERNEHMENSWORKSHOP, Persistence.Entities.EVENT_TYPES.VERTIEFUNGSWORKSHOP]
-        .indexOf(event.eventType) > 0;
+  $scope.eventCategoryNames = {};
+  $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.UNTERNEHMENSWORKSHOP] = 'Unternehmensworkshop';
+  $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.VERTIEFUNGSWORKSHOP] = 'Vertiefungsworkshop';
+  $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.MAIN] = 'Vertiefungsworkshop';
+  $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.EVENING] = 'Vertiefungsworkshop';
+
+  $scope.eventCategoryName = function(event) {
+    return $scope.eventCategoryNames[event.eventType];
   };
 })
 
