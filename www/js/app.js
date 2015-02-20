@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
 
-.run(function($ionicPlatform, ContactRequestOutbox) {
+.run(function($ionicPlatform, ContactRequestOutbox, $ionicNavBarDelegate, $ionicHistory, $state) {
   ImgCache.options.debug = true;
   ImgCache.options.chromeQuota = 50*1024*1024;
 
@@ -28,6 +28,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
     }, function(){
       console.log('ImgCache init: error! Check the log for errors');
     });
+
+    $ionicPlatform.registerBackButtonAction(function() {
+      if (!$ionicHistory.backView()) {
+        if($state.current.name != "app.starter") {
+          $ionicHistory.nextViewOptions({
+            disableAnimate: false,
+            disableBack: true
+          });
+          $state.go('app.starter');
+        } else {
+          navigator.app.exitApp();
+        }
+      } else {
+        $ionicHistory.goBack();
+      }
+    },100);
 
   });
 })
