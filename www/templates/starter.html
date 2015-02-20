@@ -3,8 +3,10 @@
         <ion-header-bar class="bar bar-header item-input-inset">
             <label class="item-input-wrapper">
                 <i class="icon ion-ios7-search placeholder-icon"></i>
-                <input ng-model="searchConfig.term" type="search"
-                       placeholder="Suche" ng-model-options='{ debounce: 1000 }' ng-change="changeSearchTerm()">
+                <input id="searchModalInput" ng-model="searchConfig.term" type="search"
+                       placeholder="Suche"
+                       ng-model-options='{ debounce: 1600 }'
+                       ng-change="changeSearchTerm()">
             </label>
             <button ng-click="stopSearch()" class="button button-clear">
                 Schließen
@@ -64,13 +66,11 @@
 
                 <a ng-click="exitSearch()"
                    ng-repeat="item in partners | filter : searchConfig.term"
-                   class="item item-thumbnail-left" ng-href="#/app/partners/{{item.serverId}}">
+                   class="item item-thumbnail-left partners-list-item" ng-href="#/app/partners/{{item.serverId}}">
                     <img ng-cache
                          ng-src="https://www.mannheim-forum.org/sites/default/files/mfschedule/company/thumbs/{{item.logoPath}}" />
                     <span>
                             {{item.name}}
-                            <p>{{item.longDescription}}</p>
-
                     </span>
                 </a>
 
@@ -105,9 +105,10 @@
     <ion-footer-bar class="item-input-inset">
         <label class="item-input-wrapper">
             <i class="icon ion-ios7-search placeholder-icon"></i>
-            <input ng-model="searchConfig.term" type="search"
+            <input stop-event
+                   ng-model="searchConfig.term" type="search"
                    placeholder="Suche"
-                   ng-model-options='{ debounce: 1000 }'
+                   ng-model-options='{ debounce: 1600 }'
                    ng-change="changeSearchTerm()"
                    ng-click="startSearch()">
         </label>

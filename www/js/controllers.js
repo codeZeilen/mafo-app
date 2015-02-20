@@ -284,7 +284,8 @@ angular.module('starter.controllers', ['starter.services'])
 
   $ionicModal.fromTemplateUrl('search-modal.html', {
     scope: $scope,
-    animation: 'slide-in-up'
+    animation: 'slide-in-up',
+    focusFirstInput: true
   }).then(function(modal) {
     $scope.modal = modal;
   });
@@ -311,15 +312,22 @@ angular.module('starter.controllers', ['starter.services'])
   });
 
   $scope.startSearch = function() {
-    $scope.modal.show();
+    $scope.modal.show().then(function() {
+      cordova.plugins.Keyboard.show();
+      document.getElementById('searchModalInput').focus();
+    });
   };
 
   $scope.stopSearch = function() {
-    $scope.modal.hide();
+    $scope.modal.hide().then(function() {
+      cordova.plugins.Keyboard.close();
+    });
   };
 
   $scope.exitSearch = function() {
-    $scope.modal.hide();
+    $scope.modal.hide().then(function() {
+      cordova.plugins.Keyboard.close();
+    });
   };
 
   /* Frankenstein code to cater for all types of items */
