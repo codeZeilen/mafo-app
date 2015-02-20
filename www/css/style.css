@@ -78,9 +78,19 @@ p.item-long-description p
 }
 
 /* Partner list */
+.partners-list-item {
+    max-height: 80px;
+    min-height: 75px;
+}
+
 .partners-list-item a {
     overflow: auto;
     white-space: normal;
+}
+
+.partners-list-item a img {
+    max-height: 70px;
+    max-width: 70px;
 }
 
 /* Person view symbol */
