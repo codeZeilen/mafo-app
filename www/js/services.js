@@ -12,7 +12,7 @@ angular.module('starter.services', ['ngResource'])
               callback(newsItems);
             });
           });
-        }, 0.5/*m*/ * 60/*s*/ * 1000 /*ms*/);
+        }, 5/*m*/ * 60/*s*/ * 1000 /*ms*/);
       }
     },
     stop : function() {
