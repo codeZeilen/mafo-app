@@ -4,7 +4,7 @@
             <label class="item-input-wrapper">
                 <i class="icon ion-ios7-search placeholder-icon"></i>
                 <input ng-model="searchConfig.term" type="search"
-                       placeholder="Suche" ng-change="changeSearchTerm()">
+                       placeholder="Suche" ng-model-options='{ debounce: 1000 }' ng-change="changeSearchTerm()">
             </label>
             <button ng-click="stopSearch()" class="button button-clear">
                 Cancel
@@ -31,8 +31,8 @@
                                         <strong>
                                             {{eventCategoryName(item)}}
                                         </strong>
-                                        <span ng-if="event.categoryId">
-                                            {{categoryNames[event.categoryId]}}
+                                        <span ng-if="item.categoryId && categoriesNotToShow.indexOf(categoryNames[item.categoryId]) == -1">
+                                            {{categoryNames[item.categoryId]}}
                                         </span>
                                     </p>
 
@@ -48,7 +48,7 @@
                         ng-href="#/app/speakers/{{item.serverId}}" >
 
                     <div ng-if="item._type == 'Speaker'" class="item-avatar" >
-                            <img ng-cache
+                            <<img ng-cache
                                  ng-src="https://www.mannheim-forum.org/sites/default/files/mfschedule/speaker/thumbs/{{item.picturePath}}"
                                  ng-if="item.picturePath" />
                             <img ng-cache
@@ -65,7 +65,7 @@
                 <a ng-click="exitSearch()"
                    ng-repeat="item in partners | filter : searchConfig.term"
                    class="item item-thumbnail-left" ng-href="#/app/partners/{{item.serverId}}">
-                    <img ng-cache
+                    <<img ng-cache
                          ng-src="https://www.mannheim-forum.org/sites/default/files/mfschedule/company/thumbs/{{item.logoPath}}" />
                     <span>
                             {{item.name}}
@@ -106,7 +106,7 @@
         <label class="item-input-wrapper">
             <i class="icon ion-ios7-search placeholder-icon"></i>
             <input ng-model="searchConfig.term" type="search"
-                   placeholder="Suche"  ng-change="changeSearchTerm()">
+                   placeholder="Suche"  ng-model-options='{ debounce: 1000 }' ng-change="changeSearchTerm()">
         </label>
         <button ng-click="startSearch()" class="button button-clear">
             Suchen

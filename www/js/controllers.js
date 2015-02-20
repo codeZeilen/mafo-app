@@ -335,11 +335,12 @@ angular.module('starter.controllers', ['starter.services'])
     });
   });
 
+  $scope.categoriesNotToShow = ['Vertiefungsworkshop', 'Unternehmensworkshop'];
   $scope.eventCategoryNames = {};
   $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.UNTERNEHMENSWORKSHOP] = 'Unternehmensworkshop';
   $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.VERTIEFUNGSWORKSHOP] = 'Vertiefungsworkshop';
-  $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.MAIN] = 'Vertiefungsworkshop';
-  $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.EVENING] = 'Vertiefungsworkshop';
+  $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.MAIN] = 'Hauptveranstaltung';
+  $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.EVENING] = 'Rahmenprogramm';
 
   $scope.eventCategoryName = function(event) {
     return $scope.eventCategoryNames[event.eventType];
