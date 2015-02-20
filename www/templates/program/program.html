@@ -27,7 +27,7 @@
                                         <strong>
                                             {{eventCategoryName(event)}}
                                         </strong>
-                                        <span ng-if="event.categoryId">
+                                        <span ng-if="event.categoryId && categoriesNotToShow.indexOf(categoryNames[event.categoryId]) == -1">
                                             {{categoryNames[event.categoryId]}}
                                         </span>
                                     </p>
@@ -69,7 +69,7 @@
                                         <strong>
                                             {{eventCategoryName(event)}}
                                         </strong>
-                                        <span ng-if="event.categoryId">
+                                        <span ng-if="event.categoryId && categoriesNotToShow.indexOf(categoryNames[event.categoryId]) == -1">
                                             {{categoryNames[event.categoryId]}}
                                         </span>
                                     </p>
@@ -111,7 +111,7 @@
                                         <strong>
                                             {{eventCategoryName(event)}}
                                         </strong>
-                                        <span ng-if="event.categoryId">
+                                        <span ng-if="event.categoryId && categoriesNotToShow.indexOf(categoryNames[event.categoryId]) == -1">
                                             {{categoryNames[event.categoryId]}}
                                         </span>
                                     </p>
