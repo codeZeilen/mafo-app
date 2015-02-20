@@ -34,6 +34,13 @@ a.text-link {
     color: inherit;
 }
 
+.item-avatar .item-content > img:first-child {
+    border-radius: 2px;
+    width: auto;
+    margin-left:auto;
+    margin-right:auto;
+}
+
 /* Tabs */
 .mafo-tabs {
     background-color: rgb(103, 20, 15);
