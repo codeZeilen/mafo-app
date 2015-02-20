@@ -286,7 +286,7 @@ angular.module('starter.controllers', ['starter.services'])
 
 })
 
-.controller('StarterCtrl', function($scope, $ionicModal, Persistence, $q) {
+.controller('StarterCtrl', function($scope, $ionicModal, Persistence, NewsInterval, $q) {
 
   $scope.searchConfig = {"term" : ""};
   $scope.events = [];
