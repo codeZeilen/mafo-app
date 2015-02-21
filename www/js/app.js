@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
 
-.run(function($ionicPlatform, ContactRequestOutbox, $ionicNavBarDelegate, $ionicHistory, $state) {
+.run(function($ionicPlatform, ContactRequestOutbox, ContentUpdater, $ionicNavBarDelegate, $ionicHistory, $state) {
   ImgCache.options.debug = true;
   ImgCache.options.chromeQuota = 50*1024*1024;
 

@@ -1,5 +1,85 @@
 angular.module('starter.services', ['ngResource'])
 
+.factory('ContentUpdater', function($interval, Persistence, $http, $q, $sanitize) {
+
+    var baseURL = "https://www.mannheim-forum.org/api/mannheim-forum-schedule/%s/last_update_timestamp";
+
+    // route part => { attributeName, entityName }
+    var apiConfiguration = {
+      "events" :
+      {
+        'attributeName'   : 'eventUpdateCounter',
+        'entityName'      : 'Event',
+        'refreshFunction' : 'refreshEvents'
+      },
+      "speakers" :
+      {
+        'attributeName'   : 'speakerUpdateCounter',
+        'entityName'      : 'Speaker',
+        'refreshFunction' : 'refreshSpeakers'
+      },
+      "partners" :
+      {
+        'attributeName'   : 'partnerUpdateCounter',
+        'entityName'      : 'Partner',
+        'refreshFunction' : 'refreshPartners'
+      },
+      "rooms" :
+      {
+        'attributeName'   : 'roomUpdateCounter',
+        'entityName'      : 'Room',
+        'refreshFunction' : 'refreshRooms'
+      },
+      "topic_categories" :
+      {
+        'attributeName'   : 'topicCategoryUpdateCounter',
+        'entityName'      : 'TopicCategory',
+        'refreshFunction' : 'refreshCategories'
+      },
+      "event_speakers" :
+      {
+        'attributeName'   : 'eventSpeakersUpdateCounter',
+        'entityName'      : 'EventHBTMSpeaker',
+        'refreshFunction' : 'refreshEvents'
+      }
+
+    };
+
+    var updateInterface = {};
+    angular.forEach(Object.keys(apiConfiguration), function(routeKey) {
+      updateInterface[apiConfiguration[routeKey].attributeName] = 0;
+    });
+
+    var intervalPromise;
+    var timestampObjects = {};
+    Persistence.Entities.ServerUpdateTimestamp.all().list(null, function(storedTimeStamps) {
+      angular.forEach(storedTimeStamps, function(ts) {
+        timestampObjects[ts.routeKey] = ts;
+      });
+
+      intervalPromise = $interval(function() {
+        console.log("Updating...");
+        angular.forEach(Object.keys(apiConfiguration), function(routeKey) {
+          $http.get(baseURL.replace("%s", routeKey))
+            .success(function(requestResult) {
+              var newTimeStamp = moment(angular.fromJson(requestResult)[0]);
+              var oldTimeStamp = moment(timestampObjects[routeKey].timestamp);
+              if(newTimeStamp > oldTimeStamp) {
+                Persistence[apiConfiguration[routeKey].refreshFunction]().then(function() {
+                  updateInterface[apiConfiguration[routeKey].attributeName] += 1;
+                  timestampObjects[routeKey].timestamp = requestResult;
+                  persistence.flush();
+                });
+              }
+            });
+        });
+      }, 0.5/*m*/ * 60 /*s*/ * 1000 /*ms*/);
+    });
+
+    return updateInterface;
+
+})
+
 .factory('NewsInterval', function($interval, Persistence) {
   var intervalPromise;
 
@@ -222,6 +302,11 @@ angular.module('starter.services', ['ngResource'])
       lastName: "TEXT",
       email: "TEXT",
       message: "TEXT"
+    });
+
+    entities.ServerUpdateTimestamp = persistence.define('ServerUpdateTimestamp', {
+      routeKey: "TEXT",
+      timestamp: "TEXT"
     });
 
     persistence.debug = true;
