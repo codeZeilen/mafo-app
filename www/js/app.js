@@ -9,6 +9,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
 .run(function($ionicPlatform, ContactRequestOutbox, $ionicNavBarDelegate, $ionicHistory, $state) {
   ImgCache.options.debug = true;
   ImgCache.options.chromeQuota = 50*1024*1024;
+
     
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -18,7 +19,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
     }
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
+      StatusBar.styleLightContent();
     }
 
     ContactRequestOutbox.send();
