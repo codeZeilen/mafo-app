@@ -285,7 +285,7 @@ angular.module('starter.controllers', ['starter.services'])
   $ionicModal.fromTemplateUrl('search-modal.html', {
     scope: $scope,
     animation: 'slide-in-up',
-    focusFirstInput: true
+    focusFirstInput: false
   }).then(function(modal) {
     $scope.modal = modal;
   });
@@ -313,9 +313,10 @@ angular.module('starter.controllers', ['starter.services'])
 
   $scope.startSearch = function() {
     $scope.modal.show().then(function() {
-      cordova.plugins.Keyboard.show();
       document.getElementById('searchModalInput').focus();
+      //cordova.plugins.Keyboard.show();
     });
+    return false;
   };
 
   $scope.stopSearch = function() {

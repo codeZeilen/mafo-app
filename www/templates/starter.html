@@ -102,16 +102,15 @@
         </ion-list>
 
     </ion-content>
-    <ion-footer-bar class="item-input-inset">
-        <label class="item-input-wrapper">
+    <ion-footer-bar class="item-input-inset hide-on-keyboard-open"
+                    >
+        <div class="item-input-wrapper" ng-click="startSearch()">
             <i class="icon ion-ios7-search placeholder-icon"></i>
-            <input stop-event
-                   ng-model="searchConfig.term" type="search"
+            <input 
+                   type="search"
                    placeholder="Suche"
-                   ng-model-options='{ debounce: 1600 }'
-                   ng-change="changeSearchTerm()"
-                   ng-click="startSearch()">
-        </label>
+ 		   disabled >
+        </div>
     </ion-footer-bar>
 </ion-view>
 
