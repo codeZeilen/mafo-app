@@ -72,7 +72,7 @@ angular.module('starter.controllers', ['starter.services'])
     });
 })
 
-.controller('ProgramCtrl', function($scope, Persistence) {
+.controller('ProgramCtrl', function($scope, $filter, Persistence) {
 
     $scope.days = [];
 
@@ -136,9 +136,7 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.updateDays = function(events) {
       var days = groupDays(events);
       days = daysToObjects(days);
-      $scope.days = days.sort(function(day1, day2) {
-        return day1.day > day2.day;
-      });
+      $scope.days = $filter('orderBy')(days, function(d) { return d.day });
     };
 
     $scope.favoriteEvent = function(event) {
@@ -195,7 +193,13 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.timeFormat = function(timeStampString) {
       var time = moment(timeStampString);
       return time.format("HH:mm").concat(" Uhr");
-    }
+    };
+
+    $scope.dayFormat = function(timeStampString) {
+      var date = moment(timeStampString);
+      date.locale("de")
+      return date.format("dd");
+    };
 })
 
 .controller('PlannerCtrl', function($scope) {

@@ -46,6 +46,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
       }
     },100);
 
+   moment.locale('de', {
+    weekdaysMin: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"]
+   });
+
   });
 })
 

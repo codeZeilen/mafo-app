@@ -18,7 +18,7 @@
 
             <div class="item item-icon-left" ng-if="event.startTime && event.endTime">
                 <i class="icon ion-ios-clock-outline"></i>
-                {{timeFormat(event.startTime)}} - {{timeFormat(event.endTime)}}
+                {{dayFormat(event.startTime)}}: {{timeFormat(event.startTime)}} - {{timeFormat(event.endTime)}}
             </div>
 
             <div class="item item-icon-left" ng-if="event.roomId > 0" ng-href="#/app/rooms/{{event.roomId}}">
