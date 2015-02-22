@@ -161,3 +161,8 @@ p.item-long-description p
 .news-item-content img {
     max-width: 100%;
 }
+
+/* Eventinfo view */
+.event-info-card .item p {
+    margin-bottom: 1em;
+}
