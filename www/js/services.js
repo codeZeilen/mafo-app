@@ -174,7 +174,7 @@ angular.module('starter.services', ['ngResource'])
 
   newsIntervalFacade.start = function() {
     if(!angular.isDefined(intervalPromise)){
-      intervalPromise = $interval(updater, 0.1/*m*/ * 60/*s*/ * 1000 /*ms*/);
+      intervalPromise = $interval(updater, 5/*m*/ * 60/*s*/ * 1000 /*ms*/);
     }
     updater();
   };

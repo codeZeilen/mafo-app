@@ -86,7 +86,7 @@ angular.module('starter.controllers', ['starter.services'])
     var processEvents = function(events) {
       $scope.updateDays(events);
     };
-    $scope.$watch(ContentUpdater.eventUpdateCounter, function(oldVal, newVal) {
+    $scope.$watch(function() { return ContentUpdater.eventUpdateCounter }, function(oldVal, newVal) {
       if(!(oldVal === newVal)) {
         Persistence.listEvents().then(processEvents);
         Persistence.listCategories().then(processCategories);
@@ -267,14 +267,22 @@ angular.module('starter.controllers', ['starter.services'])
     };
 })
 
-.controller('PartnersCtrl', function($scope, Persistence) {
+.controller('PartnersCtrl', function($scope, Persistence, ContentUpdater) {
   $scope.partners = [];
 
   $scope.partnerName = 'name';
 
+  var updater = function() {
     Persistence.listPartners().then(function(partners) {
       $scope.partners = partners;
     });
+  };
+  $scope.$watch(function() { return ContentUpdater.partnerUpdateCounter }, function(oldVal, newVal) {
+    if(!(oldVal === newVal)) {
+      updater();
+    }
+  });
+
 })
 
 .controller('PartnerCtrl', function($scope, $stateParams, Persistence) {
