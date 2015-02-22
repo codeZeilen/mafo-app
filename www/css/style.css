@@ -34,7 +34,7 @@ a.text-link {
     color: inherit;
 }
 
-.item-avatar .item-content > img:first-child {
+.item-avatar .item-content > img:first-child, .item-avatar > img:first-child {
     border-radius: 2px;
     width: auto;
     margin-left:auto;
