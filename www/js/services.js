@@ -1,79 +1,153 @@
 angular.module('starter.services', ['ngResource'])
 
-.factory('ContentUpdater', function($interval, Persistence, $http, $q, $sanitize) {
-
-    var baseURL = "https://www.mannheim-forum.org/api/mannheim-forum-schedule/%s/last_update_timestamp";
+.factory('ContentConfiguration', function() {
 
     // route part => { attributeName, entityName }
-    var apiConfiguration = {
-      "events" :
-      {
-        'attributeName'   : 'eventUpdateCounter',
-        'entityName'      : 'Event',
-        'refreshFunction' : 'refreshEvents'
-      },
-      "speakers" :
-      {
-        'attributeName'   : 'speakerUpdateCounter',
-        'entityName'      : 'Speaker',
-        'refreshFunction' : 'refreshSpeakers'
-      },
-      "partners" :
-      {
-        'attributeName'   : 'partnerUpdateCounter',
-        'entityName'      : 'Partner',
-        'refreshFunction' : 'refreshPartners'
-      },
-      "rooms" :
-      {
-        'attributeName'   : 'roomUpdateCounter',
-        'entityName'      : 'Room',
-        'refreshFunction' : 'refreshRooms'
-      },
-      "topic_categories" :
-      {
-        'attributeName'   : 'topicCategoryUpdateCounter',
-        'entityName'      : 'TopicCategory',
-        'refreshFunction' : 'refreshCategories'
-      },
-      "event_speakers" :
-      {
-        'attributeName'   : 'eventSpeakersUpdateCounter',
-        'entityName'      : 'EventHBTMSpeaker',
-        'refreshFunction' : 'refreshEvents'
+    return {
+      "contentUpdateBaseURL": "https://www.mannheim-forum.org/api/mannheim-forum-schedule/%s/last_update_timestamp",
+      "contentUpdateConfiguration": {
+        "events" :
+        {
+          'attributeName'   : 'eventUpdateCounter',
+          'entityName'      : 'Event',
+          'refreshFunction' : 'refreshEvents'
+        },
+        "speakers" :
+        {
+          'attributeName'   : 'speakerUpdateCounter',
+          'entityName'      : 'Speaker',
+          'refreshFunction' : 'refreshSpeakers'
+        },
+        "partners" :
+        {
+          'attributeName'   : 'partnerUpdateCounter',
+          'entityName'      : 'Partner',
+          'refreshFunction' : 'refreshPartners'
+        },
+        "rooms" :
+        {
+          'attributeName'   : 'roomUpdateCounter',
+          'entityName'      : 'Room',
+          'refreshFunction' : 'refreshRooms'
+        },
+        "topic_categories" :
+        {
+          'attributeName'   : 'topicCategoryUpdateCounter',
+          'entityName'      : 'TopicCategory',
+          'refreshFunction' : 'refreshCategories'
+        },
+        "event_speakers" :
+        {
+          'attributeName'   : 'eventSpeakersUpdateCounter',
+          'entityName'      : 'EventHBTMSpeaker',
+          'refreshFunction' : 'refreshEvents'
+        }
       }
-
     };
+
+})
+
+.factory('ContentInitializer', function($q, $http, Persistence, ContentConfiguration) {
+
+    var initStarted = false;
+
+    return {
+      init: function() {
+        console.log("Init started");
+        var allDone = [];
+        if(!initStarted) {
+          initStarted = true;
+          console.log("Real init!");
+          $http.get('content.json')
+            .success(function (fileContent) {
+              var entitiesContent = angular.fromJson(fileContent);
+              angular.forEach(entitiesContent, function (entityContent) {
+                var entityDone = $q.defer();
+                allDone.push(entityDone);
+
+                var entityName = ContentConfiguration.contentUpdateConfiguration[entityContent.routeKey].entityName;
+                var entity = Persistence.Entities[entityName];
+                angular.forEach(entityContent.individuals, function (individualContent) {
+                  persistence.add(new entity(individualContent));
+                });
+                persistence.flush(function () {
+                  persistence.add(new Persistence.Entities.ServerUpdateTimestamp({
+                    'routeKey': entityContent.routeKey,
+                    'timestamp': entityContent.timestamp
+                  }));
+                  persistence.flush(function () {
+                    entityDone.resolve(entityContent.timestamp);
+                  });
+                });
+              });
+            });
+        }
+
+        return $q.all(allDone);
+      }
+    };
+})
+
+.factory('ContentUpdater', function($interval, Persistence, $http, $q, ContentInitializer, ContentConfiguration) {
+
+    var baseURL = ContentConfiguration.contentUpdateBaseURL;
+    var apiConfiguration = ContentConfiguration.contentUpdateConfiguration;
 
     var updateInterface = {};
     angular.forEach(Object.keys(apiConfiguration), function(routeKey) {
       updateInterface[apiConfiguration[routeKey].attributeName] = 0;
     });
 
-    var intervalPromise;
+
     var timestampObjects = {};
-    Persistence.Entities.ServerUpdateTimestamp.all().list(null, function(storedTimeStamps) {
+    var cacheTimestampObjects = function(storedTimeStamps) {
       angular.forEach(storedTimeStamps, function(ts) {
         timestampObjects[ts.routeKey] = ts;
       });
+    };
 
+    var intervalPromise;
+    var startRefreshInterval = function() {
       intervalPromise = $interval(function() {
-        console.log("Updating...");
-        angular.forEach(Object.keys(apiConfiguration), function(routeKey) {
-          $http.get(baseURL.replace("%s", routeKey))
-            .success(function(requestResult) {
-              var newTimeStamp = moment(angular.fromJson(requestResult)[0]);
-              var oldTimeStamp = moment(timestampObjects[routeKey].timestamp);
-              if(newTimeStamp > oldTimeStamp) {
-                Persistence[apiConfiguration[routeKey].refreshFunction]().then(function() {
-                  updateInterface[apiConfiguration[routeKey].attributeName] += 1;
-                  timestampObjects[routeKey].timestamp = requestResult;
-                  persistence.flush();
-                });
-              }
-            });
+
+        // This assumes that all routeKeys listed in the configuration are initialized with timestamps --pre
+        Persistence.Entities.ServerUpdateTimestamp.all().list(null, function(storedTimeStamps) {
+          cacheTimestampObjects(storedTimeStamps);
+          angular.forEach(Object.keys(apiConfiguration), function(routeKey) {
+            $http.get(baseURL.replace("%s", routeKey))
+              .success(function(requestResult) {
+                var newTimeStamp = moment(angular.fromJson(requestResult)[0]);
+                var oldTimeStamp = moment(timestampObjects[routeKey].timestamp);
+                if(newTimeStamp > oldTimeStamp) {
+                  Persistence[apiConfiguration[routeKey].refreshFunction]().then(function() {
+                    updateInterface[apiConfiguration[routeKey].attributeName] += 1;
+                    timestampObjects[routeKey].timestamp = requestResult;
+                    persistence.flush();
+                  });
+                }
+              });
+          });
         });
       }, 0.5/*m*/ * 60 /*s*/ * 1000 /*ms*/);
+    };
+
+    Persistence.Entities.ServerUpdateTimestamp.all().list(null, function(storedTimeStamps) {
+      // if no timestamps available then initialize the thing
+      var contentInitialized = $q.defer();
+
+      if(storedTimeStamps.length == 0) {
+        ContentInitializer.init().then(function(storedTimeStamps) {
+          contentInitialized.resolve(storedTimeStamps);
+        });
+      } else {
+        contentInitialized.resolve(storedTimeStamps);
+      }
+
+      contentInitialized.promise.then(function(timeStamps) {
+        cacheTimestampObjects(timeStamps);
+        startRefreshInterval();
+      });
+
     });
 
     return updateInterface;
@@ -430,20 +504,9 @@ angular.module('starter.services', ['ngResource'])
       });
     };
 
-    var listing = function(entityClass, refreshFn, getAllFn) {
+    var listing = function(entityClass, _, getAllFn) {
       var result = $q.defer();
-
-      entityClass.all().count(null, function (speakersCount) {
-        if(speakersCount == 0) {
-          // Refresh the cache
-          refreshFn().then(function() {
-            getAllFn(result);
-          });
-        } else {
-          getAllFn(result);
-        }
-      });
-
+      getAllFn(result);
       return result.promise;
     };
 
@@ -464,10 +527,10 @@ angular.module('starter.services', ['ngResource'])
       return result.promise;
     };
 
-    var getting = function(entityClass, speakerId) {
+    var getting = function(entityClass, individualServerId) {
         var result = $q.defer();
 
-        entityClass.all().filter('serverId', '=', speakerId).one(function(individual) {
+        entityClass.all().filter('serverId', '=', individualServerId).one(function(individual) {
           result.resolve(individual);
         });
 

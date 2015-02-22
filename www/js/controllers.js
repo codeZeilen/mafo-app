@@ -72,7 +72,7 @@ angular.module('starter.controllers', ['starter.services'])
     });
 })
 
-.controller('ProgramCtrl', function($scope, $filter, Persistence) {
+.controller('ProgramCtrl', function($scope, $filter, Persistence, ContentUpdater) {
 
     $scope.days = [];
 
@@ -83,16 +83,31 @@ angular.module('starter.controllers', ['starter.services'])
 
     $scope.categoriesNotToShow = ['Vertiefungsworkshop', 'Unternehmensworkshop'];
 
-    Persistence.listEvents().then(function(events) {
+    var processEvents = function(events) {
       $scope.updateDays(events);
+    };
+    $scope.$watch(ContentUpdater.eventUpdateCounter, function(oldVal, newVal) {
+      if(!(oldVal === newVal)) {
+        Persistence.listEvents().then(processEvents);
+        Persistence.listCategories().then(processCategories);
+      }
     });
 
-    Persistence.listCategories().then(function(categories) {
+    var processCategories = function(categories) {
       angular.forEach(categories, function(category) {
         $scope.categoryColors[category.serverId] = '#' + category.color;
         $scope.categoryNames[category.serverId] = category.name;
       });
+    };
+    $scope.$watch(ContentUpdater.eventUpdateCounter, function(oldVal, newVal) {
+      if(!(oldVal === newVal)) {
+        Persistence.listEvents().then(processEvents);
+        Persistence.listCategories().then(processCategories);
+      }
     });
+
+    Persistence.listEvents().then(processEvents);
+    Persistence.listCategories().then(processCategories);
 
     var groupDays = function(events) {
       var days = {};

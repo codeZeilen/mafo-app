@@ -8,9 +8,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
 
 .run(function($ionicPlatform, ContactRequestOutbox, ContentUpdater, $ionicNavBarDelegate, $ionicHistory, $state) {
   ImgCache.options.debug = true;
-  ImgCache.options.chromeQuota = 50*1024*1024;
+  ImgCache.options.chromeQuota = 30*1024*1024;
 
-    
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -21,8 +20,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
       // org.apache.cordova.statusbar required
       StatusBar.styleLightContent();
     }
-
-    ContactRequestOutbox.send();
 
     ImgCache.init(function() {
       console.log('ImgCache init: success!');
@@ -46,11 +43,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
       }
     },100);
 
-   moment.locale('de', {
-    weekdaysMin: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"]
-   });
+    moment.locale('de', {
+      weekdaysMin: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"]
+    });
+
+    ContactRequestOutbox.send();
 
   });
+
 })
 
 .directive('ngCache', function($http) {
