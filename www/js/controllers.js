@@ -333,7 +333,9 @@ angular.module('starter.controllers', ['starter.services'])
   $scope.startSearch = function() {
     $scope.modal.show().then(function() {
       document.getElementById('searchModalInput').focus();
-      //cordova.plugins.Keyboard.show();
+      if(device.platform == "Android") {
+        cordova.plugins.Keyboard.show();
+      }
     });
     return false;
   };
