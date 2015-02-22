@@ -220,7 +220,7 @@ angular.module('starter.controllers', ['starter.services'])
 .controller('PlannerCtrl', function($scope) {
 })
 
-.controller('NewsCtrl', function($scope, Persistence, NewsInterval) {
+.controller('NewsCtrl', function($scope, $stateParams, $location, $anchorScroll, Persistence, NewsInterval) {
     $scope.news = [];
 
     var updateNews = function() {
@@ -241,6 +241,7 @@ angular.module('starter.controllers', ['starter.services'])
       var time = moment(timeStampString, "X");
       return time.format("DD. MMM YYYY, HH").concat(" Uhr");
     };
+
 })
 
 .controller('ContactCtrl', function($scope, Persistence, ContactRequestOutbox) {
@@ -299,7 +300,7 @@ angular.module('starter.controllers', ['starter.services'])
 
 })
 
-.controller('StarterCtrl', function($scope, $ionicModal, Persistence, NewsInterval, $q) {
+.controller('StarterCtrl', function($scope, $ionicModal, $state, Persistence, NewsInterval, $q) {
 
   $scope.searchConfig = {"term" : ""};
   $scope.events = [];
@@ -318,7 +319,6 @@ angular.module('starter.controllers', ['starter.services'])
   var updateNews = function() {
     Persistence.listNews().then(function(news) {
       $scope.news = news;
-      console.log(moment().format('HH:mm:ss: ') + 'Reloaded news');
     });
   };
 
@@ -341,6 +341,10 @@ angular.module('starter.controllers', ['starter.services'])
   Persistence.listNews().then(function(news) {
     $scope.news = news;
   });
+
+  $scope.gotoItem = function(newsItemId) {
+    $state.go("app.news", { scrollTo : newsItemId });
+  };
 
   $scope.startSearch = function() {
     $scope.modal.show().then(function() {

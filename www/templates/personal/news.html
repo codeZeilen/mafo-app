@@ -9,7 +9,7 @@
             </ion-item>
         </div>
         <ion-list ng-show="news.length > 0">
-            <div class="card" ng-repeat="newsItem in news | orderBy : 'createdAt' | limitTo : 7">
+            <div class="card" ng-repeat="newsItem in news | orderBy : 'createdAt' : true | limitTo : 7" id="{{newsItem.id}}">
                 <ion-item>
                     <h2>{{newsItem.title}}</h2>
                     <p>{{dateFormat(newsItem.createdAt)}}</p>

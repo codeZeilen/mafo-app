@@ -166,20 +166,20 @@ angular.module('starter.services', ['ngResource'])
   };
 
   var newsIntervalFacade = {
-    start : function() {
-      if(!angular.isDefined(intervalPromise)){
-        intervalPromise = $interval(updater, 0.2/*m*/ * 60/*s*/ * 1000 /*ms*/);
-      }
-      updater();
-    },
-
-    stop : function() {
-      if(angular.isDefined(intervalPromise)) {
-        $interval.cancel(intervalPromise);
-      }
-    },
-
     newsUpdateCounter : 0
+  };
+
+  newsIntervalFacade.start = function() {
+    if(!angular.isDefined(intervalPromise)){
+      intervalPromise = $interval(updater, 0.2/*m*/ * 60/*s*/ * 1000 /*ms*/);
+    }
+    updater();
+  };
+
+  newsIntervalFacade.stop = function() {
+    if(angular.isDefined(intervalPromise)) {
+      $interval.cancel(intervalPromise);
+    }
   };
 
   return newsIntervalFacade;

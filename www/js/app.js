@@ -6,7 +6,9 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
 
-.run(function($ionicPlatform, ContactRequestOutbox, NewsInterval, ContentUpdater, $ionicNavBarDelegate, $ionicHistory, $state) {
+.run(function($ionicPlatform, $rootScope, ContactRequestOutbox,
+              NewsInterval, ContentUpdater, $ionicNavBarDelegate,
+              $ionicHistory, $state, $location, $stateParams, $anchorScroll, $timeout) {
   ImgCache.options.debug = true;
   ImgCache.options.chromeQuota = 30*1024*1024;
 
@@ -43,6 +45,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
       }
     },100);
 
+
+
     moment.locale('de', {
       weekdaysMin: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"]
     });
@@ -50,6 +54,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
     ContactRequestOutbox.send();
     NewsInterval.start();
 
+  });
+
+  $rootScope.$on('$stateChangeSuccess', function(newRoute, oldRoute) {
+    if(angular.isDefined($stateParams.scrollTo)) {
+      $timeout(function() {
+        $location.hash($stateParams.scrollTo);
+        $anchorScroll();
+      }, 500);
+    }
   });
 
 })
@@ -148,6 +161,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
 
     .state('app.news', {
       url: "/news",
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/personal/news.html',
+          controller: 'NewsCtrl'
+        }
+      }
+    })
+
+    .state('app.newsItem', {
+      url: "/news/:scrollTo",
       views: {
         'menuContent': {
           templateUrl: 'templates/personal/news.html',
