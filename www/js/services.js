@@ -300,7 +300,7 @@ angular.module('starter.services', ['ngResource'])
   .factory('Persistence', function($q, SpeakerAPI, EventAPI, EventHBTMSpeakerAPI, PartnerAPI, TopicCateogryAPI, RoomAPI, NewsAPI) {
     // Credits to https://github.com/bgoetzmann/ionic-persistence/
 
-    persistence.store.cordovasql.config(persistence, 'mafo_app_db', '0.0.1', 'Cache for program data of mafo', 10 * 1024 * 1024, 0);
+    persistence.store.cordovasql.config(persistence, 'mafo_app_db', '0.0.5', 'Cache for program data of mafo', 30 * 1024 * 1024, 0);
 
     var entities = {};
 
