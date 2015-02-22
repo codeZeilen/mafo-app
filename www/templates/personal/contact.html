@@ -69,8 +69,10 @@
                              ng-show="contactForm.$submitted">
                             <div class="form-error" ng-message="required">Alle Felder müssen ausgefüllt sein.</div>
                         </div>
-                        <div class="form-success" ng-show="dataWasSaved">Ihre Daten wurden gespeichert.</div>
-
+                        <div class="item form-errors"
+                             ng-show="dataWasSaved">
+                            <div class="form-success" ng-show="dataWasSaved">Ihre Daten wurden gespeichert.</div>
+                        </div>
 
                         <label class="item item-input">
                             <input type="text"

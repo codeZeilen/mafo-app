@@ -41,6 +41,13 @@ a.text-link {
     margin-right:auto;
 }
 
+.keyboard-open .tabs{
+    display:none;
+}
+.keyboard-open .has-tabs{
+    bottom:0;
+}
+
 /* Tabs */
 .mafo-tabs {
     background-color: rgb(103, 20, 15);
