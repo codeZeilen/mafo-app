@@ -45,7 +45,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
       }
     },100);
 
-
+    $rootScope.$on('$stateChangeSuccess', function(newRoute, oldRoute) {
+      if(angular.isDefined($stateParams.scrollTo)) {
+        $timeout(function() {
+          $location.hash($stateParams.scrollTo);
+          $anchorScroll();
+        }, 500);
+      }
+    });
 
     moment.locale('de', {
       weekdaysMin: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"]
@@ -54,15 +61,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
     ContactRequestOutbox.send();
     NewsInterval.start();
 
-  });
-
-  $rootScope.$on('$stateChangeSuccess', function(newRoute, oldRoute) {
-    if(angular.isDefined($stateParams.scrollTo)) {
-      $timeout(function() {
-        $location.hash($stateParams.scrollTo);
-        $anchorScroll();
-      }, 500);
-    }
   });
 
 })

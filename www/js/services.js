@@ -106,29 +106,30 @@ angular.module('starter.services', ['ngResource'])
       });
     };
 
+    var updater = function() {
+      // This assumes that all routeKeys listed in the configuration are initialized with timestamps --pre
+      Persistence.Entities.ServerUpdateTimestamp.all().list(null, function(storedTimeStamps) {
+        cacheTimestampObjects(storedTimeStamps);
+        angular.forEach(Object.keys(apiConfiguration), function(routeKey) {
+          $http.get(baseURL.replace("%s", routeKey))
+            .success(function(requestResult) {
+              var newTimeStamp = moment(angular.fromJson(requestResult)[0]);
+              var oldTimeStamp = moment(timestampObjects[routeKey].timestamp);
+              if(newTimeStamp > oldTimeStamp) {
+                Persistence[apiConfiguration[routeKey].refreshFunction]().then(function() {
+                  updateInterface[apiConfiguration[routeKey].attributeName] += 1;
+                  timestampObjects[routeKey].timestamp = requestResult;
+                  persistence.flush();
+                });
+              }
+            });
+        });
+      });
+    }
+
     var intervalPromise;
     var startRefreshInterval = function() {
-      intervalPromise = $interval(function() {
-
-        // This assumes that all routeKeys listed in the configuration are initialized with timestamps --pre
-        Persistence.Entities.ServerUpdateTimestamp.all().list(null, function(storedTimeStamps) {
-          cacheTimestampObjects(storedTimeStamps);
-          angular.forEach(Object.keys(apiConfiguration), function(routeKey) {
-            $http.get(baseURL.replace("%s", routeKey))
-              .success(function(requestResult) {
-                var newTimeStamp = moment(angular.fromJson(requestResult)[0]);
-                var oldTimeStamp = moment(timestampObjects[routeKey].timestamp);
-                if(newTimeStamp > oldTimeStamp) {
-                  Persistence[apiConfiguration[routeKey].refreshFunction]().then(function() {
-                    updateInterface[apiConfiguration[routeKey].attributeName] += 1;
-                    timestampObjects[routeKey].timestamp = requestResult;
-                    persistence.flush();
-                  });
-                }
-              });
-          });
-        });
-      }, 15/*m*/ * 60 /*s*/ * 1000 /*ms*/);
+      intervalPromise = $interval(updater, 15/*m*/ * 60 /*s*/ * 1000 /*ms*/);
     };
 
     Persistence.Entities.ServerUpdateTimestamp.all().list(null, function(storedTimeStamps) {
@@ -145,6 +146,7 @@ angular.module('starter.services', ['ngResource'])
 
       contentInitialized.promise.then(function(timeStamps) {
         cacheTimestampObjects(timeStamps);
+        updater();
         startRefreshInterval();
       });
 
@@ -171,7 +173,7 @@ angular.module('starter.services', ['ngResource'])
 
   newsIntervalFacade.start = function() {
     if(!angular.isDefined(intervalPromise)){
-      intervalPromise = $interval(updater, 0.2/*m*/ * 60/*s*/ * 1000 /*ms*/);
+      intervalPromise = $interval(updater, 5/*m*/ * 60/*s*/ * 1000 /*ms*/);
     }
     updater();
   };
