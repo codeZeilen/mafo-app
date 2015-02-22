@@ -81,8 +81,18 @@
 
 <ion-view>
     <ion-content>
-
-        <ion-list class="list">
+        <div class="card" ng-show="news.length == 0">
+            <div class="item item-text-wrap">
+                <h2>Herzlich Willkommen beim <br />Mannheim Forum</h2>
+                <p>Über den App-Newsticker halten wir dich rund um die Uhr mit den wichtigsten Neuigkeiten rund um das Mannheim Forum auf dem Laufenden.</p>
+            </div>
+        </div>
+        <div class="card" ng-show="news.length == 0">
+            <ion-item>
+                Momentan gibt es noch keine News.
+            </ion-item>
+        </div>
+        <ion-list class="list" ng-show="news.length > 0">
             <div class="card">
                 <div class="item item-text-wrap">
                     <h2>Herzlich Willkommen beim <br />Mannheim Forum</h2>
@@ -102,8 +112,7 @@
         </ion-list>
 
     </ion-content>
-    <ion-footer-bar class="item-input-inset hide-on-keyboard-open"
-                    >
+    <ion-footer-bar class="item-input-inset hide-on-keyboard-open">
         <div class="item-input-wrapper" ng-click="startSearch()">
             <i class="icon ion-ios7-search placeholder-icon"></i>
             <input 

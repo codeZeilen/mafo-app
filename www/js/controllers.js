@@ -223,9 +223,8 @@ angular.module('starter.controllers', ['starter.services'])
 .controller('NewsCtrl', function($scope, Persistence, NewsInterval) {
     $scope.news = [];
 
-    Persistence.listNews().then(function(news) {
-      $scope.news = news;
-      NewsInterval.start(function(newsItems) {
+    $scope.$watch(NewsInterval.newsUpdateCounter, function(oldVal, newVal) {
+      Persistence.listNews().then(function(newsItems) {
         $scope.news = newsItems;
         console.log(moment().format('HH:mm:ss: ') + 'Reloaded news');
       });
@@ -309,13 +308,14 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.modal = modal;
   });
 
-    Persistence.listNews().then(function(news) {
-      $scope.news = news;
-      NewsInterval.start(function(newsItems) {
-        $scope.news = newsItems;
+  $scope.$watch(NewsInterval.newsUpdateCounter, function(oldVal, newVal) {
+    if(!(oldVal === newVal)) {
+      Persistence.listNews().then(function(news) {
+        $scope.news = news;
         console.log(moment().format('HH:mm:ss: ') + 'Reloaded news');
       });
-    });
+    }
+  });
 
   $q.all([Persistence.listEvents(),
     Persistence.listPartners(),

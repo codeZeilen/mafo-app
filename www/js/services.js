@@ -128,7 +128,7 @@ angular.module('starter.services', ['ngResource'])
               });
           });
         });
-      }, 0.5/*m*/ * 60 /*s*/ * 1000 /*ms*/);
+      }, 15/*m*/ * 60 /*s*/ * 1000 /*ms*/);
     };
 
     Persistence.Entities.ServerUpdateTimestamp.all().list(null, function(storedTimeStamps) {
@@ -157,24 +157,32 @@ angular.module('starter.services', ['ngResource'])
 .factory('NewsInterval', function($interval, Persistence) {
   var intervalPromise;
 
-  return {
-    start : function(callback) {
+  var updater = function() {
+    Persistence.incrementalRefreshNews().then(function() {
+      Persistence.listNews().then(function(newsItems) {
+        newsIntervalFacade.newsUpdateCounter += 1;
+      });
+    });
+  };
+
+  var newsIntervalFacade = {
+    start : function() {
       if(!angular.isDefined(intervalPromise)){
-        intervalPromise = $interval(function() {
-          Persistence.incrementalRefreshNews().then(function() {
-            Persistence.listNews().then(function(newsItems) {
-              callback(newsItems);
-            });
-          });
-        }, 5/*m*/ * 60/*s*/ * 1000 /*ms*/);
+        intervalPromise = $interval(updater, 0.2/*m*/ * 60/*s*/ * 1000 /*ms*/);
       }
+      updater();
     },
+
     stop : function() {
       if(angular.isDefined(intervalPromise)) {
         $interval.cancel(intervalPromise);
       }
-    }
+    },
+
+    newsUpdateCounter : 0
   };
+
+  return newsIntervalFacade;
 })
 
 .factory('ContactRequestOutbox', function($interval, Persistence, $http, $q) {
@@ -465,8 +473,18 @@ angular.module('starter.services', ['ngResource'])
         var creationTimestamps = news.map(function(newsItem) {
           return newsItem.createdAt;
         });
-        var latestNewsTimestamp = Math.max.apply(null, creationTimestamps);
-        NewsAPI.refreshFrom(latestNewsTimestamp).then(result.resolve);
+        var latestNewsTimestamp = 0;
+        if(creationTimestamps.length > 0) {
+          latestNewsTimestamp = Math.max.apply(null, creationTimestamps);
+        };
+        NewsAPI.refreshFrom(latestNewsTimestamp).then(function(newsItems) {
+          angular.forEach(newsItems, function(newsItem) {
+            persistence.add(new entities.News(newsItem));
+          });
+          persistence.flush(function() {
+            result.resolve();
+          });
+        });
       });
 
       return result.promise;
