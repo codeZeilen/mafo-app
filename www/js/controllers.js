@@ -223,12 +223,19 @@ angular.module('starter.controllers', ['starter.services'])
 .controller('NewsCtrl', function($scope, Persistence, NewsInterval) {
     $scope.news = [];
 
-    $scope.$watch(NewsInterval.newsUpdateCounter, function(oldVal, newVal) {
+    var updateNews = function() {
       Persistence.listNews().then(function(newsItems) {
         $scope.news = newsItems;
         console.log(moment().format('HH:mm:ss: ') + 'Reloaded news');
       });
+    };
+
+    $scope.$watch(NewsInterval.newsUpdateCounter, function(oldVal, newVal) {
+      if(!(oldVal === newVal)) {
+        updateNews();
+      }
     });
+    updateNews();
 
     $scope.dateFormat = function(timeStampString) {
       var time = moment(timeStampString, "X");
@@ -308,14 +315,19 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.modal = modal;
   });
 
+  var updateNews = function() {
+    Persistence.listNews().then(function(news) {
+      $scope.news = news;
+      console.log(moment().format('HH:mm:ss: ') + 'Reloaded news');
+    });
+  };
+
   $scope.$watch(NewsInterval.newsUpdateCounter, function(oldVal, newVal) {
     if(!(oldVal === newVal)) {
-      Persistence.listNews().then(function(news) {
-        $scope.news = news;
-        console.log(moment().format('HH:mm:ss: ') + 'Reloaded news');
-      });
+      updateNews();
     }
   });
+  updateNews();
 
   $q.all([Persistence.listEvents(),
     Persistence.listPartners(),
