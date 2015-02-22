@@ -499,8 +499,8 @@ angular.module('starter.services', ['ngResource'])
     };
 
     var getAllOf = function(entityClass, deferred) {
-      entityClass.all().list(null, function (speakers) {
-        deferred.resolve(speakers);
+      entityClass.all().list(null, function (individuals) {
+        deferred.resolve(individuals);
       });
     };
 
