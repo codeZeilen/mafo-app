@@ -125,7 +125,7 @@ angular.module('starter.services', ['ngResource'])
             });
         });
       });
-    }
+    };
 
     var intervalPromise;
     var startRefreshInterval = function() {
@@ -159,21 +159,22 @@ angular.module('starter.services', ['ngResource'])
 .factory('NewsInterval', function($interval, Persistence) {
   var intervalPromise;
 
+  var newsIntervalFacade = {
+    newsUpdateCounter : 0,
+    newsItems: []
+  };
+
   var updater = function() {
     Persistence.incrementalRefreshNews().then(function() {
       Persistence.listNews().then(function(newsItems) {
-        newsIntervalFacade.newsUpdateCounter += 1;
+        newsIntervalFacade.newsItems = newsItems;
       });
     });
   };
 
-  var newsIntervalFacade = {
-    newsUpdateCounter : 0
-  };
-
   newsIntervalFacade.start = function() {
     if(!angular.isDefined(intervalPromise)){
-      intervalPromise = $interval(updater, 5/*m*/ * 60/*s*/ * 1000 /*ms*/);
+      intervalPromise = $interval(updater, 0.1/*m*/ * 60/*s*/ * 1000 /*ms*/);
     }
     updater();
   };

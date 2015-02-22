@@ -226,13 +226,12 @@ angular.module('starter.controllers', ['starter.services'])
     var updateNews = function() {
       Persistence.listNews().then(function(newsItems) {
         $scope.news = newsItems;
-        console.log(moment().format('HH:mm:ss: ') + 'Reloaded news');
       });
     };
 
-    $scope.$watch(NewsInterval.newsUpdateCounter, function(oldVal, newVal) {
+    $scope.$watch(function() { return NewsInterval.newsItems }, function(oldVal, newVal, scope) {
       if(!(oldVal === newVal)) {
-        updateNews();
+        updateNews(scope);
       }
     });
     updateNews();
@@ -322,7 +321,7 @@ angular.module('starter.controllers', ['starter.services'])
     });
   };
 
-  $scope.$watch(NewsInterval.newsUpdateCounter, function(oldVal, newVal) {
+  $scope.$watch(function() { return NewsInterval.newsItems }, function(oldVal, newVal) {
     if(!(oldVal === newVal)) {
       updateNews();
     }
