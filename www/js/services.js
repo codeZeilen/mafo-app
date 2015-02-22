@@ -590,24 +590,6 @@ angular.module('starter.services', ['ngResource'])
       listCategories: function() {
         return listing(entities.TopicCategory, refreshCategories, getAllCategories);
       },
-      getCategory: function(categoryServerId) {
-        var result = $q.defer();
-        entities.TopicCategory.all().count(null, function (speakersCount) {
-          var intermediate_defer = $q.defer();
-          var intermediate_result = intermediate_defer.promise;
-          if(speakersCount == 0) {
-            intermediate_result = refreshAllOf(TopicCateogryAPI, entities.TopicCategory);
-          } else {
-            intermediate_defer.resolve();
-          }
-          intermediate_result.then(function() {
-            getting(entities.TopicCategory, categoryServerId).then(function(category) {
-              result.resolve(category);
-            })
-          });
-        });
-        return result.promise;
-      },
 
       /* Rooms */
       refreshRooms: refreshRooms,
