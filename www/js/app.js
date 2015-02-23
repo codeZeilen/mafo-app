@@ -161,11 +161,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
     })
 
     .state('app.newsItem', {
-      url: "/news/:scrollTo",
+      url: "/news/:itemId",
       views: {
         'menuContent': {
-          templateUrl: 'templates/personal/news.html',
-          controller: 'NewsCtrl'
+          templateUrl: 'templates/personal/newsItem.html',
+          controller: 'NewsItemCtrl'
         }
       }
     })

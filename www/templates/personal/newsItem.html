@@ -1,0 +1,16 @@
+<ion-header-bar class="bar bar-subheader">
+    <h2 class="title">News</h2>
+</ion-header-bar>
+<ion-view>
+    <ion-content>
+        <div class="card"">
+            <ion-item>
+                <h2>{{newsItem.title}}</h2>
+                <p>{{dateFormat(newsItem.createdAt)}}</p>
+            </ion-item>
+            <ion-item >
+                <p class="item-long-description news-item-content" dynamic-content="newsItem.content"></p>
+            </ion-item>
+        </div>
+    </ion-content>
+</ion-view>

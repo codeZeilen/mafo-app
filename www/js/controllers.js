@@ -99,12 +99,13 @@ angular.module('starter.controllers', ['starter.services'])
         $scope.categoryNames[category.serverId] = category.name;
       });
     };
-    $scope.$watch(function() { return ContentUpdater.eventUpdateCounter }, function(oldVal, newVal) {
+    $scope.$watch(ContentUpdater.eventUpdateCounter, function(oldVal, newVal) {
       if(!(oldVal === newVal)) {
         Persistence.listEvents().then(processEvents);
         Persistence.listCategories().then(processCategories);
       }
     });
+
     Persistence.listEvents().then(processEvents);
     Persistence.listCategories().then(processCategories);
 
@@ -242,6 +243,20 @@ angular.module('starter.controllers', ['starter.services'])
 
 })
 
+.controller('NewsItemCtrl', function($scope, $stateParams, Persistence) {
+  $scope.newsItem = {};
+
+  Persistence.getNewsItem($stateParams.itemId).then(function(newsItem) {
+    $scope.newsItem = newsItem;
+  });
+
+  $scope.dateFormat = function(timeStampString) {
+    var time = moment(timeStampString, "X");
+    return time.format("DD. MMM YYYY, HH").concat(" Uhr");
+  };
+
+})
+
 .controller('ContactCtrl', function($scope, Persistence, ContactRequestOutbox) {
 
     $scope.dataWasSaved = false;
@@ -350,7 +365,7 @@ angular.module('starter.controllers', ['starter.services'])
   });
 
   $scope.gotoItem = function(newsItemId) {
-    $state.go("app.news", { scrollTo : newsItemId });
+    $state.go("app.newsItem", { itemId : newsItemId });
   };
 
   $scope.startSearch = function() {
@@ -397,6 +412,11 @@ angular.module('starter.controllers', ['starter.services'])
 
   $scope.eventCategoryName = function(event) {
     return $scope.eventCategoryNames[event.eventType];
+  };
+
+  $scope.dateFormat = function(timeStampString) {
+    var time = moment(timeStampString, "X");
+    return time.format("DD. MMM YYYY, HH").concat(" Uhr");
   };
 })
 

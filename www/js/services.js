@@ -624,6 +624,9 @@ angular.module('starter.services', ['ngResource'])
       listNews: function() {
         return listing(entities.News, refreshAllNews, getAllNews);
       },
+      getNewsItem: function(itemId) {
+        return getting(entities.News, itemId);
+      },
       /* ContactRequest */
       addContactRequest: function(message) {
         var result = $q.defer();
