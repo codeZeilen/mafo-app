@@ -8,7 +8,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
 
 .run(function($ionicPlatform, $rootScope, ContactRequestOutbox,
               NewsInterval, ContentUpdater, $ionicNavBarDelegate,
-              $ionicHistory, $state, $location, $stateParams, $anchorScroll, $timeout) {
+              $ionicHistory, $state) {
   ImgCache.options.debug = true;
   ImgCache.options.chromeQuota = 30*1024*1024;
 
@@ -44,15 +44,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
         $ionicHistory.goBack();
       }
     },100);
-
-    $rootScope.$on('$stateChangeSuccess', function(newRoute, oldRoute) {
-      if(angular.isDefined($stateParams.scrollTo)) {
-        $timeout(function() {
-          $location.hash($stateParams.scrollTo);
-          $anchorScroll();
-        }, 500);
-      }
-    });
 
     moment.locale('de', {
       weekdaysMin: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"]
