@@ -52,6 +52,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
     ContactRequestOutbox.send();
     NewsInterval.start();
 
+    navigator.splashscreen.hide();
+
   });
 
 })
