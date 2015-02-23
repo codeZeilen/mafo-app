@@ -1,6 +1,6 @@
 <script id="search-modal.html" type="text/ng-template">
     <div class="modal">
-        <ion-header-bar class="bar bar-header item-input-inset">
+        <ion-header-bar class="bar bar-header item-input-inset starter-search-bar">
             <label class="item-input-wrapper">
                 <i class="icon ion-ios7-search placeholder-icon"></i>
                 <input id="searchModalInput" ng-model="searchConfig.term" type="search"
@@ -8,7 +8,7 @@
                        ng-model-options='{ debounce: 1500 }'
                        ng-change="changeSearchTerm()">
             </label>
-            <button ng-click="stopSearch()" class="button button-clear">
+            <button ng-click="stopSearch()" class="button button-stable button-clear">
                 Schließen
             </button>
         </ion-header-bar>
@@ -112,13 +112,13 @@
         </ion-list>
 
     </ion-content>
-    <ion-footer-bar class="item-input-inset hide-on-keyboard-open">
+    <ion-footer-bar class="item-input-inset hide-on-keyboard-open starter-search-bar">
         <div class="item-input-wrapper" ng-click="startSearch()">
             <i class="icon ion-ios7-search placeholder-icon"></i>
             <input 
                    type="search"
                    placeholder="Suche"
- 		   disabled >
+ 		           disabled >
         </div>
     </ion-footer-bar>
 </ion-view>

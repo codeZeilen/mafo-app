@@ -166,3 +166,8 @@ p.item-long-description p
 .event-info-card .item p {
     margin-bottom: 1em;
 }
+
+/* Starter view */
+.starter-search-bar {
+    background-color: rgb(103, 20, 15);
+}
