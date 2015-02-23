@@ -16,12 +16,12 @@
                 </p>
             </div>
 
-            <div class="item item-icon-left" ng-if="event.startTime && event.endTime">
+            <div class="item item-icon-left item-text-wrap" ng-if="event.startTime && event.endTime">
                 <i class="icon ion-ios-clock-outline"></i>
                 {{dayFormat(event.startTime)}}: {{timeFormat(event.startTime)}} - {{timeFormat(event.endTime)}}
             </div>
 
-            <div class="item item-icon-left" ng-if="event.roomId > 0" ng-href="#/app/rooms/{{event.roomId}}">
+            <div class="item item-icon-left item-text-wrap" ng-if="event.roomId > 0" ng-href="#/app/rooms/{{event.roomId}}">
                 <i class="icon ion-ios-home-outline"></i>
                 {{eventRoom.name}}
             </div>
