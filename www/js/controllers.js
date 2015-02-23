@@ -50,7 +50,7 @@ angular.module('starter.controllers', ['starter.services'])
   };
 
   $scope.shouldBeShown = function(speaker) {
-    return speaker.isShownInList;
+    return speaker.isShownInList == 1;
   };
 
   Persistence.listSpeakers().then(function(speakers) {
