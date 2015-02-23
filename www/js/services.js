@@ -53,11 +53,9 @@ angular.module('starter.services', ['ngResource'])
 
     return {
       init: function() {
-        console.log("Init started");
         var allDone = [];
         if(!initStarted) {
           initStarted = true;
-          console.log("Real init!");
           $http.get('content.json')
             .success(function (fileContent) {
               var entitiesContent = angular.fromJson(fileContent);
