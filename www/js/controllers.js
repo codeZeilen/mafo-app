@@ -99,13 +99,12 @@ angular.module('starter.controllers', ['starter.services'])
         $scope.categoryNames[category.serverId] = category.name;
       });
     };
-    $scope.$watch(ContentUpdater.eventUpdateCounter, function(oldVal, newVal) {
+    $scope.$watch(function() { return ContentUpdater.eventUpdateCounter }, function(oldVal, newVal) {
       if(!(oldVal === newVal)) {
         Persistence.listEvents().then(processEvents);
         Persistence.listCategories().then(processCategories);
       }
     });
-
     Persistence.listEvents().then(processEvents);
     Persistence.listCategories().then(processCategories);
 
@@ -282,6 +281,7 @@ angular.module('starter.controllers', ['starter.services'])
       updater();
     }
   });
+  updater();
 
 })
 
