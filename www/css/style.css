@@ -171,3 +171,13 @@ p.item-long-description p
 .starter-search-bar {
     background-color: rgb(103, 20, 15);
 }
+
+.news-item-teaser {
+    height:4.5em;
+    overflow:hidden;
+}
+
+.news-item-teaser p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
