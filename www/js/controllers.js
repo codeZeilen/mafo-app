@@ -361,13 +361,11 @@ angular.module('starter.controllers', ['starter.services'])
       $scope.speakers = results[3];
     });
   };
+
   $scope.$watch(function() {
-    return [ContentUpdater.roomUpdateCounter, ContentUpdater.eventUpdateCounter,
-      ContentUpdater.partnerUpdateCounter, ContentUpdater.speakerUpdateCounter];
+    return ContentUpdater.updateCounter;
   }, function(oldVal, newVal) {
-      if(!angular.equals(oldVal, newVal)) {
-        updateSearchItems();
-      }
+      updateSearchItems();
   });
   updateSearchItems();
 

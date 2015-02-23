@@ -91,7 +91,7 @@ angular.module('starter.services', ['ngResource'])
     var baseURL = ContentConfiguration.contentUpdateBaseURL;
     var apiConfiguration = ContentConfiguration.contentUpdateConfiguration;
 
-    var updateInterface = {};
+    var updateInterface = { 'updateCounter' : 0 };
     angular.forEach(Object.keys(apiConfiguration), function(routeKey) {
       updateInterface[apiConfiguration[routeKey].attributeName] = 0;
     });
@@ -116,6 +116,7 @@ angular.module('starter.services', ['ngResource'])
               if(newTimeStamp > oldTimeStamp) {
                 Persistence[apiConfiguration[routeKey].refreshFunction]().then(function() {
                   updateInterface[apiConfiguration[routeKey].attributeName] += 1;
+                  updateInterface.updateCounter += 1;
                   timestampObjects[routeKey].timestamp = requestResult;
                   persistence.flush();
                 });
