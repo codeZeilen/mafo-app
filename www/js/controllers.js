@@ -369,6 +369,7 @@ angular.module('starter.controllers', ['starter.services'])
         updateSearchItems();
       }
   });
+  updateSearchItems();
 
 
   Persistence.listNews().then(function(news) {
