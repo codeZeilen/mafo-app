@@ -322,7 +322,7 @@ angular.module('starter.controllers', ['starter.services'])
 
 })
 
-.controller('StarterCtrl', function($scope, $ionicModal, $state, Persistence, NewsInterval, $q) {
+.controller('StarterCtrl', function($scope, $ionicModal, $state, Persistence, NewsInterval, ContentUpdater, $q) {
 
   $scope.searchConfig = {"term" : ""};
   $scope.events = [];
@@ -351,14 +351,25 @@ angular.module('starter.controllers', ['starter.services'])
   });
   updateNews();
 
-  $q.all([Persistence.listEvents(),
-    Persistence.listPartners(),
-    Persistence.listRooms(),
-    Persistence.listSpeakers()]).then(function(results) {
-    $scope.events = results[0];
-    $scope.partners = results[1];
-    $scope.speakers = results[3];
+  var updateSearchItems = function() {
+    $q.all([Persistence.listEvents(),
+      Persistence.listPartners(),
+      Persistence.listRooms(),
+      Persistence.listSpeakers()]).then(function(results) {
+      $scope.events = results[0];
+      $scope.partners = results[1];
+      $scope.speakers = results[3];
+    });
+  };
+  $scope.$watch(function() {
+    return [ContentUpdater.roomUpdateCounter, ContentUpdater.eventUpdateCounter,
+      ContentUpdater.partnerUpdateCounter, ContentUpdater.speakerUpdateCounter];
+  }, function(oldVal, newVal) {
+      if(!angular.equals(oldVal, newVal)) {
+        updateSearchItems();
+      }
   });
+
 
   Persistence.listNews().then(function(news) {
     $scope.news = news;
