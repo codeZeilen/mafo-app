@@ -48,6 +48,7 @@ a.text-link {
     bottom:0;
 }
 
+
 /* Tabs */
 .mafo-tabs {
     background-color: rgb(103, 20, 15);
@@ -180,4 +181,25 @@ p.item-long-description p
 .news-item-teaser p {
     margin-top: 0px;
     margin-bottom: 0px;
+}
+
+/* Map */
+
+ion-scroll.map-room-scroll[direction=y] {
+    height: calc(100vh - 40px - 40px /*header + subheader */ - 150px /*map*/);
+}
+
+.map-col {
+    height: 170px;
+}
+
+.map-caption {
+    height: 20px;
+    text-align: center;
+    width: inherit;
+}
+
+.map-col img {
+    height: 140px;
+    width: inherit;
 }
