@@ -185,12 +185,13 @@ p.item-long-description p
 
 /* Map */
 
-ion-scroll.map-room-scroll[direction=y] {
-    height: calc(100vh - 40px - 40px /*header + subheader */ - 150px /*map*/);
-}
+/*ion-scroll.map-room-scroll[direction=y] {
+    height: 300px;
+}*/
 
 .map-col {
-    height: 170px;
+    max-height: 150px;
+    text-align: center;
 }
 
 .map-caption {
@@ -200,6 +201,8 @@ ion-scroll.map-room-scroll[direction=y] {
 }
 
 .map-col img {
-    height: 140px;
-    width: inherit;
+    max-height:120px;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
 }

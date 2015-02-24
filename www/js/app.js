@@ -108,6 +108,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
   };
 })
 
+.directive('mapList', function() {
+  return {
+    restrict: 'A',
+    link: function(scope, elements, attrs) {
+      var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+      elements[0].style.height = "" + (h - (88 + 150)) + "px";
+    }
+  }
+})
+
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
   $ionicConfigProvider.tabs.position('bottom');
   $ionicConfigProvider.navBar.alignTitle('center');

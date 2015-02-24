@@ -5,19 +5,21 @@
     <ion-content scroll="false">
         <div class="row">
             <div class="col col-50 map-col">
-                <img src="../../img/assets/mfschedule/room/Lageplan_EG_grau.jpg" />
+                <img src="img/assets/mfschedule/room/Lageplan_EG_grau.jpg" />
                 <div class="map-caption">EG</div>
             </div>
             <div class="col col-50 map-col">
-                <img src="../../img/assets/mfschedule/room/Lageplan_OG_grau.jpg" />
+                <img src="img/assets/mfschedule/room/Lageplan_OG_grau.jpg" />
                 <div class="map-caption">OG</div>
             </div>
         </div>
-        <ion-scroll class="map-room-scroll" direction="y" has-bouncing="false">
-            <ion-item ng-repeat="room in rooms | orderBy : 'name'"
-                      ng-href="#/app/rooms/{{room.serverId}}">
-                {{room.name}}
-            </ion-item>
+        <ion-scroll map-list id="map-room-list" class="map-room-scroll" direction="y" has-bouncing="false">
+            <ion-list>
+                <ion-item class="item-text-wrap" ng-repeat="room in rooms | orderBy : 'name'"
+                          ng-href="#/app/rooms/{{room.serverId}}">
+                    {{room.name}}
+                </ion-item>
+            </ion-list>
         </ion-scroll>
     </ion-content>
 </ion-view>
