@@ -80,6 +80,7 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.startTimes = 'startTime';
     $scope.categoryColors = {};
     $scope.categoryNames = {};
+    $scope.favoriteEventIds = [];
 
     $scope.categoriesNotToShow = ['Vertiefungsworkshop', 'Unternehmensworkshop'];
 
@@ -154,9 +155,21 @@ angular.module('starter.controllers', ['starter.services'])
       $scope.days = $filter('orderBy')(days, function(d) { return d.day });
     };
 
+    $scope.isFavorite = function(event) {
+      return $scope.favoriteEventIds.indexOf(event.serverId) > -1;
+    };
     $scope.favoriteEvent = function(event) {
-      alert('Favorite: ' + event.name);
-      return false;
+      var action;
+      if($scope.isFavorite(event)) {
+        action = Persistence.removeFavoriteEvent(event.serverId);
+      } else {
+        action = Persistence.addFavoriteEvent(event.serverId);
+      }
+      action.then(function() {
+        Persistence.listFavoriteEventIds().then(function(ids) {
+          $scope.favoriteEventIds = ids;
+        })
+      });
     };
 
     $scope.eventCategoryNames = {};

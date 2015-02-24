@@ -35,9 +35,12 @@
                                 </div>
                             </a>
                         </div>
-                        <!--<div class="program-favorite-event">
-                            <i class="ion-icon ion-ios-star-outline" ng-click="favoriteEvent(event);" stopEvent></i>
-                        </div>-->
+                        <div class="program-favorite-event">
+                            <i class="ion-icon"
+                               ng-class="{'ion-ios-star-outline': !(favoriteEventIds.indexOf(event.serverId) > -1),
+                                          'ion-ios-star': (favoriteEventIds.indexOf(event.serverId) > -1)}"
+                               ng-click="favoriteEvent(event);" stopEvent></i>
+                        </div>
                     </ion-item>
                     <div ng-repeat-end></div>
                 </ion-list>

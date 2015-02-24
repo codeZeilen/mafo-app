@@ -415,6 +415,17 @@ angular.module('starter.services', ['ngResource'])
       timestamp: "TEXT"
     });
 
+    entities.FavoriteEvent = persistence.define('FavoriteEvent', {
+      serverId: 'INT'
+    });
+
+    entities.UserEvent = persistence.define('UserEvent', {
+      title : 'TEXT',
+      startTimeStamp : 'TEXT',
+      endTimeStamp : 'TEXT',
+      location : 'TEXT'
+    });
+
     persistence.debug = true;
     persistence.schemaSync();
 
@@ -666,6 +677,51 @@ angular.module('starter.services', ['ngResource'])
       listContactRequests: function() {
         var result = $q.defer();
         getAllOf(entities.ContactRequest, result);
+        return result.promise;
+      },
+
+      /* Favorite Events */
+      listFavoriteEventIds : function() {
+        var result = $q.defer();
+        entities.FavoriteEvent.all().list(null, function(ids) {
+          result.resolve(ids.map(function(each) {
+            return each.serverId;
+          }));
+        });
+        return result.promise;
+      },
+      listFavoriteEvents : function() {
+        var result = $q.defer();
+        entities.FavoriteEvent.all().list(null, function(favoriteIds) {
+          var idSet = {};
+          angular.forEach(favoriteIds, function(idObject) {
+            idSet[idObject.serverId] = true;
+          });
+          entities.Event.all().filter('serverId', 'in', Object.keys(idSet)).list(null, function(events) {
+            result.resolve(events);
+          })
+        });
+        return result.promise;
+      },
+      listUserEvents : function() {
+        var result = $q.defer();
+        entities.UserEvent.all().list(null, result.resolve);
+        return result.promise;
+      },
+      addFavoriteEvent : function(eventServerId) {
+        var result = $q.defer();
+        persistence.add(new entities.FavoriteEvent({serverId : eventServerId}));
+        persistence.flush(result.resolve);
+        return result.promise;
+      },
+      removeFavoriteEvent : function(eventServerId) {
+        var result = $q.defer();
+        entities.FavoriteEvent.all().filter('serverId', '=', eventServerId).list(null, function(favorites) {
+          angular.forEach(favorites, function(each) {
+            persistence.remove(each);
+          });
+          persistence.flush(result.resolve);
+        });
         return result.promise;
       }
     };
