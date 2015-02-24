@@ -218,6 +218,10 @@ angular.module('starter.controllers', ['starter.services'])
 })
 
 .controller('PlannerCtrl', function($scope) {
+    $scope.thursday = { name : 'Donnerstag' };
+    $scope.friday   = { name : 'Freitag' };
+    $scope.saturday = { name : 'Samstag' };
+
 })
 
 .controller('NewsCtrl', function($scope, $stateParams, $location, $anchorScroll, Persistence, NewsInterval) {

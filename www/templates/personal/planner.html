@@ -1,16 +1,47 @@
+<script id="planner-day.html" type="text/ng-template">
+    <h2>{{day.name}}</h2>
+</script>
+
+<ion-header-bar class="bar bar-subheader">
+    <h2 class="title">Planer</h2>
+</ion-header-bar>
 <ion-view>
-    <ion-content>
-        <h1>Planer</h1>
-        <p>Mit dem MaFo-Planer kannst du dir deinen persönlichen Stundenplan für das Mannheim Forum
+    <ion-tabs class="tabs-royal">
+        <ion-tab title="Do">
+            <ion-view><ion-content>
+                <mafo-planner-day day="thursday"></mafo-planner-day>
+            </ion-content></ion-view>
+        </ion-tab>
 
-            zusammenstellen. Veranstaltungen hinzufügen kannst du, indem du in der Programmübersicht auf
+        <ion-tab title="Fr">
+            <ion-view><ion-content>
+                <mafo-planner-day day="friday"></mafo-planner-day>
+            </ion-content></ion-view>
+        </ion-tab>
 
-            den Stern hinter dem jeweiligen Programmpunkt tippst – die Veranstaltung wird dann automatisch in
+        <ion-tab title="Sa">
+            <ion-view><ion-content>
+                <mafo-planner-day day="saturday"></mafo-planner-day>
+            </ion-content></ion-view>
+        </ion-tab>
 
-            deinen Planer übernommen. Mehr Informationen über eine Veranstaltung oder eine Veranstaltung
+        <ion-tab title="Info">
+            <ion-view><ion-content>
+                <p>Mit dem MaFo-Planer kannst du dir deinen persönlichen Stundenplan für das Mannheim Forum
 
-            löschen kannst du, indem du auf den jeweiligen Eintrag in dem Planer drückst.
+                    zusammenstellen. Veranstaltungen hinzufügen kannst du, indem du in der Programmübersicht auf
 
-            Alternativ kannst du dir manuell einen Termin eintragen (siehe unter dem Planer).</p>
-    </ion-content>
+                    den Stern hinter dem jeweiligen Programmpunkt tippst – die Veranstaltung wird dann automatisch in
+
+                    deinen Planer übernommen. Mehr Informationen über eine Veranstaltung oder eine Veranstaltung
+
+                    löschen kannst du, indem du auf den jeweiligen Eintrag in dem Planer drückst.
+
+                    Alternativ kannst du dir manuell einen Termin eintragen (siehe unter dem Planer).</p>
+
+            </ion-content></ion-view>
+        </ion-tab>
+    </ion-tabs>
+
+
 </ion-view>

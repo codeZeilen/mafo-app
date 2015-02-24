@@ -118,6 +118,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
   }
 })
 
+.directive('mafoPlannerDay', function() {
+    return {
+      restrict: 'E',
+      scope: {
+        day: '=day'
+      },
+      templateUrl: 'planner-day.html'
+    };
+})
+
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
   $ionicConfigProvider.tabs.position('bottom');
   $ionicConfigProvider.navBar.alignTitle('center');
