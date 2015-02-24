@@ -2,7 +2,7 @@
 <widget id="com.ionicframework.mafoapp" version="0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
   <name>Mannheim Forum</name>
   <description>
-        An Ionic Framework and Cordova project.
+        Die offizielle App des Mannheim Forums 2015
     </description>
   <author email="patrick.rein@gmail.com" href="https://wwww.mannheim-forum.org/">
         Patrick Rein
