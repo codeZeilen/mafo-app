@@ -222,6 +222,17 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.friday   = { name : 'Freitag' };
     $scope.saturday = { name : 'Samstag' };
 
+    $scope.slots = [];
+    var start = moment("09:00", "HH:mm");
+    for(var i = 0; i < 14; i++) {
+      var time = moment(start);
+      time.add(moment.duration(i, 'hour'));
+      $scope.slots.push({
+        timestamp : time,
+        timeString : time.format("HH:mm")
+      });
+    }
+
 })
 
 .controller('NewsCtrl', function($scope, $stateParams, $location, $anchorScroll, Persistence, NewsInterval) {

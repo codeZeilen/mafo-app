@@ -210,3 +210,27 @@ p.item-long-description p
 img.map-full-view {
     width: 100%;
 }
+
+/* Planner */
+table.mafo-planner {
+    width: 100%;
+}
+
+table.mafo-planner tr {
+    height: 3em;
+    width: 100%;
+    padding: 0.5em;
+}
+
+td.mafo-planner-time {
+    width: 20%;
+    color: #4a4a4a;
+}
+
+td.mafo-planner-slot {
+    width: 80%;
+}
+
+tr.mafo-planner-odd-row {
+    background-color: lightgray;
+}

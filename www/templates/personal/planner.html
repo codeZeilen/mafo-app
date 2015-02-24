@@ -1,5 +1,12 @@
 <script id="planner-day.html" type="text/ng-template">
-    <h2>{{day.name}}</h2>
+    <table class="mafo-planner padding">
+        <tr ng-repeat="slot in slots"
+            ng-class-even="'mafo-planner-even-row'"
+            ng-class-odd="'mafo-planner-odd-row'">
+            <td class="padding mafo-planner-time">{{slot.timeString}}</td>
+            <td class="mafo-planner-slot"></td>
+        </tr>
+    </table>
 </script>
 
 <ion-header-bar class="bar bar-subheader">
@@ -8,25 +15,25 @@
 <ion-view>
     <ion-tabs class="tabs-royal">
         <ion-tab title="Do">
-            <ion-view><ion-content>
-                <mafo-planner-day day="thursday"></mafo-planner-day>
+            <ion-view><ion-content class="padding">
+                <mafo-planner-day day="thursday" slots="slots"></mafo-planner-day>
             </ion-content></ion-view>
         </ion-tab>
 
         <ion-tab title="Fr">
-            <ion-view><ion-content>
-                <mafo-planner-day day="friday"></mafo-planner-day>
+            <ion-view><ion-content class="padding">
+                <mafo-planner-day day="friday" slots="slots"></mafo-planner-day>
             </ion-content></ion-view>
         </ion-tab>
 
         <ion-tab title="Sa">
-            <ion-view><ion-content>
-                <mafo-planner-day day="saturday"></mafo-planner-day>
+            <ion-view><ion-content class="padding">
+                <mafo-planner-day day="saturday" slots="slots"></mafo-planner-day>
             </ion-content></ion-view>
         </ion-tab>
 
         <ion-tab title="Info">
-            <ion-view><ion-content>
+            <ion-view><ion-content class="padding">
                 <p>Mit dem MaFo-Planer kannst du dir deinen persönlichen Stundenplan für das Mannheim Forum
 
                     zusammenstellen. Veranstaltungen hinzufügen kannst du, indem du in der Programmübersicht auf
