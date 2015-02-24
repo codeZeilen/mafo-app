@@ -16,8 +16,9 @@
         <div class="item item-divider"> Räume </div>
         <ion-scroll map-list id="map-room-list" class="map-room-scroll" direction="y" has-bouncing="false">
             <ion-list>
-                <ion-item class="item-text-wrap" ng-repeat="room in rooms | orderBy : 'name'"
-                          ng-href="#/app/rooms/{{room.serverId}}">
+                <ion-item
+                            class="item-text-wrap" ng-repeat="room in rooms | orderBy : 'name'"
+                            ng-href="#/app/room/{{room.serverId}}">
                     {{room.name}}
                 </ion-item>
             </ion-list>

@@ -258,6 +258,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
       }
     })
 
+    .state('app.room', {
+      url: "/room/:roomId",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/program/room.html",
+          controller: 'RoomCtrl'
+        }
+      }
+    })
+
     .state('app.faq', {
       url: "/faq",
       views: {

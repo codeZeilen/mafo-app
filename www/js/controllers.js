@@ -313,11 +313,21 @@ angular.module('starter.controllers', ['starter.services'])
   })
 })
 
-.controller('MapCtrl', function($scope, Persistence) {
+.controller('MapCtrl', function($scope, $state, Persistence) {
     $scope.rooms = [];
 
     Persistence.listRooms().then(function(rooms) {
       $scope.rooms = rooms;
+    });
+
+})
+
+.controller('RoomCtrl', function($scope, $stateParams, Persistence) {
+
+    $scope.room = {};
+
+    Persistence.getRoom($stateParams.roomId).then(function(room) {
+      $scope.room = room;
     });
 
 })
