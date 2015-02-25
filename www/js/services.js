@@ -373,5 +373,36 @@ angular.module('starter.services', ['ngResource'])
         return result.promise;
       }
     };
-  });
+  })
 
+.factory('PlannerContent', function(Persistence) {
+
+    var favoriteEvents = [];
+    Persistence.listFavoriteEvents().then(function(persistedFavoriteEvents) {
+      favoriteEvents = persistedFavoriteEvents;
+    });
+
+    var isFavorite = function(event) {
+      return favoriteEvents.indexOf(event) > -1;
+    };
+
+    return {
+      favoriteEvents : favoriteEvents,
+      isFavoriteEvent : isFavorite,
+      favoriteEvent : function(event) {
+        favoriteEvents.push(event);
+        Persistence.addFavoriteEvent(event.serverId);
+      },
+      removeFavoriteEvent : function(event) {
+        var index = favoriteEvents.indexOf(event);
+        if(index > -1) {
+          favoriteEvents.splice(index, 1);
+        }
+        Persistence.removeFavoriteEvent(event.serverId);
+      }
+
+    }
+
+
+
+});

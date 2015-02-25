@@ -72,7 +72,7 @@ angular.module('starter.controllers', ['starter.services'])
     });
 })
 
-.controller('ProgramCtrl', function($scope, $filter, Persistence, ContentUpdater, EventUtil) {
+.controller('ProgramCtrl', function($scope, $filter, Persistence, ContentUpdater, EventUtil, PlannerContent) {
 
     $scope.days = [];
 
@@ -80,7 +80,6 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.startTimes = 'startTime';
     $scope.categoryColors = {};
     $scope.categoryNames = {};
-    $scope.favoriteEventIds = [];
 
     $scope.categoriesNotToShow = ['Vertiefungsworkshop', 'Unternehmensworkshop'];
 
@@ -110,29 +109,21 @@ angular.module('starter.controllers', ['starter.services'])
     Persistence.listEvents().then(processEvents);
     Persistence.listCategories().then(processCategories);
 
-
-
     $scope.updateDays = function(events) {
       var days = EventUtil.groupDays(events);
       days = EventUtil.daysToObjects(days);
       $scope.days = $filter('orderBy')(days, function(d) { return d.day });
     };
 
-    $scope.isFavorite = function(event) {
-      return $scope.favoriteEventIds.indexOf(event.serverId) > -1;
+    $scope.isFavoriteEvent = function(event) {
+      return PlannerContent.isFavoriteEvent(event);
     };
     $scope.favoriteEvent = function(event) {
-      var action;
-      if($scope.isFavorite(event)) {
-        action = Persistence.removeFavoriteEvent(event.serverId);
+      if(PlannerContent.isFavoriteEvent(event)) {
+        PlannerContent.removeFavoriteEvent(event);
       } else {
-        action = Persistence.addFavoriteEvent(event.serverId);
+        PlannerContent.favoriteEvent(event);
       }
-      action.then(function() {
-        Persistence.listFavoriteEventIds().then(function(ids) {
-          $scope.favoriteEventIds = ids;
-        })
-      });
     };
 
     $scope.eventCategoryNames = {};

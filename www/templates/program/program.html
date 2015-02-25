@@ -37,8 +37,8 @@
                         </div>
                         <div class="program-favorite-event">
                             <i class="ion-icon"
-                               ng-class="{'ion-ios-star-outline': !(favoriteEventIds.indexOf(event.serverId) > -1),
-                                          'ion-ios-star': (favoriteEventIds.indexOf(event.serverId) > -1)}"
+                               ng-class="{'ion-ios-star-outline': !isFavoriteEvent(event),
+                                          'ion-ios-star': isFavoriteEvent(event)}"
                                ng-click="favoriteEvent(event);" stopEvent></i>
                         </div>
                     </ion-item>
@@ -82,8 +82,8 @@
                         </div>
                         <div class="program-favorite-event">
                             <i class="ion-icon"
-                               ng-class="{'ion-ios-star-outline': !(favoriteEventIds.indexOf(event.serverId) > -1),
-                                          'ion-ios-star': (favoriteEventIds.indexOf(event.serverId) > -1)}"
+                               ng-class="{'ion-ios-star-outline': !isFavoriteEvent(event),
+                                          'ion-ios-star': isFavoriteEvent(event)}"
                                ng-click="favoriteEvent(event);" stopEvent></i>
                         </div>
                     </ion-item>
@@ -127,8 +127,8 @@
                         </div>
                         <div class="program-favorite-event">
                             <i class="ion-icon"
-                               ng-class="{'ion-ios-star-outline': !(favoriteEventIds.indexOf(event.serverId) > -1),
-                                          'ion-ios-star': (favoriteEventIds.indexOf(event.serverId) > -1)}"
+                               ng-class="{'ion-ios-star-outline': !isFavoriteEvent(event),
+                                          'ion-ios-star': isFavoriteEvent(event)}"
                                ng-click="favoriteEvent(event);" stopEvent></i>
                         </div>
                     </ion-item>
