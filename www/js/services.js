@@ -209,6 +209,52 @@ angular.module('starter.services', ['ngResource'])
   return newsIntervalFacade;
 })
 
+.factory('EventUtil', function() {
+    var groupDays = function(events) {
+      var days = {};
+      angular.forEach(events, function(event) {
+        var startTime = moment(event.startTime);
+        var day = moment(startTime);
+        day.startOf('day');
+        if(!(day in days)) {
+          days[day] = {};
+        }
+        if(!(startTime in days[day])) {
+          days[day][startTime] = [];
+        }
+        days[day][startTime].push(event);
+
+      });
+      return days;
+    };
+
+    var daysToObjects = function(days) {
+      var resultDays = [];
+      angular.forEach(Object.keys(days), function(day) {
+        var slots = [];
+        angular.forEach(Object.keys(days[day]), function(timeslot) {
+          slots.push({
+            'startTime': moment(timeslot),
+            'displayName' : moment(timeslot).format("HH:mm").concat(" Uhr"),
+            'events' :  days[day][timeslot]
+          });
+        });
+        resultDays.push({
+          'day': moment(day),
+          'displayName' : moment(day).format("dd, D.MMM"),
+          'slots' : slots
+        });
+      });
+
+      return resultDays;
+    };
+
+    return {
+      daysToObjects : daysToObjects,
+      groupDays     : groupDays
+    }
+})
+
 .factory('ContactRequestOutbox', function($interval, Persistence, $http, $q) {
   var intervalPromise;
 

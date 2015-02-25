@@ -1,10 +1,18 @@
 <script id="planner-day.html" type="text/ng-template">
     <table class="mafo-planner padding">
-        <tr ng-repeat="slot in slots"
-            ng-class-even="'mafo-planner-even-row'"
-            ng-class-odd="'mafo-planner-odd-row'">
-            <td class="padding mafo-planner-time">{{slot.timeString}}</td>
-            <td class="mafo-planner-slot"></td>
+        <tr ng-repeat="slot in day.slots"
+            >
+            <td class="mafo-planner-time"
+                ng-class="{ 'mafo-planner-even-row' : (($index/4) % 2 < 1) == 0,
+                            'mafo-planner-odd-row'  : (($index/4) % 2 < 1) == 1 }">{{($index%4 == 0) ? slot.timeString : ""}}</td>
+            <td class="mafo-planner-event"
+                ng-repeat="event in slot.events"
+                rowspan="{{event.duration.asMinutes() / 15}}">
+                <div>{{event.name}}</div>
+            </td>
+            <td ng-repeat="i in [1,2,3,4,5,6,7,8,9]" ng-class="{ 'mafo-planner-even-row' : (($index/4) % 2 < 1) == 0,
+                        'mafo-planner-odd-row'  : (($parent.$index/4) % 2 < 1) == 1 }">
+            </td>
         </tr>
     </table>
 </script>
@@ -16,19 +24,19 @@
     <ion-tabs class="tabs-royal">
         <ion-tab title="Do">
             <ion-view><ion-content class="padding">
-                <mafo-planner-day day="thursday" slots="slots"></mafo-planner-day>
+                <mafo-planner-day day="days[0]" slots="slots"></mafo-planner-day>
             </ion-content></ion-view>
         </ion-tab>
 
         <ion-tab title="Fr">
             <ion-view><ion-content class="padding">
-                <mafo-planner-day day="friday" slots="slots"></mafo-planner-day>
+                <mafo-planner-day day="days[1]" slots="slots"></mafo-planner-day>
             </ion-content></ion-view>
         </ion-tab>
 
         <ion-tab title="Sa">
             <ion-view><ion-content class="padding">
-                <mafo-planner-day day="saturday" slots="slots"></mafo-planner-day>
+                <mafo-planner-day day="days[2]" slots="slots"></mafo-planner-day>
             </ion-content></ion-view>
         </ion-tab>
 

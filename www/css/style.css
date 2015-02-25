@@ -217,20 +217,32 @@ table.mafo-planner {
 }
 
 table.mafo-planner tr {
-    height: 3em;
+    height: 0.6em;
     width: 100%;
     padding: 0.5em;
 }
 
 td.mafo-planner-time {
+    padding:0.3em;
     width: 20%;
     color: #4a4a4a;
 }
 
 td.mafo-planner-slot {
     width: 80%;
+    overflow: visible;
+    max-height:3em;
 }
 
-tr.mafo-planner-odd-row {
+.mafo-planner-odd-row {
     background-color: lightgray;
+}
+
+.mafo-planner-event {
+    background-color: rgb(103, 20, 15);
+    color: #FFFFFF;
+    overflow: hidden;
+    font-size: 0.8em;
+    padding: 0.2em;
+    border: 1px solid #FFF;
 }

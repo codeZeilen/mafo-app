@@ -72,7 +72,7 @@ angular.module('starter.controllers', ['starter.services'])
     });
 })
 
-.controller('ProgramCtrl', function($scope, $filter, Persistence, ContentUpdater) {
+.controller('ProgramCtrl', function($scope, $filter, Persistence, ContentUpdater, EventUtil) {
 
     $scope.days = [];
 
@@ -110,48 +110,11 @@ angular.module('starter.controllers', ['starter.services'])
     Persistence.listEvents().then(processEvents);
     Persistence.listCategories().then(processCategories);
 
-    var groupDays = function(events) {
-      var days = {};
-      angular.forEach(events, function(event) {
-        var startTime = moment(event.startTime);
-        var day = moment(startTime);
-        day.startOf('day');
-        if(!(day in days)) {
-          days[day] = {};
-        }
-        if(!(startTime in days[day])) {
-          days[day][startTime] = [];
-        }
-        days[day][startTime].push(event);
 
-      });
-      return days;
-    };
-
-    var daysToObjects = function(days) {
-      var resultDays = [];
-      angular.forEach(Object.keys(days), function(day) {
-        var slots = [];
-        angular.forEach(Object.keys(days[day]), function(timeslot) {
-          slots.push({
-            'startTime': moment(timeslot),
-            'displayName' : moment(timeslot).format("HH:mm").concat(" Uhr"),
-            'events' :  days[day][timeslot]
-          });
-        });
-        resultDays.push({
-          'day': moment(day),
-          'displayName' : moment(day).format("dd, D.MMM"),
-          'slots' : slots
-        });
-      });
-
-      return resultDays;
-    };
 
     $scope.updateDays = function(events) {
-      var days = groupDays(events);
-      days = daysToObjects(days);
+      var days = EventUtil.groupDays(events);
+      days = EventUtil.daysToObjects(days);
       $scope.days = $filter('orderBy')(days, function(d) { return d.day });
     };
 
@@ -230,21 +193,70 @@ angular.module('starter.controllers', ['starter.services'])
     };
 })
 
-.controller('PlannerCtrl', function($scope) {
-    $scope.thursday = { name : 'Donnerstag' };
-    $scope.friday   = { name : 'Freitag' };
-    $scope.saturday = { name : 'Samstag' };
-
+.controller('PlannerCtrl', function($scope, Persistence, EventUtil, $filter) {
     $scope.slots = [];
-    var start = moment("09:00", "HH:mm");
-    for(var i = 0; i < 14; i++) {
-      var time = moment(start);
-      time.add(moment.duration(i, 'hour'));
-      $scope.slots.push({
-        timestamp : time,
-        timeString : time.format("HH:mm")
+
+    var initializeSlots = function() {
+      var start = moment("09:00", "HH:mm");
+      for(var i = 0; i < 56; i++) {
+        var time = moment(start);
+        time = time.add(moment.duration(i*15, 'minutes'));
+        $scope.slots.push({
+          timestamp : time,
+          timeString : time.format("HH:mm")
+        });
+      }
+    };
+
+    Persistence.listFavoriteEvents().then(function(favoriteEvents) {
+      var startDay = moment("03-05-2015");
+
+      // Set duration of events
+      angular.forEach(favoriteEvents, function(event) {
+        var duration = moment(event.endTime);
+        duration.subtract(moment(event.startTime));
+        event['duration'] = moment.duration(duration.hours()*60 + duration.minutes(), 'minutes');
       });
-    }
+
+      var days = [];
+      for(var dayNumber = 0; dayNumber < 3; dayNumber++) {
+        var dayTimestamp = moment(startDay);
+        dayTimestamp.add(moment.duration(dayNumber, 'days'));
+        var daySlots = [];
+        for(var i = 0; i < 56; i++) {
+          var time = moment(dayTimestamp);
+          time.add(moment.duration(9, 'hours'));
+          time.add(moment.duration(i*15, 'minutes'));
+
+          // Filter events in between
+          var events = [];
+          var endTime = moment(time);
+          endTime.add(moment.duration(15, 'minutes'));
+          var startTime = moment(time);
+          startTime.subtract(moment.duration(1, 'minutes'));
+          angular.forEach(favoriteEvents, function(event) {
+            if(moment(event.startTime).isBetween(startTime, endTime)) {
+              var offset = moment(event.startTime);
+              offset.subtract(startTime);
+              event['offset'] =   moment.duration(offset.hours()*60 + offset.minutes(), 'minutes');
+              events.push(event);
+            }
+          });
+
+          daySlots.push({
+            timestamp : time,
+            timeString : time.format("HH:mm"),
+            events: events
+          });
+        }
+        days.push({
+          day : dayTimestamp,
+          slots : daySlots
+        });
+      };
+
+      $scope.days = $filter('orderBy')(days, function(d) { return moment(d.day) });
+    });
 
 })
 
