@@ -136,7 +136,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
         slots: '=',
         roomsById: '='
       },
-      templateUrl: 'planner-day.html'
+      templateUrl: 'planner-day.html',
+      controller: function($scope, $ionicActionSheet) {
+        $scope.showActions = function(eventId) {
+          $ionicActionSheet.show({
+            buttons: [],
+            destructiveText: 'Löschen',
+            titleText: 'Event Aktionen',
+            cancelText: 'Abbrechen',
+            buttonClicked: function() {
+
+            }
+          });
+        };
+      }
     };
 })
 

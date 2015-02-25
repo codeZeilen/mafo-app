@@ -7,7 +7,8 @@
                             'mafo-planner-odd-row'  : (($index/4) % 2 < 1) == 1 }">{{($index%4 == 0) ? slot.timeString : ""}}</td>
             <td class="mafo-planner-event"
                 ng-repeat="event in slot.events"
-                rowspan="{{event.duration.asMinutes() / 15}}">
+                rowspan="{{event.duration.asMinutes() / 15}}"
+                ng-click="showActions(event.serverId)">
                 <p class="mafo-planner-event-title">{{event.name}}</p>
                 <p class="mafo-planner-event-time">{{event.timeString}} <span class="mafo-planner-event-room" ng-if="event.roomId > 0">{{roomsById[event.roomId].name}}</span></p>
 
@@ -28,19 +29,19 @@
     <ion-tabs class="tabs-royal">
         <ion-tab title="Do">
             <ion-view><ion-content scroll="false" class="padding">
-                <mafo-planner-day day="days[0]" slots="slots" rooms-by-id="roomsById"></mafo-planner-day>
+                <mafo-planner-day day="days[0]" slots="slots" rooms-by-id="roomsById" showActionsMethod="showActionsFor"></mafo-planner-day>
             </ion-content></ion-view>
         </ion-tab>
 
         <ion-tab title="Fr">
             <ion-view><ion-content scroll="false" class="padding">
-                <mafo-planner-day day="days[1]" slots="slots" rooms-by-id="roomsById"></mafo-planner-day>
+                <mafo-planner-day day="days[1]" slots="slots" rooms-by-id="roomsById" showActionsMethod="showActionsFor"></mafo-planner-day>
             </ion-content></ion-view>
         </ion-tab>
 
         <ion-tab title="Sa">
             <ion-view><ion-content scroll="false" class="padding">
-                <mafo-planner-day day="days[2]" slots="slots" rooms-by-id="roomsById"></mafo-planner-day>
+                <mafo-planner-day day="days[2]" slots="slots" rooms-by-id="roomsById" showActionsMethod="showActionsFor"></mafo-planner-day>
             </ion-content></ion-view>
         </ion-tab>
 

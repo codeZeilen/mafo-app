@@ -193,7 +193,7 @@ angular.module('starter.controllers', ['starter.services'])
     };
 })
 
-.controller('PlannerCtrl', function($scope, Persistence, EventUtil, $filter) {
+.controller('PlannerCtrl', function($scope, Persistence, EventUtil, $filter, $ionicActionSheet) {
     $scope.slots = [];
 
     var initializeSlots = function() {
