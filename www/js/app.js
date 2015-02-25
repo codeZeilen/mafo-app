@@ -133,7 +133,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
       restrict: 'E',
       scope: {
         day: '=',
-        slots: '='
+        slots: '=',
+        roomsById: '='
       },
       templateUrl: 'planner-day.html'
     };

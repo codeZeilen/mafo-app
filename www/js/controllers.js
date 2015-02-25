@@ -260,6 +260,14 @@ angular.module('starter.controllers', ['starter.services'])
       $scope.days = $filter('orderBy')(days, function(d) { return moment(d.day) });
     });
 
+    Persistence.listRooms().then(function(rooms) {
+      var resultRooms = {};
+      angular.forEach(rooms, function(room) {
+        resultRooms[room.serverId] = room;
+      });
+      $scope.roomsById = resultRooms;
+    });
+
     $scope.timeFormat = function(timeStampString) {
       var time = moment(timeStampString);
       return time.format("HH:mm").concat(" Uhr");
