@@ -377,6 +377,10 @@ angular.module('starter.services', ['ngResource'])
 
 .factory('PlannerContent', function(Persistence) {
 
+    var minutesPerSlot = 15;
+    var startHour = 8;
+    var endHour = 24;
+
     var favoriteEvents = [];
     Persistence.listFavoriteEvents().then(function(persistedFavoriteEvents) {
       favoriteEvents = persistedFavoriteEvents;
@@ -414,15 +418,15 @@ angular.module('starter.services', ['ngResource'])
         });
 
         var daySlots = [];
-        for (var i = 0; i < 56; i++) {
+        for (var i = 0; i < (endHour - startHour) * (60 / minutesPerSlot); i++) {
           var time = moment(startDay);
           time.add(moment.duration(9, 'hours'));
-          time.add(moment.duration(i * 15, 'minutes'));
+          time.add(moment.duration(i * minutesPerSlot, 'minutes'));
 
           // Filter events in between
           var events = [];
           var endTime = moment(time);
-          endTime.add(moment.duration(15, 'minutes'));
+          endTime.add(moment.duration(minutesPerSlot, 'minutes'));
           var startTime = moment(time);
           startTime.subtract(moment.duration(1, 'minutes'));
           angular.forEach(dayEvents, function (event) {
