@@ -123,7 +123,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
     restrict: 'A',
     link: function(scope, elements, attrs) {
       var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-      elements[0].style.height = "" + (h - (88 /* headers */)) + "px";
+      elements[0].style.height = "" + (h - (88 /* headers */ + 48 /* Tab controls */)) + "px";
     }
   }
 })
