@@ -184,61 +184,12 @@ angular.module('starter.controllers', ['starter.services'])
     };
 })
 
-.controller('PlannerCtrl', function($scope, Persistence, EventUtil, $filter, $ionicActionSheet) {
+.controller('PlannerCtrl', function($scope, Persistence) {
     $scope.slots = [];
+    $scope.days = [moment("03-05-2015"), moment("03-06-2015"), moment("03-07-2015")];
 
-    Persistence.listFavoriteEvents().then(function(favoriteEvents) {
-      var startDay = moment("03-05-2015");
 
-      // Set duration of events
-      angular.forEach(favoriteEvents, function(event) {
-        var duration = moment(event.endTime);
-        duration.subtract(moment(event.startTime));
-        event['duration'] = moment.duration(duration.hours()*60 + duration.minutes(), 'minutes');
-      });
-
-      var days = [];
-      for(var dayNumber = 0; dayNumber < 3; dayNumber++) {
-        var dayTimestamp = moment(startDay);
-        dayTimestamp.add(moment.duration(dayNumber, 'days'));
-        var daySlots = [];
-        for(var i = 0; i < 56; i++) {
-          var time = moment(dayTimestamp);
-          time.add(moment.duration(9, 'hours'));
-          time.add(moment.duration(i*15, 'minutes'));
-
-          // Filter events in between
-          var events = [];
-          var endTime = moment(time);
-          endTime.add(moment.duration(15, 'minutes'));
-          var startTime = moment(time);
-          startTime.subtract(moment.duration(1, 'minutes'));
-          angular.forEach(favoriteEvents, function(event) {
-            if(moment(event.startTime).isBetween(startTime, endTime)) {
-              var offset = moment(event.startTime);
-              offset.subtract(startTime);
-              event['offset'] = moment.duration(offset.hours()*60 + offset.minutes(), 'minutes');
-
-              event['timeString'] = moment(event.startTime).format("HH:mm").concat(" - ").concat(moment(event.endTime).format("HH:mm"));
-              events.push(event);
-            }
-          });
-
-          daySlots.push({
-            timestamp : time,
-            timeString : time.format("HH:mm"),
-            events: events
-          });
-        }
-        days.push({
-          day : dayTimestamp,
-          slots : daySlots
-        });
-      };
-
-      $scope.days = $filter('orderBy')(days, function(d) { return moment(d.day) });
-    });
-
+    $scope.roomsById = {};
     Persistence.listRooms().then(function(rooms) {
       var resultRooms = {};
       angular.forEach(rooms, function(room) {
@@ -247,11 +198,34 @@ angular.module('starter.controllers', ['starter.services'])
       $scope.roomsById = resultRooms;
     });
 
+})
+
+.controller('PlannerTabCtrl', function($scope, $ionicActionSheet, PlannerContent) {
+
+    $scope.showActions = function(eventId) {
+      $ionicActionSheet.show({
+        buttons: [],
+        destructiveText: 'Löschen',
+        titleText: 'Event Aktionen',
+        cancelText: 'Abbrechen',
+        buttonClicked: function() {
+        }
+      });
+    };
+
     $scope.timeFormat = function(timeStampString) {
       var time = moment(timeStampString);
       return time.format("HH:mm").concat(" Uhr");
     };
 
+    $scope.slots = [];
+    var slotsUpdater = function() {
+      $scope.slots = PlannerContent.slotsForDay($scope.day);
+    };
+    $scope.$watchCollection(PlannerContent.getFavoriteEvents, function(oldVal, newVal) {
+      slotsUpdater();
+    }, true);
+    slotsUpdater();
 })
 
 .controller('NewsCtrl', function($scope, $stateParams, $location, $anchorScroll, Persistence, NewsInterval) {

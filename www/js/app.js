@@ -133,24 +133,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
       restrict: 'E',
       scope: {
         day: '=',
-        slots: '=',
         roomsById: '='
       },
       templateUrl: 'planner-day.html',
-      controller: function($scope, $ionicActionSheet) {
-        $scope.showActions = function(eventId) {
-          $ionicActionSheet.show({
-            buttons: [],
-            destructiveText: 'Löschen',
-            titleText: 'Event Aktionen',
-            cancelText: 'Abbrechen',
-            buttonClicked: function() {
-
-            }
-          });
-        };
-      }
-    };
+      controller: 'PlannerTabCtrl'
+    }
 })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {

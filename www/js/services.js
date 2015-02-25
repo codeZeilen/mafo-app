@@ -387,7 +387,7 @@ angular.module('starter.services', ['ngResource'])
     };
 
     return {
-      favoriteEvents : favoriteEvents,
+      getFavoriteEvents : function() { return favoriteEvents },
       isFavoriteEvent : isFavorite,
       favoriteEvent : function(event) {
         favoriteEvents.push(event);
@@ -399,6 +399,51 @@ angular.module('starter.services', ['ngResource'])
           favoriteEvents.splice(index, 1);
         }
         Persistence.removeFavoriteEvent(event.serverId);
+      },
+
+      slotsForDay : function(day) {
+        var startDay = moment(day);
+        var endOfDay = moment(startDay);
+        endOfDay.add(moment.duration(1, 'days'));
+
+        var dayEvents = [];
+        angular.forEach(favoriteEvents, function(event) {
+          if (moment(event.startTime).isBetween(startDay, endOfDay)) {
+            dayEvents.push(event);
+          }
+        });
+
+        var daySlots = [];
+        for (var i = 0; i < 56; i++) {
+          var time = moment(startDay);
+          time.add(moment.duration(9, 'hours'));
+          time.add(moment.duration(i * 15, 'minutes'));
+
+          // Filter events in between
+          var events = [];
+          var endTime = moment(time);
+          endTime.add(moment.duration(15, 'minutes'));
+          var startTime = moment(time);
+          startTime.subtract(moment.duration(1, 'minutes'));
+          angular.forEach(dayEvents, function (event) {
+            if (moment(event.startTime).isBetween(startTime, endTime)) {
+              var offset = moment(event.startTime);
+              offset.subtract(startTime);
+              event['offset'] = moment.duration(offset.hours() * 60 + offset.minutes(), 'minutes');
+
+              event['timeString'] = moment(event.startTime).format("HH:mm").concat(" - ").concat(moment(event.endTime).format("HH:mm"));
+              events.push(event);
+            }
+          });
+
+          daySlots.push({
+            timestamp: time,
+            timeString: time.format("HH:mm"),
+            events: events
+          });
+        }
+
+        return daySlots;
       }
 
     }
