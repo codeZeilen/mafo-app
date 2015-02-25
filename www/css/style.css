@@ -241,8 +241,8 @@ td.mafo-planner-time {
     color: rgb(68, 68, 68);
     padding: 0.5em;
     overflow: hidden;
-    font-size: 0.8em;
-    border: 3px solid #FFF;
+    font-size: 0.9em;
+    border: 2px solid #FFF;
 }
 
 .mafo-planner-event-title {
