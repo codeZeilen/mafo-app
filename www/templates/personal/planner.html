@@ -1,18 +1,20 @@
 <script id="planner-day.html" type="text/ng-template">
     <ion-scroll planner-scroll direction="xy">
     <table class="mafo-planner padding">
-        <tr ng-repeat="slot in day.slots"
-            >
+        <tr ng-repeat="slot in day.slots">
             <td class="mafo-planner-time"
                 ng-class="{ 'mafo-planner-even-row' : (($index/4) % 2 < 1) == 0,
                             'mafo-planner-odd-row'  : (($index/4) % 2 < 1) == 1 }">{{($index%4 == 0) ? slot.timeString : ""}}</td>
             <td class="mafo-planner-event"
                 ng-repeat="event in slot.events"
                 rowspan="{{event.duration.asMinutes() / 15}}">
-                <div>{{event.name}}</div>
+                <p class="mafo-planner-event-title">{{event.name}}</p>
+                <p class="mafo-planner-event-time">{{event.timeString}}</p>
+                <div class="mafo-planner-event-room"></div>
             </td>
-            <td ng-repeat="i in [1,2,3,4,5,6,7,8,9]" ng-class="{ 'mafo-planner-even-row' : (($index/4) % 2 < 1) == 0,
-                        'mafo-planner-odd-row'  : (($parent.$index/4) % 2 < 1) == 1 }">
+            <td ng-repeat="i in [1,2,3,4,5,6,7,8,9]"
+                ng-class="{ 'mafo-planner-even-row' : (($index/4) % 2 < 1) == 0,
+                            'mafo-planner-odd-row'  : (($parent.$index/4) % 2 < 1) == 1 }">
             </td>
         </tr>
     </table>

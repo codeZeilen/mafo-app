@@ -238,7 +238,9 @@ angular.module('starter.controllers', ['starter.services'])
             if(moment(event.startTime).isBetween(startTime, endTime)) {
               var offset = moment(event.startTime);
               offset.subtract(startTime);
-              event['offset'] =   moment.duration(offset.hours()*60 + offset.minutes(), 'minutes');
+              event['offset'] = moment.duration(offset.hours()*60 + offset.minutes(), 'minutes');
+
+              event['timeString'] = moment(event.startTime).format("HH:mm").concat(" - ").concat(moment(event.endTime).format("HH:mm"));
               events.push(event);
             }
           });
@@ -257,6 +259,11 @@ angular.module('starter.controllers', ['starter.services'])
 
       $scope.days = $filter('orderBy')(days, function(d) { return moment(d.day) });
     });
+
+    $scope.timeFormat = function(timeStampString) {
+      var time = moment(timeStampString);
+      return time.format("HH:mm").concat(" Uhr");
+    };
 
 })
 
