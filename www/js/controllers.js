@@ -187,18 +187,6 @@ angular.module('starter.controllers', ['starter.services'])
 .controller('PlannerCtrl', function($scope, Persistence, EventUtil, $filter, $ionicActionSheet) {
     $scope.slots = [];
 
-    var initializeSlots = function() {
-      var start = moment("09:00", "HH:mm");
-      for(var i = 0; i < 56; i++) {
-        var time = moment(start);
-        time = time.add(moment.duration(i*15, 'minutes'));
-        $scope.slots.push({
-          timestamp : time,
-          timeString : time.format("HH:mm")
-        });
-      }
-    };
-
     Persistence.listFavoriteEvents().then(function(favoriteEvents) {
       var startDay = moment("03-05-2015");
 
