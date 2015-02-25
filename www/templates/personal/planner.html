@@ -11,13 +11,15 @@
                 ng-repeat="event in slot.events"
                 rowspan="{{tickSpan(event)}}"
                 ng-click="showActions(event)">
-                <p class="mafo-planner-event-title">{{event.name}}</p>
-                <p class="mafo-planner-event-time">
+                <div class="mafo-planner-event-title">{{event.name}}</div>
+                <div class="mafo-planner-event-time">
                     {{event.timeString}}
                     <span class="mafo-planner-event-room" ng-if="event.roomId > 0">{{roomsById[event.roomId].name}}
                     </span>
-                </p>
-
+                </div>
+                <div>
+                    {{categoryLabel(event)}}
+                </div>
             </td>
             <td ng-repeat="i in [1,2,3,4,5,6,7,8,9]"
                 ng-class="{ 'mafo-planner-even-row' : (($index/4) % 2 < 1) == 0,

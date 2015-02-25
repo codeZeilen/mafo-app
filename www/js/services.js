@@ -451,7 +451,36 @@ angular.module('starter.services', ['ngResource'])
       }
 
     }
+})
 
+.factory('TopicCategoryService', function($rootScope, Persistence, ContentUpdater) {
 
+    var categoryColors = {};
+    var categoryNames = {};
+
+    var updater = function() {
+      Persistence.listCategories().then(function(categories) {
+        categoryColors = {};
+        categoryNames = {};
+        angular.forEach(categories, function(category) {
+          categoryColors[category.serverId] = '#' + category.color;
+          categoryNames[category.serverId] = category.name;
+        });
+      });
+    };
+
+    $rootScope.$watchCollection(function() { return ContentUpdater.topicCategoryUpdateCounter }, function(oldVal, newVal) {
+      updater();
+    });
+    updater();
+
+    return {
+      categoryColorFromId : function(categoryId) {
+        return categoryColors[categoryId];
+      },
+      categoryNameFromId : function(categoryId) {
+        return categoryNames[categoryId];
+      }
+    }
 
 });

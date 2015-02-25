@@ -72,14 +72,12 @@ angular.module('starter.controllers', ['starter.services'])
     });
 })
 
-.controller('ProgramCtrl', function($scope, $filter, Persistence, ContentUpdater, EventUtil, PlannerContent) {
+.controller('ProgramCtrl', function($scope, $filter, Persistence, ContentUpdater, EventUtil, TopicCategoryService, PlannerContent) {
 
     $scope.days = [];
 
     $scope.dates = 'day';
     $scope.startTimes = 'startTime';
-    $scope.categoryColors = {};
-    $scope.categoryNames = {};
 
     $scope.categoriesNotToShow = ['Vertiefungsworkshop', 'Unternehmensworkshop'];
 
@@ -89,25 +87,24 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.$watch(function() { return ContentUpdater.eventUpdateCounter }, function(oldVal, newVal) {
       if(!(oldVal === newVal)) {
         Persistence.listEvents().then(processEvents);
-        Persistence.listCategories().then(processCategories);
       }
     });
 
-    var processCategories = function(categories) {
-      angular.forEach(categories, function(category) {
-        $scope.categoryColors[category.serverId] = '#' + category.color;
-        $scope.categoryNames[category.serverId] = category.name;
-      });
+    $scope.topicCategoryColor = function(event) {
+      return TopicCategoryService.categoryColorFromId(event.categoryId);
     };
+
+    $scope.topicCategoryName = function(event) {
+      return TopicCategoryService.categoryNameFromId(event.categoryId);
+    };
+
     $scope.$watch(ContentUpdater.eventUpdateCounter, function(oldVal, newVal) {
       if(!(oldVal === newVal)) {
         Persistence.listEvents().then(processEvents);
-        Persistence.listCategories().then(processCategories);
       }
     });
 
     Persistence.listEvents().then(processEvents);
-    Persistence.listCategories().then(processCategories);
 
     $scope.updateDays = function(events) {
       var days = EventUtil.groupDays(events);
@@ -138,10 +135,8 @@ angular.module('starter.controllers', ['starter.services'])
 
 })
 
-.controller('EventCtrl', function($scope, $stateParams, Persistence, $sce) {
+.controller('EventCtrl', function($scope, $stateParams, Persistence, $sce, TopicCategoryService) {
     $scope.event = {};
-    $scope.categoryColors = {};
-    $scope.categoryNames = {};
     $scope.speakersForEvent = [];
     $scope.eventRoom = null;
 
@@ -156,12 +151,13 @@ angular.module('starter.controllers', ['starter.services'])
       }
     });
 
-    Persistence.listCategories().then(function(categories) {
-      angular.forEach(categories, function(category) {
-        $scope.categoryColors[category.serverId] = '#' + category.color;
-        $scope.categoryNames[category.serverId] = category.name;
-      });
-    });
+    $scope.topicCategoryColor = function(event) {
+      return TopicCategoryService.categoryColorFromId(event.categoryId);
+    };
+
+    $scope.topicCategoryName = function(event) {
+      return TopicCategoryService.categoryNameFromId(event.categoryId);
+    };
 
     Persistence.listSpeakersForEvent($stateParams.eventId).then(function(speakers) {
       $scope.speakersForEvent = speakers;

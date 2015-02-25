@@ -7,8 +7,8 @@
             <div class="item">
                 <h2>{{event.name}}</h2>
                 <p class="item-short-description">
-                    <span ng-if="event.categoryId" ng-style="{color: categoryColors[event.categoryId]}">
-                        {{categoryNames[event.categoryId]}}
+                    <span ng-if="event.categoryId" ng-style="{color: topicCategoryColor(event)}">
+                        {{topicCategoryName(event)}}
                     </span>
                     <span ng-if="isWorkshop(event)">
                         Workshop
