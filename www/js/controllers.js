@@ -141,7 +141,6 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.eventRoom = null;
 
     Persistence.getEvent($stateParams.eventId).then(function(event) {
-      event.longDescription = $sce.trustAsHtml(event.longDescription);
       $scope.event = event;
 
       if(event.roomId) {
@@ -196,7 +195,7 @@ angular.module('starter.controllers', ['starter.services'])
 
 })
 
-.controller('PlannerTabCtrl', function($scope, $state, $ionicActionSheet, $ionicLoading, PlannerContent) {
+.controller('PlannerTabCtrl', function($scope, $state, $ionicActionSheet, $ionicLoading, TopicCategoryService, PlannerContent) {
 
     $scope.showActions = function(event) {
       var buttons = [{text: 'Details'},];
@@ -224,6 +223,10 @@ angular.module('starter.controllers', ['starter.services'])
           }
         }
       });
+    };
+
+    $scope.topicCategoryName = function(event) {
+      return TopicCategoryService.categoryNameFromId(event.categoryId);
     };
 
     $scope.timeFormat = function(timeStampString) {
