@@ -218,6 +218,14 @@ angular.module('starter.controllers', ['starter.services'])
       return time.format("HH:mm").concat(" Uhr");
     };
 
+    $scope.tickSpan = function(event) {
+      var start = moment(event.startTime);
+      var end   = moment(event.endTime);
+      end.subtract(start);
+      var duration = moment.duration(60*end.hours()+end.minutes(), 'minutes');
+      return duration.asMinutes() / 15;
+    };
+
     $scope.slots = [];
     var slotsUpdater = function() {
       $scope.slots = PlannerContent.slotsForDay($scope.day);

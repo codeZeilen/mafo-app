@@ -4,13 +4,19 @@
         <tr ng-repeat="slot in slots">
             <td class="mafo-planner-time"
                 ng-class="{ 'mafo-planner-even-row' : (($index/4) % 2 < 1) == 0,
-                            'mafo-planner-odd-row'  : (($index/4) % 2 < 1) == 1 }">{{($index%4 == 0) ? slot.timeString : ""}}</td>
+                            'mafo-planner-odd-row'  : (($index/4) % 2 < 1) == 1 }">
+                {{($index%4 == 0) ? slot.timeString : ""}}
+            </td>
             <td class="mafo-planner-event"
                 ng-repeat="event in slot.events"
-                rowspan="{{event.duration.asMinutes() / 15}}"
+                rowspan="{{tickSpan(event)}}"
                 ng-click="showActions(event.serverId)">
                 <p class="mafo-planner-event-title">{{event.name}}</p>
-                <p class="mafo-planner-event-time">{{event.timeString}} <span class="mafo-planner-event-room" ng-if="event.roomId > 0">{{roomsById[event.roomId].name}}</span></p>
+                <p class="mafo-planner-event-time">
+                    {{event.timeString}}
+                    <span class="mafo-planner-event-room" ng-if="event.roomId > 0">{{roomsById[event.roomId].name}}
+                    </span>
+                </p>
 
             </td>
             <td ng-repeat="i in [1,2,3,4,5,6,7,8,9]"
