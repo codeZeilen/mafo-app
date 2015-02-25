@@ -200,15 +200,32 @@ angular.module('starter.controllers', ['starter.services'])
 
 })
 
-.controller('PlannerTabCtrl', function($scope, $ionicActionSheet, PlannerContent) {
+.controller('PlannerTabCtrl', function($scope, $state, $ionicActionSheet, $ionicLoading, PlannerContent) {
 
-    $scope.showActions = function(eventId) {
+    $scope.showActions = function(event) {
+      var buttons = [{text: 'Details'},];
+      if(event.roomId > 0 && $scope.roomsById[event.roomId].mapImagePath != "") {
+        buttons.push({text: 'Raum auf Karte zeigen'});
+      };
+
       $ionicActionSheet.show({
-        buttons: [],
+        buttons: buttons,
         destructiveText: 'Löschen',
         titleText: 'Event Aktionen',
         cancelText: 'Abbrechen',
-        buttonClicked: function() {
+        destructiveButtonClicked: function() {
+          PlannerContent.removeFavoriteEvent(event);
+          return true;
+        },
+        buttonClicked: function(index) {
+          if(index == 0/*Show details*/) {
+            $state.go('app.event', {eventId : event.serverId});
+            return true;
+          }
+          if(index == 1/*Show room on map*/) {
+            $state.go('app.room', {roomId : event.roomId});
+            return true;
+          }
         }
       });
     };
@@ -229,8 +246,12 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.slots = [];
     var slotsUpdater = function() {
       $scope.slots = PlannerContent.slotsForDay($scope.day);
+      $ionicLoading.hide();
     };
     $scope.$watchCollection(PlannerContent.getFavoriteEvents, function(oldVal, newVal) {
+      $ionicLoading.show({
+        template: 'Loading...'
+      });
       slotsUpdater();
     }, true);
     slotsUpdater();

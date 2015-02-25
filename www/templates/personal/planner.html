@@ -10,7 +10,7 @@
             <td class="mafo-planner-event"
                 ng-repeat="event in slot.events"
                 rowspan="{{tickSpan(event)}}"
-                ng-click="showActions(event.serverId)">
+                ng-click="showActions(event)">
                 <p class="mafo-planner-event-title">{{event.name}}</p>
                 <p class="mafo-planner-event-time">
                     {{event.timeString}}
