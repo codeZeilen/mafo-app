@@ -135,7 +135,7 @@ angular.module('starter.controllers', ['starter.services'])
 
 })
 
-.controller('EventCtrl', function($scope, $stateParams, Persistence, $sce, TopicCategoryService) {
+.controller('EventCtrl', function($scope, $stateParams, Persistence, $sce, TopicCategoryService,MafoTimeFormatter) {
     $scope.event = {};
     $scope.speakersForEvent = [];
     $scope.eventRoom = null;
@@ -168,8 +168,7 @@ angular.module('starter.controllers', ['starter.services'])
     };
 
     $scope.timeFormat = function(timeStampString) {
-      var time = moment(timeStampString);
-      return time.format("HH:mm").concat(" Uhr");
+      return MafoTimeFormatter.formatTime(timeStampString).concat(" Uhr");
     };
 
     $scope.dayFormat = function(timeStampString) {
@@ -195,7 +194,7 @@ angular.module('starter.controllers', ['starter.services'])
 
 })
 
-.controller('PlannerTabCtrl', function($scope, $state, $ionicActionSheet, $ionicLoading, TopicCategoryService, PlannerContent) {
+.controller('PlannerTabCtrl', function($scope, $state, $ionicActionSheet, $ionicLoading,MafoTimeFormatter, TopicCategoryService, PlannerContent) {
 
     $scope.showActions = function(event) {
       var buttons = [{text: 'Details'},];
@@ -230,8 +229,7 @@ angular.module('starter.controllers', ['starter.services'])
     };
 
     $scope.timeFormat = function(timeStampString) {
-      var time = moment(timeStampString);
-      return time.format("HH:mm").concat(" Uhr");
+      return MafoTimeFormatter.formatTime(timeStampString).concat(" Uhr");
     };
 
     $scope.tickSpan = function(event) {
@@ -256,7 +254,7 @@ angular.module('starter.controllers', ['starter.services'])
     slotsUpdater();
 })
 
-.controller('NewsCtrl', function($scope, $stateParams, $location, $anchorScroll, Persistence, NewsInterval) {
+.controller('NewsCtrl', function($scope, $stateParams, $location, $anchorScroll, Persistence, MafoTimeFormatter, NewsInterval) {
     $scope.news = [];
 
     var updateNews = function() {
@@ -273,13 +271,12 @@ angular.module('starter.controllers', ['starter.services'])
     updateNews();
 
     $scope.dateFormat = function(timeStampString) {
-      var time = moment(timeStampString, "X");
-      return time.format("DD. MMM YYYY, HH").concat(" Uhr");
+      return MafoTimeFormatter.formatNewsDate(timeStampString).concat(" Uhr");
     };
 
 })
 
-.controller('NewsItemCtrl', function($scope, $stateParams, Persistence) {
+.controller('NewsItemCtrl', function($scope, $stateParams, Persistence, MafoTimeFormatter) {
   $scope.newsItem = {};
 
   Persistence.getNewsItem($stateParams.itemId).then(function(newsItem) {
@@ -287,8 +284,7 @@ angular.module('starter.controllers', ['starter.services'])
   });
 
   $scope.dateFormat = function(timeStampString) {
-    var time = moment(timeStampString, "X");
-    return time.format("DD. MMM YYYY, HH").concat(" Uhr");
+    return MafoTimeFormatter.formatNewsDate(timeStampString).concat(" Uhr");
   };
 
 })
@@ -381,7 +377,7 @@ angular.module('starter.controllers', ['starter.services'])
 
 })
 
-.controller('StarterCtrl', function($scope, $ionicModal, $state, Persistence, NewsInterval, ContentUpdater, $q) {
+.controller('StarterCtrl', function($scope, $ionicModal, $state, Persistence, NewsInterval, ContentUpdater, MafoTimeFormatter, $q) {
 
   $scope.searchConfig = {"term" : ""};
   $scope.events = [];
@@ -483,10 +479,9 @@ angular.module('starter.controllers', ['starter.services'])
     return $scope.eventCategoryNames[event.eventType];
   };
 
-  $scope.dateFormat = function(timeStampString) {
-    var time = moment(timeStampString, "X");
-    return time.format("DD. MMM YYYY, HH").concat(" Uhr");
-  };
+    $scope.dateFormat = function(timeStampString) {
+      return MafoTimeFormatter.formatNewsDate(timeStampString).concat(" Uhr");
+    };
 })
 
 .controller('FAQCtrl', function($scope) {

@@ -483,4 +483,16 @@ angular.module('starter.services', ['ngResource'])
       }
     }
 
+})
+
+.factory('MafoTimeFormatter', function() {
+    return {
+      formatTime : function(timestamp) {
+        return moment(timestamp).format("HH:mm");
+      },
+      formatNewsDate : function(timestamp) {
+        var time = moment(timestamp, "X");
+        return time.format("DD. MMM YYYY, HH");
+      }
+    }
 });
