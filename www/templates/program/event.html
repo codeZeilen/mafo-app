@@ -21,9 +21,11 @@
                 {{dayFormat(event.startTime)}}: {{timeFormat(event.startTime)}} - {{timeFormat(event.endTime)}}
             </div>
 
-            <div class="item item-icon-left item-text-wrap" ng-if="event.roomId > 0" >
+            <div class="item item-icon-left  item-icon-right item-text-wrap" ng-if="event.roomId > 0" >
                 <i class="icon ion-ios-home-outline"></i>
-                <a class="text-link" ng-href="#/app/room/{{event.roomId}}">{{eventRoom.name}}</a>
+                <a class="text-link" ng-if="eventRoom.mapImagePath && eventRoom.mapImagePath != ''" ng-href="#/app/room/{{event.roomId}}">{{eventRoom.name}}</a>
+                <a class="text-link" ng-if="!(eventRoom.mapImagePath && eventRoom.mapImagePath != '')" >{{eventRoom.name}}</a>
+                <i class="icon ion-ios-location" ng-if="eventRoom.mapImagePath && eventRoom.mapImagePath != ''"></i>
             </div>
 
             <div class="item item-divider" ng-if="event.longDescription">
