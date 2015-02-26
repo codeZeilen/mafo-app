@@ -53,15 +53,17 @@ angular.module('starter.services', ['ngResource'])
 
     return {
       init: function() {
-        var allDone = [];
+
+        var initializationDone = $q.defer();
         if(!initStarted) {
           initStarted = true;
           $http.get('content.json')
             .success(function (fileContent) {
+              var entitiesInitialized = [];
               var entitiesContent = angular.fromJson(fileContent);
               angular.forEach(entitiesContent, function (entityContent) {
                 var entityDone = $q.defer();
-                allDone.push(entityDone);
+                entitiesInitialized.push(entityDone);
 
                 var entityName = ContentConfiguration.contentUpdateConfiguration[entityContent.routeKey].entityName;
                 var entity = Persistence.Entities[entityName];
@@ -69,19 +71,24 @@ angular.module('starter.services', ['ngResource'])
                   persistence.add(new entity(individualContent));
                 });
                 persistence.flush(function () {
-                  persistence.add(new Persistence.Entities.ServerUpdateTimestamp({
+                  var timestampObject = new Persistence.Entities.ServerUpdateTimestamp({
                     'routeKey': entityContent.routeKey,
                     'timestamp': entityContent.timestamp
-                  }));
-                  persistence.flush(function () {
-                    entityDone.resolve(entityContent.timestamp);
+                  });
+                  persistence.add(timestampObject);
+                  persistence.flush(function() {
+                    entityDone.resolve(timestampObject);
                   });
                 });
               });
+
+              $q.all(entitiesInitialized).then(function(timestamps) {
+                initializationDone.resolve(timestamps);
+              })
             });
         }
 
-        return $q.all(allDone);
+        return initializationDone.promise;
       }
     };
 })
