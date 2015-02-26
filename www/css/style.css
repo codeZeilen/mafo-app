@@ -48,6 +48,9 @@ a.text-link {
     bottom:0;
 }
 
+.without-padding {
+    padding: 0px;
+}
 
 /* Tabs */
 .mafo-tabs {

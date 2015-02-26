@@ -376,8 +376,26 @@ angular.module('starter.services'
     },
     listUserEvents : function() {
       var result = $q.defer();
-      entities.UserEvent.all().list(null, result.resolve);
+      entities.UserEvent.all().list(null, function(events) {
+        angular.forEach(events, function(event) {
+          event.isUserEvent = true;
+        });
+        result.resolve(events);
+      });
       return result.promise;
+    },
+    addUserEvent : function(event) {
+      var done = $q.defer();
+      var newEvent = new entities.UserEvent(event);
+      persistence.add(newEvent);
+      persistence.flush(done.resolve);
+      return done.promise;
+    },
+    removeUserEvent : function(event) {
+      var done = $q.defer();
+      persistence.remove(event);
+      persistence.flush(done.resolve);
+      return done.promise;
     },
     addFavoriteEvent : function(eventServerId) {
       var result = $q.defer();

@@ -180,7 +180,12 @@ angular.module('starter.controllers', ['starter.services'])
 
 .controller('PlannerCtrl', function($scope, Persistence) {
     $scope.slots = [];
-    $scope.days = [moment("03-05-2015"), moment("03-06-2015"), moment("03-07-2015")];
+    var daysToDate = {
+      'Donnerstag' : moment("03-05-2015"),
+      'Freitag' : moment("03-06-2015"),
+      'Samstag' : moment("03-07-2015")
+    };
+    $scope.days = [daysToDate.Donnerstag, daysToDate.Freitag, daysToDate.Samstag];
 
 
     $scope.roomsById = {};
@@ -192,9 +197,61 @@ angular.module('starter.controllers', ['starter.services'])
       $scope.roomsById = resultRooms;
     });
 
+    $scope.askForTime = function(eventModel, timeAttribute) {
+      datePicker.show({
+        time : eventModel[timeAttribute] || moment(),
+        mode : 'time'
+      }, function(enteredTime) {
+        eventModel[timeAttribute] = enteredTime;
+      });
+    };
+
+    $scope.range = function(min, max, step){
+      step = step || 1;
+      var input = [];
+      for (var i = min; i <= max; i += step) input.push(i);
+      return input;
+    };
+
+    var initialEvent = {
+      startTimeHours : 12,
+      endTimeHours : 13,
+      startTimeMinutes : 0,
+      endTimeMinutes : 0
+    };
+    $scope.userEvent = angular.copy(initialEvent);
+    $scope.storeEvent = function(aUserEvent) {
+      $scope.dataWasSaved = false;
+      $scope.incompleteEvent = (
+        (!angular.isDefined(aUserEvent.dayIndex))
+        || (!angular.isDefined(aUserEvent.startTimeHours))
+        || (!angular.isDefined(aUserEvent.startTimeMinutes))
+        || (!angular.isDefined(aUserEvent.endTimeHours))
+        || (!angular.isDefined(aUserEvent.endTimeMinutes)));
+      if($scope.incompleteEvent) {
+        return;
+      }
+
+      var start = moment(daysToDate[aUserEvent.dayIndex]);
+      start.add(moment.duration(60*aUserEvent.startTimeHours + aUserEvent.startTimeMinutes, 'minutes'));
+
+      var end = moment(daysToDate[aUserEvent.dayIndex]);
+      end.add(moment.duration(60*aUserEvent.endTimeHours + aUserEvent.endTimeMinutes, 'minutes'));
+      var eventData = {
+        title : aUserEvent.name,
+        location : aUserEvent.location,
+        startTimeStamp : start,
+        endTimeStamp : end
+      };
+      Persistence.addUserEvent(eventData).then(function() {
+        $scope.dataWasSaved = true;
+      });
+      $scope.userEvent = angular.copy(initialEvent);
+    };
+
 })
 
-.controller('PlannerTabCtrl', function($scope, $state, $ionicActionSheet, $ionicLoading,MafoTimeFormatter, TopicCategoryService, PlannerContent) {
+.controller('PlannerTabCtrl', function($scope, $state, $ionicActionSheet, $ionicLoading, MafoTimeFormatter, TopicCategoryService, PlannerContent) {
 
     $scope.showActions = function(event) {
       var buttons = [{text: 'Details'},];

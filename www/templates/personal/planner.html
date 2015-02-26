@@ -53,21 +53,116 @@
             </ion-content></ion-view>
         </ion-tab>
 
-        <ion-tab title="Info">
-            <ion-view><ion-content class="padding">
-                <p>Mit dem MaFo-Planer kannst du dir deinen persönlichen Stundenplan für das Mannheim Forum
-
+        <ion-tab title="Neu">
+            <ion-view>
+                <ion-content class="padding" >
+                <p>
+                    Mit dem MaFo-Planer kannst du dir deinen persönlichen Stundenplan für das Mannheim Forum
                     zusammenstellen. Veranstaltungen hinzufügen kannst du, indem du in der Programmübersicht auf
-
                     den Stern hinter dem jeweiligen Programmpunkt tippst – die Veranstaltung wird dann automatisch in
-
                     deinen Planer übernommen. Mehr Informationen über eine Veranstaltung oder eine Veranstaltung
-
                     löschen kannst du, indem du auf den jeweiligen Eintrag in dem Planer drückst.
+                    Alternativ kannst du dir manuell einen Termin eintragen (siehe unten).</p>
 
-                    Alternativ kannst du dir manuell einen Termin eintragen (siehe unter dem Planer).</p>
+                <form ng-submit="storeEvent(userEvent)" class="list list-inset">
+                    <div class="item form-errors"
+                         ng-show="dataWasSaved">
+                        <div class="form-success" ng-show="dataWasSaved">Ihr Termin wurde eingetragen.</div>
+                    </div>
 
-            </ion-content></ion-view>
+                    <div class="item form-errors"
+                         ng-show="incompleteEvent">
+                        <div class="form-error" ng-show="incompleteEvent">Alle Terminfelder müssen belegt sein.</div>
+                    </div>
+
+
+                    <label class="item item-input">
+                        <input type="text"
+                               name="name"
+                               placeholder="Veranstaltungstitel"
+                               ng-model="userEvent.name" />
+                    </label>
+
+                    <label class="item item-input">
+                        <input type="text"
+                               name="location"
+                               placeholder="Ort"
+                               ng-model="userEvent.location" />
+                    </label>
+
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            Tag
+                        </div>
+                        <select name="day" ng-model="userEvent.dayIndex">
+                            <option selected>Donnerstag</option>
+                            <option>Freitag</option>
+                            <option>Samstag</option>
+                        </select>
+                    </label>
+
+                    <div class="item item-divider">
+                        Von
+                    </div>
+
+                    <div class="row without-padding">
+
+                        <label class="item item-input item-select col-50">
+                            <div class="input-label">
+                                Stunde
+                            </div>
+                            <select name="startTimeHours"
+                                    ng-model="userEvent.startTimeHours">
+                                <option ng-repeat="hour in range(0,23,1)"
+                                        ng-selected="hour == userEvent.startTimeHours">{{hour}}</option>
+                            </select>
+                        </label>
+
+                        <label class="item item-input item-select col-50">
+                            <div class="input-label">
+                                Minuten
+                            </div>
+                            <select name="startTimeMinutes"
+                                    ng-model="userEvent.startTimeMinutes">
+                                <option ng-repeat="minute in range(0,59,5)"
+                                        ng-selected="minute == userEvent.startTimeMinutes">{{minute}}</option>
+                            </select>
+                        </label>
+
+                    </div>
+
+                    <div class="item item-divider">
+                        Bis
+                    </div>
+
+                    <div class="row without-padding">
+                        <label class="item item-input item-select col-50">
+                            <div class="input-label">
+                                Stunde
+                            </div>
+                            <select name="endTimeHours"
+                                    ng-model="userEvent.endTimeHours">
+                                <option ng-repeat="hour in range(0,23,1)"
+                                        ng-selected="hour == userEvent.endTimeHours">{{hour}}</option>
+                            </select>
+                        </label>
+
+                        <label class="item item-input item-select col-50">
+                            <div class="input-label">
+                                Minuten
+                            </div>
+                            <select name="endTimeMinutes"
+                                    ng-model="userEvent.endTimeMinutes">
+                                <option ng-repeat="minute in range(0,59,5)"
+                                        ng-selected="minute == userEvent.endTimeMinutes">{{minute}}</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <input type="submit" value="Speichern" class="button button-block button-positive activated" />
+                </form>
+                </ion-content>
+            </ion-view>
         </ion-tab>
     </ion-tabs>
 
