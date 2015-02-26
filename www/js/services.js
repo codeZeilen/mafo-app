@@ -381,6 +381,37 @@ angular.module('starter.services', ['ngResource'])
     var startHour = 8;
     var endHour = 24;
 
+    var fixedEvents = [
+      {
+        'name': 'Check-In in O048',
+        'roomId': 3,
+        'startTime': moment('03-05-2015 15:00'),
+        'endTime':   moment('03-05-2015 18:00'),
+        'durationInMinutes' : 30
+      },
+      {
+        'name': 'Check-In in O048',
+        'roomId': 3,
+        'startTime': moment('03-06-2015 08:00'),
+        'endTime':   moment('03-06-2015 13:00'),
+        'durationInMinutes' : 30
+      },
+      {
+        'name': 'Check-In am Info-Point',
+        'roomId': 7,
+        'startTime': moment('03-06-2015 13:00'),
+        'endTime':   moment('03-06-2015 19:00'),
+        'durationInMinutes' : 30
+      },
+      {
+        'name': 'Check-In am Info-Point',
+        'roomId': 7,
+        'startTime': moment('03-07-2015 08:00'),
+        'endTime':   moment('03-07-2015 17:00'),
+        'durationInMinutes' : 30
+      },
+    ];
+
     var favoriteEvents = [];
     Persistence.listFavoriteEvents().then(function(persistedFavoriteEvents) {
       favoriteEvents = persistedFavoriteEvents;
@@ -411,7 +442,7 @@ angular.module('starter.services', ['ngResource'])
         endOfDay.add(moment.duration(1, 'days'));
 
         var dayEvents = [];
-        angular.forEach(favoriteEvents, function(event) {
+        angular.forEach(favoriteEvents.concat(fixedEvents), function(event) {
           if (moment(event.startTime).isBetween(startDay, endOfDay)) {
             dayEvents.push(event);
           }
@@ -420,7 +451,7 @@ angular.module('starter.services', ['ngResource'])
         var daySlots = [];
         for (var i = 0; i < (endHour - startHour) * (60 / minutesPerSlot); i++) {
           var time = moment(startDay);
-          time.add(moment.duration(9, 'hours'));
+          time.add(moment.duration(startHour, 'hours'));
           time.add(moment.duration(i * minutesPerSlot, 'minutes'));
 
           // Filter events in between

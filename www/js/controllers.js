@@ -233,10 +233,14 @@ angular.module('starter.controllers', ['starter.services'])
     };
 
     $scope.tickSpan = function(event) {
-      var start = moment(event.startTime);
-      var end   = moment(event.endTime);
-      end.subtract(start);
-      var duration = moment.duration(60*end.hours()+end.minutes(), 'minutes');
+      var duration;
+      if(angular.isDefined(event.durationInMinutes)) {
+        duration = moment.duration(event.durationInMinutes, 'minutes');
+      } else {
+        var start = moment(event.startTime);
+        var end = moment(event.endTime);
+        end.subtract(start);duration = moment.duration(60 * end.hours() + end.minutes(), 'minutes');
+      }
       return duration.asMinutes() / 15;
     };
 
