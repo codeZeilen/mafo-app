@@ -251,3 +251,7 @@ td.mafo-planner-time {
 .mafo-planner-event-title {
     font-weight: bold;
 }
+
+.mafo-planner-user-event {
+    background-color: rgba(33, 98, 103, 0.18);
+}

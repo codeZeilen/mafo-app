@@ -394,34 +394,43 @@ angular.module('starter.services', ['ngResource'])
         'roomId': 3,
         'startTime': moment('03-05-2015 15:00'),
         'endTime':   moment('03-05-2015 18:00'),
-        'durationInMinutes' : 30
+        'durationInMinutes' : 30,
+        'isFixedEvent' : true
       },
       {
         'name': 'Check-In in O048',
         'roomId': 3,
         'startTime': moment('03-06-2015 08:00'),
         'endTime':   moment('03-06-2015 13:00'),
-        'durationInMinutes' : 30
+        'durationInMinutes' : 30,
+        'isFixedEvent' : true
       },
       {
         'name': 'Check-In am Info-Point',
         'roomId': 7,
         'startTime': moment('03-06-2015 13:00'),
         'endTime':   moment('03-06-2015 19:00'),
-        'durationInMinutes' : 30
+        'durationInMinutes' : 30,
+        'isFixedEvent' : true
       },
       {
         'name': 'Check-In am Info-Point',
         'roomId': 7,
         'startTime': moment('03-07-2015 08:00'),
         'endTime':   moment('03-07-2015 17:00'),
-        'durationInMinutes' : 30
+        'durationInMinutes' : 30,
+        'isFixedEvent' : true
       },
     ];
 
     var favoriteEvents = [];
     Persistence.listFavoriteEvents().then(function(persistedFavoriteEvents) {
       favoriteEvents = persistedFavoriteEvents;
+    });
+
+    var userEvents = [];
+    Persistence.listUserEvents().then(function(persistedUserEvents) {
+      userEvents = persistedUserEvents;
     });
 
     var isFavorite = function(event) {
@@ -442,14 +451,26 @@ angular.module('starter.services', ['ngResource'])
         }
         Persistence.removeFavoriteEvent(event.serverId);
       },
-
+      getUserEvents : function() { return userEvents },
+      saveUserEvent : function(eventData) {
+        Persistence.addUserEvent(eventData).then(function(persistedUserEvent) {
+          userEvents.push(persistedUserEvent);
+        });
+      },
+      removeUserEvent : function(event) {
+        var index = userEvents.indexOf(event);
+        if(index > -1) {
+          userEvents.splice(index, 1);
+        }
+        Persistence.removeUserEvent(event);
+      },
       slotsForDay : function(day) {
         var startDay = moment(day);
         var endOfDay = moment(startDay);
         endOfDay.add(moment.duration(1, 'days'));
 
         var dayEvents = [];
-        angular.forEach(favoriteEvents.concat(fixedEvents), function(event) {
+        angular.forEach(favoriteEvents.concat(fixedEvents).concat(userEvents), function(event) {
           if (moment(event.startTime).isBetween(startDay, endOfDay)) {
             dayEvents.push(event);
           }

@@ -178,7 +178,7 @@ angular.module('starter.controllers', ['starter.services'])
     };
 })
 
-.controller('PlannerCtrl', function($scope, Persistence) {
+.controller('PlannerCtrl', function($scope, Persistence, PlannerContent) {
     $scope.slots = [];
     var daysToDate = {
       'Donnerstag' : moment("03-05-2015"),
@@ -238,14 +238,14 @@ angular.module('starter.controllers', ['starter.services'])
       var end = moment(daysToDate[aUserEvent.dayIndex]);
       end.add(moment.duration(60*aUserEvent.endTimeHours + aUserEvent.endTimeMinutes, 'minutes'));
       var eventData = {
-        title : aUserEvent.name,
+        name : aUserEvent.name,
         location : aUserEvent.location,
-        startTimeStamp : start,
-        endTimeStamp : end
+        startTime : start,
+        endTime : end
       };
-      Persistence.addUserEvent(eventData).then(function() {
-        $scope.dataWasSaved = true;
-      });
+
+      PlannerContent.saveUserEvent(eventData);
+      $scope.dataWasSaved = true;
       $scope.userEvent = angular.copy(initialEvent);
     };
 
@@ -254,9 +254,21 @@ angular.module('starter.controllers', ['starter.services'])
 .controller('PlannerTabCtrl', function($scope, $state, $ionicActionSheet, $ionicLoading, MafoTimeFormatter, TopicCategoryService, PlannerContent) {
 
     $scope.showActions = function(event) {
-      var buttons = [{text: 'Details'},];
+      var buttons = [];
+      var buttonActions = [];
+      if(angular.isDefined(event.serverId)) {
+        buttons.push({text: 'Details'});
+        buttonActions.push(function() {
+          $state.go('app.event', {eventId : event.serverId});
+          return true;
+        });
+      };
       if(event.roomId > 0 && $scope.roomsById[event.roomId].mapImagePath != "") {
         buttons.push({text: 'Raum auf Karte zeigen'});
+        buttonActions.push(function() {
+          $state.go('app.room', {roomId : event.roomId});
+          return true;
+        })
       };
 
       $ionicActionSheet.show({
@@ -265,18 +277,15 @@ angular.module('starter.controllers', ['starter.services'])
         titleText: 'Event Aktionen',
         cancelText: 'Abbrechen',
         destructiveButtonClicked: function() {
-          PlannerContent.removeFavoriteEvent(event);
+          if(angular.isDefined(event.serverId)) {
+            PlannerContent.removeFavoriteEvent(event);
+          } else {
+            PlannerContent.removeUserEvent(event);
+          }
           return true;
         },
         buttonClicked: function(index) {
-          if(index == 0/*Show details*/) {
-            $state.go('app.event', {eventId : event.serverId});
-            return true;
-          }
-          if(index == 1/*Show room on map*/) {
-            $state.go('app.room', {roomId : event.roomId});
-            return true;
-          }
+          return buttonActions[index]();
         }
       });
     };
@@ -303,13 +312,16 @@ angular.module('starter.controllers', ['starter.services'])
 
     $scope.slots = [];
     var slotsUpdater = function() {
+      $ionicLoading.show({
+        template: 'Loading...'
+      });
       $scope.slots = PlannerContent.slotsForDay($scope.day);
       $ionicLoading.hide();
     };
     $scope.$watchCollection(PlannerContent.getFavoriteEvents, function(oldVal, newVal) {
-      $ionicLoading.show({
-        template: 'Loading...'
-      });
+       slotsUpdater();
+    }, true);
+    $scope.$watchCollection(PlannerContent.getUserEvents, function(oldVal, newVal) {
       slotsUpdater();
     }, true);
     slotsUpdater();

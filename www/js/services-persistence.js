@@ -91,9 +91,9 @@ angular.module('starter.services'
   });
 
   entities.UserEvent = persistence.define('UserEvent', {
-    title : 'TEXT',
-    startTimeStamp : 'TEXT',
-    endTimeStamp : 'TEXT',
+    name : 'TEXT',
+    startTime : 'TEXT',
+    endTime : 'TEXT',
     location : 'TEXT'
   });
 
@@ -388,7 +388,10 @@ angular.module('starter.services'
       var done = $q.defer();
       var newEvent = new entities.UserEvent(event);
       persistence.add(newEvent);
-      persistence.flush(done.resolve);
+      persistence.flush(function() {
+        newEvent.isUserEvent = true;
+        done.resolve(newEvent);
+      });
       return done.promise;
     },
     removeUserEvent : function(event) {
