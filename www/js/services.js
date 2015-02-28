@@ -382,7 +382,7 @@ angular.module('starter.services', ['ngResource'])
     };
   })
 
-.factory('PlannerContent', function(Persistence) {
+.factory('PlannerContent', function(Persistence, $interval, $ionicPopup) {
 
     var minutesPerSlot = 15;
     var startHour = 8;
@@ -423,9 +423,38 @@ angular.module('starter.services', ['ngResource'])
       },
     ];
 
+    var alarms = {};
+    var setAlarm = function(event) {
+      if(!angular.isDefined(event.startTime)) {
+        return false;
+      }
+      if(!angular.isDefined(alarms[event.serverId])) {
+        var delay = moment(event.startTime);
+        delay.subtract(moment.duration(10, 'minutes'));
+        var delayMs = delay.diff(moment());
+        alarms[event.serverId] = $interval(function() {
+            var alertPopup = $ionicPopup.alert({
+              title: 'Erinnerung',
+              template: 'Die Veranstaltung ' + event.name + ' beginnt in 10 Minuten.'
+            });
+            alertPopup.then(function(res) {
+            });
+        },
+        delayMs,
+        1);
+      }
+    };
+    var cancelAlarm = function(event) {
+      if(angular.isDefined(alarms[event.serverId])) {
+        $interval.cancel(alarms[event.serverId]);
+      }
+    };
+
+
     var favoriteEvents = [];
     Persistence.listFavoriteEvents().then(function(persistedFavoriteEvents) {
       favoriteEvents = persistedFavoriteEvents;
+      angular.forEach(persistedFavoriteEvents, setAlarm);
     });
 
     var userEvents = [];
@@ -442,6 +471,7 @@ angular.module('starter.services', ['ngResource'])
       isFavoriteEvent : isFavorite,
       favoriteEvent : function(event) {
         favoriteEvents.push(event);
+        setAlarm(event);
         Persistence.addFavoriteEvent(event.serverId);
       },
       removeFavoriteEvent : function(event) {
@@ -449,6 +479,7 @@ angular.module('starter.services', ['ngResource'])
         if(index > -1) {
           favoriteEvents.splice(index, 1);
         }
+        cancelAlarm(event);
         Persistence.removeFavoriteEvent(event.serverId);
       },
       getUserEvents : function() { return userEvents },
