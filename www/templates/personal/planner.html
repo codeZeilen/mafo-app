@@ -8,7 +8,7 @@
                 {{($index%4 == 0) ? slot.timeString : ""}}
             </td>
             <td class="mafo-planner-event"
-                ng-class="{'mafo-planner-user-event' : event.isUserEvent, 'mafo-planner-fixed-event' : event.isFixedEvent}"
+                ng-class="{'mafo-planner-user-event' : event.isUserEvent, 'mafo-planner-fixed-event'}"
                 ng-repeat="event in slot.events"
                 rowspan="{{tickSpan(event)}}"
                 ng-click="showActions(event)">
@@ -112,9 +112,8 @@
                         Von
                     </div>
 
-                    <div class="row without-padding">
 
-                        <label class="item item-input item-select col-50">
+                        <label class="item item-input item-select ">
                             <div class="input-label">
                                 Stunde
                             </div>
@@ -125,7 +124,7 @@
                             </select>
                         </label>
 
-                        <label class="item item-input item-select col-50">
+                        <label class="item item-input item-select">
                             <div class="input-label">
                                 Minuten
                             </div>
@@ -136,14 +135,11 @@
                             </select>
                         </label>
 
-                    </div>
-
                     <div class="item item-divider">
                         Bis
                     </div>
 
-                    <div class="row without-padding">
-                        <label class="item item-input item-select col-50">
+                        <label class="item item-input item-select ">
                             <div class="input-label">
                                 Stunde
                             </div>
@@ -154,7 +150,7 @@
                             </select>
                         </label>
 
-                        <label class="item item-input item-select col-50">
+                        <label class="item item-input item-select ">
                             <div class="input-label">
                                 Minuten
                             </div>
@@ -164,7 +160,6 @@
                                         ng-selected="minute == userEvent.endTimeMinutes">{{minute}}</option>
                             </select>
                         </label>
-                    </div>
 
                     <input type="submit" value="Speichern" class="button button-block button-positive activated" />
                 </form>
