@@ -9,7 +9,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
 .run(function($ionicPlatform, $rootScope, ContactRequestOutbox,
               NewsInterval, ContentUpdater, $ionicNavBarDelegate,
               $ionicHistory, $state) {
-  ImgCache.options.debug = true;
+  ImgCache.options.debug = false;
   ImgCache.options.chromeQuota = 30*1024*1024;
 
   $ionicPlatform.ready(function() {

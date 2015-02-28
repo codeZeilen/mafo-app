@@ -97,7 +97,7 @@ angular.module('starter.services'
     location : 'TEXT'
   });
 
-  persistence.debug = true;
+  persistence.debug = false;
   persistence.schemaSync();
 
   var refreshSpeakers = function() {
