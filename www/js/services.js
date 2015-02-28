@@ -450,16 +450,19 @@ angular.module('starter.services', ['ngResource'])
       }
     };
 
+    var allEvents = [];
 
     var favoriteEvents = [];
     Persistence.listFavoriteEvents().then(function(persistedFavoriteEvents) {
       favoriteEvents = persistedFavoriteEvents;
       angular.forEach(persistedFavoriteEvents, setAlarm);
+      allEvents = allEvents.concat(persistedFavoriteEvents);
     });
 
     var userEvents = [];
     Persistence.listUserEvents().then(function(persistedUserEvents) {
       userEvents = persistedUserEvents;
+      allEvents = allEvents.concat(persistedUserEvents);
     });
 
     var isFavorite = function(event) {
@@ -467,9 +470,11 @@ angular.module('starter.services', ['ngResource'])
     };
 
     return {
+      getAllEvents : function() { return allEvents },
       getFavoriteEvents : function() { return favoriteEvents },
       isFavoriteEvent : isFavorite,
       favoriteEvent : function(event) {
+        allEvents.push(event);
         favoriteEvents.push(event);
         setAlarm(event);
         Persistence.addFavoriteEvent(event.serverId);
@@ -479,6 +484,10 @@ angular.module('starter.services', ['ngResource'])
         if(index > -1) {
           favoriteEvents.splice(index, 1);
         }
+        index = allEvents.indexOf(event);
+        if(index > -1) {
+          allEvents.splice(index, 1);
+        }
         cancelAlarm(event);
         Persistence.removeFavoriteEvent(event.serverId);
       },
@@ -486,12 +495,17 @@ angular.module('starter.services', ['ngResource'])
       saveUserEvent : function(eventData) {
         Persistence.addUserEvent(eventData).then(function(persistedUserEvent) {
           userEvents.push(persistedUserEvent);
+          allEvents.push(persistedUserEvent);
         });
       },
       removeUserEvent : function(event) {
         var index = userEvents.indexOf(event);
         if(index > -1) {
           userEvents.splice(index, 1);
+        }
+        index = allEvents.indexOf(event);
+        if(index > -1) {
+          allEvents.splice(index, 1);
         }
         Persistence.removeUserEvent(event);
       },

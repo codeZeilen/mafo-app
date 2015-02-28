@@ -312,18 +312,9 @@ angular.module('starter.controllers', ['starter.services'])
 
     $scope.slots = [];
     var slotsUpdater = function() {
-      $ionicLoading.show({
-        template: 'Loading...'
-      });
       $scope.slots = PlannerContent.slotsForDay($scope.day);
-      $ionicLoading.hide();
     };
-    $scope.$watchCollection(PlannerContent.getFavoriteEvents, function(oldVal, newVal) {
-       slotsUpdater();
-    }, true);
-    $scope.$watchCollection(PlannerContent.getUserEvents, function(oldVal, newVal) {
-      slotsUpdater();
-    }, true);
+    $scope.$watchCollection(PlannerContent.getAllEvents, slotsUpdater);
     slotsUpdater();
 })
 
