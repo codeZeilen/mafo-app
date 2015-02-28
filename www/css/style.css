@@ -255,3 +255,13 @@ td.mafo-planner-time {
 .mafo-planner-user-event {
     background-color: rgba(33, 98, 103, 0.18);
 }
+
+.mafo-planner-fixed-event {
+    background: repeating-linear-gradient(
+            45deg,
+            rgba(103, 20, 15, 0.11),
+            rgba(103, 20, 15, 0.11) 7px,
+            rgba(226, 221, 218, 0.50) 7px,
+            rgba(226, 221, 218, 0.50) 14px
+    );
+}

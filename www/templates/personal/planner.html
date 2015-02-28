@@ -8,7 +8,7 @@
                 {{($index%4 == 0) ? slot.timeString : ""}}
             </td>
             <td class="mafo-planner-event"
-                ng-class="{'mafo-planner-user-event' : event.isUserEvent}"
+                ng-class="{'mafo-planner-user-event' : event.isUserEvent, 'mafo-planner-fixed-event' : event.isFixedEvent}"
                 ng-repeat="event in slot.events"
                 rowspan="{{tickSpan(event)}}"
                 ng-click="showActions(event)">
