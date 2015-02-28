@@ -393,7 +393,7 @@ angular.module('starter.services', ['ngResource'])
         'name': 'Check-In in O048',
         'roomId': 3,
         'startTime': moment('03-05-2015 15:00'),
-        'endTime':   moment('03-05-2015 18:00'),
+        'endTime':   moment('03-05-2015 19:00'),
         'durationInMinutes' : 30,
         'isFixedEvent' : true
       },
