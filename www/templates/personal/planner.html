@@ -1,16 +1,172 @@
+<script id="planner-day.html" type="text/ng-template">
+    <ion-scroll planner-scroll direction="xy" has-bouncing="false">
+    <table class="mafo-planner padding">
+        <tr ng-repeat="slot in slots">
+            <td class="mafo-planner-time"
+                ng-class="{ 'mafo-planner-even-row' : (($index/4) % 2 < 1) == 0,
+                            'mafo-planner-odd-row'  : (($index/4) % 2 < 1) == 1 }">
+                {{($index%4 == 0) ? slot.timeString : ""}}
+            </td>
+            <td class="mafo-planner-event"
+                ng-class="{'mafo-planner-user-event' : event.isUserEvent, 'mafo-planner-fixed-event' : event.isFixedEvent}"
+                ng-repeat="event in slot.events"
+                rowspan="{{tickSpan(event)}}"
+                ng-click="showActions(event)">
+                <div class="mafo-planner-event-title">{{event.name}}</div>
+                <div class="mafo-planner-event-time">
+                    {{event.timeString}}
+                    <span class="mafo-planner-event-room"
+                          ng-if="event.roomId > 0">
+                        {{roomsById[event.roomId].name}}
+                    </span>
+                    <span class="mafo-planner-event-room"
+                          ng-if="angular.isDefined(event.location)">
+                        {{event.location}}
+                    </span>
+                </div>
+                <div>
+                    {{topicCategoryName(event)}}
+                </div>
+            </td>
+            <td ng-repeat="i in [1,2,3,4,5,6,7,8,9]"
+                ng-class="{ 'mafo-planner-even-row' : (($index/4) % 2 < 1) == 0,
+                            'mafo-planner-odd-row'  : (($parent.$index/4) % 2 < 1) == 1 }">
+            </td>
+        </tr>
+    </table>
+    </ion-scroll>
+</script>
+
+<ion-header-bar class="bar bar-subheader">
+    <h2 class="title">Planer</h2>
+</ion-header-bar>
 <ion-view>
-    <ion-content>
-        <h1>Planer</h1>
-        <p>Mit dem MaFo-Planer kannst du dir deinen persönlichen Stundenplan für das Mannheim Forum
+    <ion-tabs class="tabs-royal">
+        <ion-tab title="Do">
+            <ion-view><ion-content scroll="false" class="padding">
+                <mafo-planner-day day="days[0]" rooms-by-id="roomsById"></mafo-planner-day>
+            </ion-content></ion-view>
+        </ion-tab>
 
-            zusammenstellen. Veranstaltungen hinzufügen kannst du, indem du in der Programmübersicht auf
+        <ion-tab title="Fr">
+            <ion-view><ion-content scroll="false" class="padding">
+                <mafo-planner-day day="days[1]" rooms-by-id="roomsById"></mafo-planner-day>
+            </ion-content></ion-view>
+        </ion-tab>
 
-            den Stern hinter dem jeweiligen Programmpunkt tippst – die Veranstaltung wird dann automatisch in
+        <ion-tab title="Sa">
+            <ion-view><ion-content scroll="false" class="padding">
+                <mafo-planner-day day="days[2]" rooms-by-id="roomsById"></mafo-planner-day>
+            </ion-content></ion-view>
+        </ion-tab>
 
-            deinen Planer übernommen. Mehr Informationen über eine Veranstaltung oder eine Veranstaltung
+        <ion-tab title="Info">
+            <ion-view>
+                <ion-content class="padding" >
+                <p>
+                    Mit dem MaFo-Planer kannst du dir deinen persönlichen Stundenplan für das Mannheim Forum
+                    zusammenstellen. Veranstaltungen hinzufügen kannst du, indem du in der Programmübersicht auf
+                    den Stern hinter dem jeweiligen Programmpunkt tippst – die Veranstaltung wird dann automatisch in
+                    deinen Planer übernommen. Mehr Informationen über eine Veranstaltung oder eine Veranstaltung
+                    löschen kannst du, indem du auf den jeweiligen Eintrag in dem Planer drückst.
+                    Alternativ kannst du dir manuell einen Termin eintragen (siehe unten).</p>
 
-            löschen kannst du, indem du auf den jeweiligen Eintrag in dem Planer drückst.
+                <form ng-submit="storeEvent(userEvent)" class="list list-inset">
+                    <div class="item form-errors"
+                         ng-show="dataWasSaved">
+                        <div class="form-success" ng-show="dataWasSaved">Ihr Termin wurde eingetragen.</div>
+                    </div>
 
-            Alternativ kannst du dir manuell einen Termin eintragen (siehe unter dem Planer).</p>
-    </ion-content>
+                    <div class="item form-errors"
+                         ng-show="incompleteEvent">
+                        <div class="form-error" ng-show="incompleteEvent">Alle Terminfelder müssen belegt sein.</div>
+                    </div>
+
+
+                    <label class="item item-input">
+                        <input type="text"
+                               name="name"
+                               placeholder="Veranstaltungstitel"
+                               ng-model="userEvent.name" />
+                    </label>
+
+                    <label class="item item-input">
+                        <input type="text"
+                               name="location"
+                               placeholder="Ort"
+                               ng-model="userEvent.location" />
+                    </label>
+
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            Tag
+                        </div>
+                        <select name="day" ng-model="userEvent.dayIndex">
+                            <option selected>Donnerstag</option>
+                            <option>Freitag</option>
+                            <option>Samstag</option>
+                        </select>
+                    </label>
+
+                    <div class="item item-divider">
+                        Von
+                    </div>
+
+
+                        <label class="item item-input item-select ">
+                            <div class="input-label">
+                                Stunde
+                            </div>
+                            <select name="startTimeHours"
+                                    ng-model="userEvent.startTimeHours">
+                                <option ng-repeat="hour in range(0,23,1)"
+                                        ng-selected="hour == userEvent.startTimeHours">{{hour}}</option>
+                            </select>
+                        </label>
+
+                        <label class="item item-input item-select">
+                            <div class="input-label">
+                                Minuten
+                            </div>
+                            <select name="startTimeMinutes"
+                                    ng-model="userEvent.startTimeMinutes">
+                                <option ng-repeat="minute in range(0,59,5)"
+                                        ng-selected="minute == userEvent.startTimeMinutes">{{minute}}</option>
+                            </select>
+                        </label>
+
+                    <div class="item item-divider">
+                        Bis
+                    </div>
+
+                        <label class="item item-input item-select ">
+                            <div class="input-label">
+                                Stunde
+                            </div>
+                            <select name="endTimeHours"
+                                    ng-model="userEvent.endTimeHours">
+                                <option ng-repeat="hour in range(0,23,1)"
+                                        ng-selected="hour == userEvent.endTimeHours">{{hour}}</option>
+                            </select>
+                        </label>
+
+                        <label class="item item-input item-select ">
+                            <div class="input-label">
+                                Minuten
+                            </div>
+                            <select name="endTimeMinutes"
+                                    ng-model="userEvent.endTimeMinutes">
+                                <option ng-repeat="minute in range(0,59,5)"
+                                        ng-selected="minute == userEvent.endTimeMinutes">{{minute}}</option>
+                            </select>
+                        </label>
+
+                    <input type="submit" value="Speichern" class="button button-block button-positive activated" />
+                </form>
+                </ion-content>
+            </ion-view>
+        </ion-tab>
+    </ion-tabs>
+
+
 </ion-view>

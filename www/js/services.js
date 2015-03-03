@@ -53,15 +53,17 @@ angular.module('starter.services', ['ngResource'])
 
     return {
       init: function() {
-        var allDone = [];
+
+        var initializationDone = $q.defer();
         if(!initStarted) {
           initStarted = true;
           $http.get('content.json')
             .success(function (fileContent) {
+              var entitiesInitialized = [];
               var entitiesContent = angular.fromJson(fileContent);
               angular.forEach(entitiesContent, function (entityContent) {
                 var entityDone = $q.defer();
-                allDone.push(entityDone);
+                entitiesInitialized.push(entityDone);
 
                 var entityName = ContentConfiguration.contentUpdateConfiguration[entityContent.routeKey].entityName;
                 var entity = Persistence.Entities[entityName];
@@ -69,19 +71,24 @@ angular.module('starter.services', ['ngResource'])
                   persistence.add(new entity(individualContent));
                 });
                 persistence.flush(function () {
-                  persistence.add(new Persistence.Entities.ServerUpdateTimestamp({
+                  var timestampObject = new Persistence.Entities.ServerUpdateTimestamp({
                     'routeKey': entityContent.routeKey,
                     'timestamp': entityContent.timestamp
-                  }));
-                  persistence.flush(function () {
-                    entityDone.resolve(entityContent.timestamp);
+                  });
+                  persistence.add(timestampObject);
+                  persistence.flush(function() {
+                    entityDone.resolve(timestampObject);
                   });
                 });
               });
+
+              $q.all(entitiesInitialized).then(function(timestamps) {
+                initializationDone.resolve(timestamps);
+              })
             });
         }
 
-        return $q.all(allDone);
+        return initializationDone.promise;
       }
     };
 })
@@ -209,6 +216,52 @@ angular.module('starter.services', ['ngResource'])
   return newsIntervalFacade;
 })
 
+.factory('EventUtil', function() {
+    var groupDays = function(events) {
+      var days = {};
+      angular.forEach(events, function(event) {
+        var startTime = moment(event.startTime);
+        var day = moment(startTime);
+        day.startOf('day');
+        if(!(day in days)) {
+          days[day] = {};
+        }
+        if(!(startTime in days[day])) {
+          days[day][startTime] = [];
+        }
+        days[day][startTime].push(event);
+
+      });
+      return days;
+    };
+
+    var daysToObjects = function(days) {
+      var resultDays = [];
+      angular.forEach(Object.keys(days), function(day) {
+        var slots = [];
+        angular.forEach(Object.keys(days[day]), function(timeslot) {
+          slots.push({
+            'startTime': moment(timeslot),
+            'displayName' : moment(timeslot).format("HH:mm").concat(" Uhr"),
+            'events' :  days[day][timeslot]
+          });
+        });
+        resultDays.push({
+          'day': moment(day),
+          'displayName' : moment(day).format("dd, D.MMM"),
+          'slots' : slots
+        });
+      });
+
+      return resultDays;
+    };
+
+    return {
+      daysToObjects : daysToObjects,
+      groupDays     : groupDays
+    }
+})
+
 .factory('ContactRequestOutbox', function($interval, Persistence, $http, $q) {
   var intervalPromise;
 
@@ -329,344 +382,221 @@ angular.module('starter.services', ['ngResource'])
     };
   })
 
-  .factory('Persistence', function($q, SpeakerAPI, EventAPI, EventHBTMSpeakerAPI, PartnerAPI, TopicCateogryAPI, RoomAPI, NewsAPI) {
-    // Credits to https://github.com/bgoetzmann/ionic-persistence/
+.factory('PlannerContent', function(Persistence, $interval, $ionicPopup) {
 
-    persistence.store.cordovasql.config(persistence, 'mafo_app_db', '0.0.5', 'Cache for program data of mafo', 30 * 1024 * 1024, 0);
+    var minutesPerSlot = 15;
+    var startHour = 8;
+    var endHour = 24;
 
-    var entities = {};
+    var fixedEvents = [
+      {
+        'name': 'Check-In in O048',
+        'roomId': 3,
+        'startTime': moment('03-05-2015 15:00', 'MM-DD-YYYY HH:mm'),
+        'endTime':   moment('03-05-2015 19:00', 'MM-DD-YYYY HH:mm'),
+        'durationInMinutes' : 30,
+        'isFixedEvent' : true
+      },
+      {
+        'name': 'Check-In in O048',
+        'roomId': 3,
+        'startTime': moment('03-06-2015 08:00', 'MM-DD-YYYY HH:mm'),
+        'endTime':   moment('03-06-2015 13:00', 'MM-DD-YYYY HH:mm'),
+        'durationInMinutes' : 30,
+        'isFixedEvent' : true
+      },
+      {
+        'name': 'Check-In am Info-Point',
+        'roomId': 7,
+        'startTime': moment('03-06-2015 13:00', 'MM-DD-YYYY HH:mm'),
+        'endTime':   moment('03-06-2015 19:00', 'MM-DD-YYYY HH:mm'),
+        'durationInMinutes' : 30,
+        'isFixedEvent' : true
+      },
+      {
+        'name': 'Check-In am Info-Point',
+        'roomId': 7,
+        'startTime': moment('03-07-2015 08:00', 'MM-DD-YYYY HH:mm'),
+        'endTime':   moment('03-07-2015 17:00', 'MM-DD-YYYY HH:mm'),
+        'durationInMinutes' : 30,
+        'isFixedEvent' : true
+      },
+    ];
 
-    entities.Speaker = persistence.define('Speaker', {
-      serverId: 'INT',
-      name: 'TEXT',
-      title: 'TEXT',
-      shortDescription: 'TEXT',
-      longDescription: 'TEXT',
-      picturePath: 'TEXT',
-      isShownInList: 'INT'
-    });
-
-    entities.Event = persistence.define('Event', {
-      serverId: 'INT',
-      name: 'TEXT',
-      shortDescription: 'TEXT',
-      longDescription: 'TEXT',
-      startTime: 'TEXT',
-      endTime: 'TEXT',
-      roomId: 'INT',
-      categoryId: 'INT',
-      companyId: 'INT',
-      picturePath: 'TEXT',
-      eventType: 'TEXT'
-    });
-    entities.EVENT_TYPES = {
-      MAIN: 'main',
-      EVENING: 'evening',
-      VERTIEFUNGSWORKSHOP: 'vworkshop',
-      UNTERNEHMENSWORKSHOP: 'uworkshop'
-    };
-
-    entities.Partner = persistence.define('Partner', {
-      serverId: 'INT',
-      name: 'TEXT',
-      shortDescription: 'TEXT',
-      longDescription: 'TEXT',
-      website: 'TEXT',
-      email: 'TEXT',
-      nameOfContact: 'TEXT',
-      address: 'TEXT',
-      logoPath: 'TEXT'
-    });
-
-    entities.TopicCategory = persistence.define('TopicCategory', {
-      serverId: 'INT',
-      name: 'TEXT',
-      color: 'TEXT'
-    });
-
-    entities.Room = persistence.define('Room', {
-      serverId: 'INT',
-      name: 'TEXT',
-      capacity: 'INT',
-      mapImagePath: 'TEXT'
-    });
-
-    entities.News = persistence.define('News', {
-      serverId: 'INT',
-      title: 'TEXT',
-      content: 'TEXT',
-      createdAt: 'TEXT'
-    });
-
-    entities.EventHBTMSpeaker = persistence.define('EventHBTMSpeaker', {
-      speakerServerId: 'INT',
-      eventServerId: 'INT'
-    });
-
-    entities.ContactRequest = persistence.define('ContactRequest', {
-      firstName: "TEXT",
-      lastName: "TEXT",
-      email: "TEXT",
-      message: "TEXT"
-    });
-
-    entities.ServerUpdateTimestamp = persistence.define('ServerUpdateTimestamp', {
-      routeKey: "TEXT",
-      timestamp: "TEXT"
-    });
-
-    persistence.debug = true;
-    persistence.schemaSync();
-
-    var refreshSpeakers = function() {
-      return $q.all([
-        refreshAllOf(SpeakerAPI, entities.Speaker),
-        refreshAllOf(EventHBTMSpeakerAPI, entities.EventHBTMSpeaker),
-        refreshAllOf(RoomAPI, entities.Room),
-        refreshAllOf(TopicCateogryAPI, entities.TopicCategory),
-        refreshAllOf(EventAPI, entities.Event)
-      ]);
-
-    };
-
-    var getAllSpeakers = function(speakersResult) {
-      return getAllOf(entities.Speaker, speakersResult);
-    };
-
-    var refreshEvents = function() {
-      return $q.all([
-        refreshAllOf(EventAPI, entities.Event),
-        refreshAllOf(EventHBTMSpeakerAPI, entities.EventHBTMSpeaker),
-        refreshAllOf(SpeakerAPI, entities.Speaker),
-        refreshAllOf(RoomAPI, entities.Room),
-        refreshAllOf(TopicCateogryAPI, entities.TopicCategory),
-      ]);
-    };
-
-    var getAllEvents = function(events) {
-      return getAllOf(entities.Event, events);
-    };
-
-    var getEventsForPartner = function(partnerId) {
-      return function(result) {
-        entities.Event.all().filter('companyId', '=', partnerId).list(null, function(events){
-          result.resolve(events);
-        })
-      };
-    };
-
-    var refreshPartners = function() {
-      return refreshAllOf(PartnerAPI, entities.Partner);
-    };
-
-    var getAllPartners = function(partnersResult) {
-      return getAllOf(entities.Partner, partnersResult);
-    };
-
-    var refreshCategories = function() {
-      return refreshAllOf(TopicCateogryAPI, entities.TopicCategory);
-    };
-
-    var getAllCategories = function(categoriesResult) {
-      return getAllOf(entities.TopicCategory, categoriesResult);
-    };
-
-    var refreshRooms = function() {
-      return $q.all([
-        refreshAllOf(EventAPI, entities.Event),
-        refreshAllOf(EventHBTMSpeakerAPI, entities.EventHBTMSpeaker),
-        refreshAllOf(SpeakerAPI, entities.Speaker),
-        refreshAllOf(RoomAPI, entities.Room),
-        refreshAllOf(TopicCateogryAPI, entities.TopicCategory),
-      ]);
-    };
-
-    var getAllRooms = function(roomsResult) {
-      return getAllOf(entities.Room, roomsResult);
-    };
-
-    var refreshAllNews = function() {
-      return refreshAllOf(NewsAPI, entities.News);
-    };
-
-    var incrementalRefreshNews = function() {
-      var result = $q.defer();
-      var intermediateResult = $q.defer();
-      getAllNews(intermediateResult);
-      intermediateResult.promise.then(function(news) {
-        var creationTimestamps = news.map(function(newsItem) {
-          return newsItem.createdAt;
-        });
-        var latestNewsTimestamp = 0;
-        if(creationTimestamps.length > 0) {
-          latestNewsTimestamp = Math.max.apply(null, creationTimestamps);
-        };
-        NewsAPI.refreshFrom(latestNewsTimestamp).then(function(newsItems) {
-          angular.forEach(newsItems, function(newsItem) {
-            persistence.add(new entities.News(newsItem));
-          });
-          persistence.flush(function() {
-            result.resolve();
-          });
-        });
-      });
-
-      return result.promise;
-    };
-
-    var getAllNews = function(newsResult) {
-      return getAllOf(entities.News, newsResult);
-    };
-
-    var refreshAllOf = function(ResourceApi, entityClass) {
-      var result = $q.defer();
-      ResourceApi.query(function(individuals) {
-        //TODO: check response
-        if(individuals.length == 0) {
-          // Safe-guard against wrong data. TODO: Maybe stronger
-          return false;
-        } else {
-          entityClass.all().destroyAll();
-          persistence.flush(function() {
-            angular.forEach(individuals, function(individual) {
-              persistence.add(new entityClass(individual));
+    var alarms = {};
+    var setAlarm = function(event) {
+      if(!angular.isDefined(event.startTime)) {
+        return false;
+      }
+      if(!angular.isDefined(alarms[event.serverId])) {
+        var delay = moment(event.startTime);
+        delay.subtract(moment.duration(10, 'minutes'));
+        var delayMs = delay.diff(moment());
+        alarms[event.serverId] = $interval(function() {
+            var alertPopup = $ionicPopup.alert({
+              title: 'Erinnerung',
+              template: 'Die Veranstaltung ' + event.name + ' beginnt in 10 Minuten.'
             });
-            persistence.flush(function() {
-              result.resolve();
+            alertPopup.then(function(res) {
             });
-          });
-        }
-      });
-      return result.promise;
+        },
+        delayMs,
+        1);
+      }
+    };
+    var cancelAlarm = function(event) {
+      if(angular.isDefined(alarms[event.serverId])) {
+        $interval.cancel(alarms[event.serverId]);
+      }
     };
 
-    var getAllOf = function(entityClass, deferred) {
-      entityClass.all().list(null, function (individuals) {
-        deferred.resolve(individuals);
-      });
-    };
+    var allEvents = [];
 
-    var listing = function(entityClass, _, getAllFn) {
-      var result = $q.defer();
-      getAllFn(result);
-      return result.promise;
-    };
+    var favoriteEvents = [];
+    Persistence.listFavoriteEvents().then(function(persistedFavoriteEvents) {
+      favoriteEvents = persistedFavoriteEvents;
+      angular.forEach(persistedFavoriteEvents, setAlarm);
+      allEvents = allEvents.concat(persistedFavoriteEvents);
+    });
 
-    var listingViaHBTM = function(hbtmEntity, sourceId, sourceAttribute, targetEntity, targetAttribute) {
-      var result = $q.defer();
-      hbtmEntity.all().filter(sourceAttribute, '=', sourceId).list(function(eventServerIds) {
-        if(eventServerIds.length > 0) {
-          var ids = eventServerIds.map(function(eventServerId) {
-            return eventServerId[targetAttribute];
-          });
-          targetEntity.all().filter('serverId', 'in', ids).list(null, function(events) {
-            result.resolve(events);
-          });
-        } else {
-          result.resolve([]);
-        }
-      });
-      return result.promise;
-    };
+    var userEvents = [];
+    Persistence.listUserEvents().then(function(persistedUserEvents) {
+      userEvents = persistedUserEvents;
+      allEvents = allEvents.concat(persistedUserEvents);
+    });
 
-    var getting = function(entityClass, individualServerId) {
-        var result = $q.defer();
-
-        entityClass.all().filter('serverId', '=', individualServerId).one(function(individual) {
-          result.resolve(individual);
-        });
-
-        return result.promise;
+    var isFavorite = function(event) {
+      return favoriteEvents.indexOf(event) > -1;
     };
 
     return {
-      Entities: entities,
-
-      add: function(playlist) {
-        persistence.add(playlist);
-        persistence.flush();
+      getAllEvents : function() { return allEvents },
+      getFavoriteEvents : function() { return favoriteEvents },
+      isFavoriteEvent : isFavorite,
+      favoriteEvent : function(event) {
+        allEvents.push(event);
+        favoriteEvents.push(event);
+        setAlarm(event);
+        Persistence.addFavoriteEvent(event.serverId);
       },
-
-      /* Speakers */
-      refreshSpeakers: refreshSpeakers,
-      getSpeaker: function(speakerId) {
-        return getting(entities.Speaker, speakerId);
+      removeFavoriteEvent : function(event) {
+        var index = favoriteEvents.indexOf(event);
+        if(index > -1) {
+          favoriteEvents.splice(index, 1);
+        }
+        index = allEvents.indexOf(event);
+        if(index > -1) {
+          allEvents.splice(index, 1);
+        }
+        cancelAlarm(event);
+        Persistence.removeFavoriteEvent(event.serverId);
       },
-      listSpeakers: function() {
-        return listing(entities.Speaker, refreshSpeakers, getAllSpeakers);
-      },
-      eventsForSpeaker: function(speakerId) {
-        return listingViaHBTM(entities.EventHBTMSpeaker,
-                              speakerId, 'speakerServerId',
-                              entities.Event, 'eventServerId');
-      },
-
-      /* Events */
-      refreshEvents: refreshEvents,
-      getEvent: function(eventId) {
-        return getting(entities.Event, eventId);
-      },
-      listEvents: function() {
-        return listing(entities.Event, refreshEvents, getAllEvents);
-      },
-      listSpeakersForEvent: function(eventId) {
-        return listingViaHBTM(entities.EventHBTMSpeaker,
-          eventId, 'eventServerId',
-          entities.Speaker, 'speakerServerId');
-      },
-
-      /* Partner */
-      refreshPartners: refreshPartners,
-      getPartner: function(partnerId) {
-        return getting(entities.Partner, partnerId);
-      },
-      listPartners: function() {
-        return listing(entities.Partner, refreshPartners, getAllPartners);
-      },
-      getWorkshopsOfPartner: function(partnerId) {
-        return listing(entities.Event, refreshEvents, getEventsForPartner(partnerId));
-      },
-
-      /* Topic category */
-      refreshCategories: refreshCategories,
-      listCategories: function() {
-        return listing(entities.TopicCategory, refreshCategories, getAllCategories);
-      },
-
-      /* Rooms */
-      refreshRooms: refreshRooms,
-      listRooms: function() {
-        return listing(entities.Room, refreshRooms, getAllRooms);
-      },
-      getRoom: function(roomId) {
-        return getting(entities.Room, roomId);
-      },
-
-      /* News */
-      incrementalRefreshNews: incrementalRefreshNews,
-      listNews: function() {
-        return listing(entities.News, refreshAllNews, getAllNews);
-      },
-      getNewsItem: function(itemId) {
-        return getting(entities.News, itemId);
-      },
-      /* ContactRequest */
-      addContactRequest: function(message) {
-        var result = $q.defer();
-        persistence.add(new entities.ContactRequest(message));
-        persistence.flush(function() {
-          result.resolve();
+      getUserEvents : function() { return userEvents },
+      saveUserEvent : function(eventData) {
+        Persistence.addUserEvent(eventData).then(function(persistedUserEvent) {
+          userEvents.push(persistedUserEvent);
+          allEvents.push(persistedUserEvent);
         });
-        return result.promise;
       },
-      removeContactRequest: function(request) {
-        persistence.remove(request);
-        persistence.flush();
+      removeUserEvent : function(event) {
+        var index = userEvents.indexOf(event);
+        if(index > -1) {
+          userEvents.splice(index, 1);
+        }
+        index = allEvents.indexOf(event);
+        if(index > -1) {
+          allEvents.splice(index, 1);
+        }
+        Persistence.removeUserEvent(event);
       },
-      listContactRequests: function() {
-        var result = $q.defer();
-        getAllOf(entities.ContactRequest, result);
-        return result.promise;
+      slotsForDay : function(day) {
+        var startDay = moment(day);
+        var endOfDay = moment(startDay);
+        endOfDay.add(moment.duration(1, 'days'));
+
+        var dayEvents = [];
+        angular.forEach(favoriteEvents.concat(fixedEvents).concat(userEvents), function(event) {
+          if (moment(event.startTime).isBetween(startDay, endOfDay)) {
+            dayEvents.push(event);
+          }
+        });
+
+        var daySlots = [];
+        for (var i = 0; i < (endHour - startHour) * (60 / minutesPerSlot); i++) {
+          var time = moment(startDay);
+          time.add(moment.duration(startHour, 'hours'));
+          time.add(moment.duration(i * minutesPerSlot, 'minutes'));
+
+          // Filter events in between
+          var events = [];
+          var endTime = moment(time);
+          endTime.add(moment.duration(minutesPerSlot, 'minutes'));
+          var startTime = moment(time);
+          startTime.subtract(moment.duration(1, 'minutes'));
+          angular.forEach(dayEvents, function (event) {
+            if (moment(event.startTime).isBetween(startTime, endTime)) {
+              var offset = moment(event.startTime);
+              offset.subtract(startTime);
+              event['offset'] = moment.duration(offset.hours() * 60 + offset.minutes(), 'minutes');
+
+              event['timeString'] = moment(event.startTime).format("HH:mm").concat(" - ").concat(moment(event.endTime).format("HH:mm"));
+              events.push(event);
+            }
+          });
+
+          daySlots.push({
+            timestamp: time,
+            timeString: time.format("HH:mm"),
+            events: events
+          });
+        }
+
+        return daySlots;
       }
+
+    }
+})
+
+.factory('TopicCategoryService', function($rootScope, Persistence, ContentUpdater) {
+
+    var categoryColors = {};
+    var categoryNames = {};
+
+    var updater = function() {
+      Persistence.listCategories().then(function(categories) {
+        categoryColors = {};
+        categoryNames = {};
+        angular.forEach(categories, function(category) {
+          categoryColors[category.serverId] = '#' + category.color;
+          categoryNames[category.serverId] = category.name;
+        });
+      });
     };
-  });
+
+    $rootScope.$watchCollection(function() { return ContentUpdater.topicCategoryUpdateCounter }, function(oldVal, newVal) {
+      updater();
+    });
+    updater();
+
+    return {
+      categoryColorFromId : function(categoryId) {
+        return categoryColors[categoryId];
+      },
+      categoryNameFromId : function(categoryId) {
+        return categoryNames[categoryId];
+      }
+    }
+
+})
+
+.factory('MafoTimeFormatter', function() {
+    return {
+      formatTime : function(timestamp) {
+        return moment(timestamp).format("HH:mm");
+      },
+      formatNewsDate : function(timestamp) {
+        var time = moment(timestamp, "X");
+        return time.format("DD. MMM YYYY, HH");
+      }
+    }
+});

@@ -7,8 +7,8 @@
             <div class="item">
                 <h2>{{event.name}}</h2>
                 <p class="item-short-description">
-                    <span ng-if="event.categoryId" ng-style="{color: categoryColors[event.categoryId]}">
-                        {{categoryNames[event.categoryId]}}
+                    <span ng-if="event.categoryId" ng-style="{color: topicCategoryColor(event)}">
+                        {{topicCategoryName(event)}}
                     </span>
                     <span ng-if="isWorkshop(event)">
                         Workshop
@@ -21,16 +21,18 @@
                 {{dayFormat(event.startTime)}}: {{timeFormat(event.startTime)}} - {{timeFormat(event.endTime)}}
             </div>
 
-            <div class="item item-icon-left item-text-wrap" ng-if="event.roomId > 0" ng-href="#/app/rooms/{{event.roomId}}">
+            <div class="item item-icon-left  item-icon-right item-text-wrap" ng-if="event.roomId > 0" >
                 <i class="icon ion-ios-home-outline"></i>
-                {{eventRoom.name}}
+                <a class="text-link" ng-if="eventRoom.mapImagePath && eventRoom.mapImagePath != ''" ng-href="#/app/room/{{event.roomId}}">{{eventRoom.name}}</a>
+                <a class="text-link" ng-if="!(eventRoom.mapImagePath && eventRoom.mapImagePath != '')" >{{eventRoom.name}}</a>
+                <i class="icon ion-ios-location" ng-if="eventRoom.mapImagePath && eventRoom.mapImagePath != ''"></i>
             </div>
 
             <div class="item item-divider" ng-if="event.longDescription">
                 Beschreibung
             </div>
             <div class="item" ng-if="event.longDescription">
-                <p class="item-long-description" ng-bind-html="event.longDescription"></p>
+                <p class="item-long-description" dynamic-content="event.longDescription"></p>
             </div>
 
             <div class="item item-divider" ng-if="speakersForEvent.length > 0">

@@ -9,7 +9,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
 .run(function($ionicPlatform, $rootScope, ContactRequestOutbox,
               NewsInterval, ContentUpdater, $ionicNavBarDelegate,
               $ionicHistory, $state) {
-  ImgCache.options.debug = true;
+  ImgCache.options.debug = false;
   ImgCache.options.chromeQuota = 30*1024*1024;
 
   $ionicPlatform.ready(function() {
@@ -106,6 +106,38 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
       });
     }
   };
+})
+
+.directive('mapList', function() {
+  return {
+    restrict: 'A',
+    link: function(scope, elements, attrs) {
+      var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+      elements[0].style.height = "" + (h - (88 /* headers */ + 38 /*divider*/ + 150/*maps*/)) + "px";
+    }
+  }
+})
+
+.directive('plannerScroll', function() {
+  return {
+    restrict: 'A',
+    link: function(scope, elements, attrs) {
+      var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+      elements[0].style.height = "" + (h - (88 /* headers */ + 48 /* Tab controls */)) + "px";
+    }
+  }
+})
+
+.directive('mafoPlannerDay', function() {
+    return {
+      restrict: 'E',
+      scope: {
+        day: '=',
+        roomsById: '='
+      },
+      templateUrl: 'planner-day.html',
+      controller: 'PlannerTabCtrl'
+    }
 })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
@@ -244,6 +276,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
         'menuContent': {
           templateUrl: "templates/program/map.html",
           controller: 'MapCtrl'
+        }
+      }
+    })
+
+    .state('app.room', {
+      url: "/room/:roomId",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/program/room.html",
+          controller: 'RoomCtrl'
         }
       }
     })

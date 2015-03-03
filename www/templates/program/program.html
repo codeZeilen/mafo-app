@@ -16,7 +16,7 @@
                     <ion-item ng-repeat="event in timeslot.events" class="item-text-wrap">
                         <div class="program-category-indicator"
                              ng-if="event.categoryId"
-                             ng-style="{'background-color': categoryColors[event.categoryId]};">
+                             ng-style="{'background-color': topicCategoryColor(event)};">
                             &#8203;
                         </div>
                         <div class="program-title-description">
@@ -27,17 +27,20 @@
                                         <strong>
                                             {{eventCategoryName(event)}}
                                         </strong>
-                                        <span ng-if="event.categoryId && categoriesNotToShow.indexOf(categoryNames[event.categoryId]) == -1">
-                                            {{categoryNames[event.categoryId]}}
+                                        <span ng-if="event.categoryId && categoriesNotToShow.indexOf(topicCategoryName(event)) == -1">
+                                            {{topicCategoryName(event)}}
                                         </span>
                                     </p>
 
                                 </div>
                             </a>
                         </div>
-                        <!--<div class="program-favorite-event">
-                            <i class="ion-icon ion-ios-star-outline" ng-click="favoriteEvent(event);" stopEvent></i>
-                        </div>-->
+                        <div class="program-favorite-event">
+                            <i class="ion-icon"
+                               ng-class="{'ion-ios-star-outline': !isFavoriteEvent(event),
+                                          'ion-ios-star': isFavoriteEvent(event)}"
+                               ng-click="favoriteEvent(event);" stopEvent></i>
+                        </div>
                     </ion-item>
                     <div ng-repeat-end></div>
                 </ion-list>
@@ -58,7 +61,7 @@
                     <ion-item ng-repeat="event in timeslot.events" class="item-text-wrap">
                         <div class="program-category-indicator"
                              ng-if="event.categoryId"
-                             ng-style="{'background-color': categoryColors[event.categoryId]};">
+                             ng-style="{'background-color': topicCategoryColor(event)};">
                             &#8203;
                         </div>
                         <div class="program-title-description">
@@ -69,17 +72,20 @@
                                         <strong>
                                             {{eventCategoryName(event)}}
                                         </strong>
-                                        <span ng-if="event.categoryId && categoriesNotToShow.indexOf(categoryNames[event.categoryId]) == -1">
-                                            {{categoryNames[event.categoryId]}}
+                                        <span ng-if="event.categoryId && categoriesNotToShow.indexOf(topicCategoryName(event)) == -1">
+                                            {{topicCategoryName(event)}}
                                         </span>
                                     </p>
 
                                 </div>
                             </a>
                         </div>
-                        <!--<div class="program-favorite-event">
-                            <i class="ion-icon ion-ios-star-outline" ng-click="favoriteEvent(event);" stopEvent></i>
-                        </div>-->
+                        <div class="program-favorite-event">
+                            <i class="ion-icon"
+                               ng-class="{'ion-ios-star-outline': !isFavoriteEvent(event),
+                                          'ion-ios-star': isFavoriteEvent(event)}"
+                               ng-click="favoriteEvent(event);" stopEvent></i>
+                        </div>
                     </ion-item>
                     <div ng-repeat-end></div>
                 </ion-list>
@@ -100,7 +106,7 @@
                     <ion-item ng-repeat="event in timeslot.events" class="item-text-wrap">
                         <div class="program-category-indicator"
                              ng-if="event.categoryId"
-                             ng-style="{'background-color': categoryColors[event.categoryId]};">
+                             ng-style="{'background-color': topicCategoryColor(event)};">
                             &#8203;
                         </div>
                         <div class="program-title-description">
@@ -111,17 +117,20 @@
                                         <strong>
                                             {{eventCategoryName(event)}}
                                         </strong>
-                                        <span ng-if="event.categoryId && categoriesNotToShow.indexOf(categoryNames[event.categoryId]) == -1">
-                                            {{categoryNames[event.categoryId]}}
+                                        <span ng-if="event.categoryId && categoriesNotToShow.indexOf(topicCategoryName(event)) == -1">
+                                            {{topicCategoryName(event)}}
                                         </span>
                                     </p>
 
                                 </div>
                             </a>
                         </div>
-                        <!--<div class="program-favorite-event">
-                            <i class="ion-icon ion-ios-star-outline" ng-click="favoriteEvent(event);" stopEvent></i>
-                        </div>-->
+                        <div class="program-favorite-event">
+                            <i class="ion-icon"
+                               ng-class="{'ion-ios-star-outline': !isFavoriteEvent(event),
+                                          'ion-ios-star': isFavoriteEvent(event)}"
+                               ng-click="favoriteEvent(event);" stopEvent></i>
+                        </div>
                     </ion-item>
                     <div ng-repeat-end></div>
                 </ion-list>

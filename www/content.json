@@ -22,7 +22,7 @@
   {
     "routeKey"    : "rooms",
     "timestamp"   : "0000-00-00 00:00:00",
-    "individuals" : [{"serverId":"1","name":"Universit\u00e4t Mannheim, Raum: TBA","capacity":"12151","mapImagePath":"uni_mannheim_logo.jpg"}]
+    "individuals" : [{"serverId":"1","name":"Universit\u00e4t Mannheim, Raum: TBA","capacity":"12151","mapImagePath":"Lageplan_EG_grau.jpg"}]
   },
   {
     "routeKey"    : "event_speakers",
