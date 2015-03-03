@@ -118,8 +118,8 @@ angular.module('starter.services', ['ngResource'])
         angular.forEach(Object.keys(apiConfiguration), function(routeKey) {
           $http.get(baseURL.replace("%s", routeKey))
             .success(function(requestResult) {
-              var newTimeStamp = moment(angular.fromJson(requestResult)[0]);
-              var oldTimeStamp = moment(timestampObjects[routeKey].timestamp);
+              var newTimeStamp = moment(angular.fromJson(requestResult)[0], "MM-DD-YYYY HH:mm");
+              var oldTimeStamp = moment(timestampObjects[routeKey].timestamp, "MM-DD-YYYY HH:mm");
               if(newTimeStamp > oldTimeStamp) {
                 Persistence[apiConfiguration[routeKey].refreshFunction]().then(function() {
                   updateInterface[apiConfiguration[routeKey].attributeName] += 1;
