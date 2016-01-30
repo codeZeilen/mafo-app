@@ -392,32 +392,32 @@ angular.module('starter.services', ['ngResource'])
       {
         'name': 'Check-In in O048',
         'roomId': 3,
-        'startTime': moment('03-05-2015 15:00', 'MM-DD-YYYY HH:mm'),
-        'endTime':   moment('03-05-2015 19:00', 'MM-DD-YYYY HH:mm'),
+        'startTime': moment('03-10-2016 15:00', 'MM-DD-YYYY HH:mm'),
+        'endTime':   moment('03-10-2016 19:00', 'MM-DD-YYYY HH:mm'),
         'durationInMinutes' : 30,
         'isFixedEvent' : true
       },
       {
         'name': 'Check-In in O048',
         'roomId': 3,
-        'startTime': moment('03-06-2015 08:00', 'MM-DD-YYYY HH:mm'),
-        'endTime':   moment('03-06-2015 13:00', 'MM-DD-YYYY HH:mm'),
+        'startTime': moment('03-11-2016 08:00', 'MM-DD-YYYY HH:mm'),
+        'endTime':   moment('03-11-2016 13:00', 'MM-DD-YYYY HH:mm'),
         'durationInMinutes' : 30,
         'isFixedEvent' : true
       },
       {
         'name': 'Check-In am Info-Point',
         'roomId': 7,
-        'startTime': moment('03-06-2015 13:00', 'MM-DD-YYYY HH:mm'),
-        'endTime':   moment('03-06-2015 19:00', 'MM-DD-YYYY HH:mm'),
+        'startTime': moment('03-11-2016 13:00', 'MM-DD-YYYY HH:mm'),
+        'endTime':   moment('03-11-2016 19:00', 'MM-DD-YYYY HH:mm'),
         'durationInMinutes' : 30,
         'isFixedEvent' : true
       },
       {
         'name': 'Check-In am Info-Point',
         'roomId': 7,
-        'startTime': moment('03-07-2015 08:00', 'MM-DD-YYYY HH:mm'),
-        'endTime':   moment('03-07-2015 17:00', 'MM-DD-YYYY HH:mm'),
+        'startTime': moment('03-12-2016 08:00', 'MM-DD-YYYY HH:mm'),
+        'endTime':   moment('03-12-2016 17:00', 'MM-DD-YYYY HH:mm'),
         'durationInMinutes' : 30,
         'isFixedEvent' : true
       },
@@ -428,17 +428,21 @@ angular.module('starter.services', ['ngResource'])
       if(!angular.isDefined(event.startTime)) {
         return false;
       }
-      if(!angular.isDefined(alarms[event.serverId])) {
-        var delay = moment(event.startTime);
-        delay.subtract(moment.duration(10, 'minutes'));
-        var delayMs = delay.diff(moment());
+      var reminderStart = moment(event.startTime);
+      reminderStart.subtract(moment.duration(10, 'minutes'));
+
+      if(reminderStart > moment() && !angular.isDefined(alarms[event.serverId])) {
+        var delayMs = reminderStart.diff(moment());
+        var popupShown = false;
         alarms[event.serverId] = $interval(function() {
+          if(!popupShown) {
+            popupShown = true;
             var alertPopup = $ionicPopup.alert({
               title: 'Erinnerung',
               template: 'Die Veranstaltung ' + event.name + ' beginnt in 10 Minuten.'
             });
-            alertPopup.then(function(res) {
-            });
+            alertPopup.then(function(res) {});
+          }
         },
         delayMs,
         1);
