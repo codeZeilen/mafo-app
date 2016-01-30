@@ -181,9 +181,9 @@ angular.module('starter.controllers', ['starter.services'])
 .controller('PlannerCtrl', function($scope, Persistence, PlannerContent) {
     $scope.slots = [];
     var daysToDate = {
-      'Donnerstag' : moment("03-05-2015", "MM-DD-YYYY"),
-      'Freitag' : moment("03-06-2015", "MM-DD-YYYY"),
-      'Samstag' : moment("03-07-2015", "MM-DD-YYYY")
+      'Donnerstag' : moment("03-10-2016", "MM-DD-YYYY"),
+      'Freitag' : moment("03-11-2016", "MM-DD-YYYY"),
+      'Samstag' : moment("03-12-2016", "MM-DD-YYYY")
     };
     $scope.days = [daysToDate.Donnerstag, daysToDate.Freitag, daysToDate.Samstag];
 
