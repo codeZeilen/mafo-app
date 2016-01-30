@@ -78,6 +78,17 @@
         <ion-item nav-clear menu-close stopEvent ng-click="toInstagram()" ng-show="subMenuVisible('socialMedia')">
             Instagram
         </ion-item>
+
+        <div class="item item-divider" nav-clear ng-click="toggleSubMenuVisibility('language')" >
+            Sprachauswahl
+        </div>
+            <ion-item nav-clear menu-close stopEvent ng-click="setLanguageToGerman()" ng-show="subMenuVisible('language')">
+                Deutsch {{selectedLanguage}}
+            </ion-item>
+            <ion-item nav-clear menu-close stopEvent ng-click="setLanguageToEnglish()" ng-show="subMenuVisible('language')">
+                English {{selectedLanguage}}
+            </ion-item>
+
       </ion-list>
     </ion-content>
   </ion-side-menu>

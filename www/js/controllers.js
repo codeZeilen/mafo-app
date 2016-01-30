@@ -1,12 +1,13 @@
 angular.module('starter.controllers', ['starter.services'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $ionicHistory) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $ionicHistory, DataLanguage) {
   // Form data for the login modal
   $scope.loginData = {};
   $scope.visibleSubMenus = {
       'eventInfo' : true,
       'personal' : true,
-      'socialMedia' : true
+      'socialMedia' : true,
+      'language' : true
   };
 
   $scope.toggleSubMenuVisibility = function(subMenuName) {
@@ -23,6 +24,22 @@ angular.module('starter.controllers', ['starter.services'])
       disableAnimate: false,
       disableBack: true
     });
+  };
+
+
+  $scope.selectedLanguage = DataLanguage.currentLanguage();
+  $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
+    if(oldVal != newVal) {
+      $scope.selectedLanguage = DataLanguage.currentLanguage();
+    }
+  });
+
+  $scope.setLanguageToEnglish = function() {
+    DataLanguage.setLanguageTo('en');
+  };
+
+  $scope.setLanguageToGerman = function() {
+    DataLanguage.setLanguageTo('de');
   };
 
   $scope.toYoutube = function() {
