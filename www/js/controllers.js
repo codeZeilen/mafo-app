@@ -26,7 +26,7 @@ angular.module('starter.controllers', ['starter.services'])
   };
 
   $scope.toYoutube = function() {
-    window.open('https://www.youtube.com/channel/UCqbs5sy_vxt-12SNdYGMPBA', '_system', 'location=no');
+    window.open('https://www.youtube.com/user/MannheimForum', '_system', 'location=no');
   };
 
   $scope.toFacebookEvent = function() {
@@ -37,8 +37,8 @@ angular.module('starter.controllers', ['starter.services'])
     window.open('https://www.facebook.com/MannheimForum?fref=ts', '_system', 'location=no');
   };
 
-  $scope.toXing = function() {
-    window.open('https://www.xing.com/communities/groups/mannheim-forum-6e17-1006016/about', '_system', 'location=no');
+  $scope.toInstagram = function() {
+    window.open('https://www.instagram.com/mannheimforum/', '_system', 'location=no');
   };
 })
 
