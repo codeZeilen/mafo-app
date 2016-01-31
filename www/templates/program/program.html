@@ -4,12 +4,12 @@
 <ion-view>
         <ion-tabs class="tabs-royal">
 
-        <ion-tab title="Do">
+        <ion-tab title="Do" ng-if="showCompleteProgram">
             <ion-view>
             <ion-content>
 
                 <ion-list>
-                   <div ng-repeat-start="timeslot in days[0].slots | orderBy:startTimes"></div>
+                   <div ng-repeat-start="timeslot in thursdaySlots.slots | orderBy:startTimes"></div>
                     <div class="item item-divider">
                         {{timeslot.displayName}}
                     </div>
@@ -49,12 +49,12 @@
             </ion-view>
         </ion-tab>
 
-        <ion-tab title="Fr">
+        <ion-tab title="Fr" ng-if="showCompleteProgram">
             <ion-view>
             <ion-content>
 
                 <ion-list>
-                    <div ng-repeat-start="timeslot in days[1].slots | orderBy:startTimes"></div>
+                    <div ng-repeat-start="timeslot in fridaySlots.slots | orderBy:startTimes"></div>
                     <div class="item item-divider">
                         {{timeslot.displayName}}
                     </div>
@@ -99,7 +99,7 @@
                 <ion-content>
 
                 <ion-list>
-                    <div ng-repeat-start="timeslot in days[2].slots | orderBy:startTimes"></div>
+                    <div ng-repeat-start="timeslot in saturdaySlots.slots | orderBy:startTimes"></div>
                     <div class="item item-divider">
                         {{timeslot.displayName}}
                     </div>

@@ -124,6 +124,7 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.startTimes = 'startTime';
 
     $scope.categoriesNotToShow = ['Vertiefungsworkshop', 'Unternehmensworkshop'];
+    $scope.showCompleteProgram = DataLanguage.currentLanguage() == 'de';
 
     var processEvents = function(events) {
       $scope.updateDays(events);
@@ -145,6 +146,7 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
       if(!(oldVal === newVal)) {
         updateEvents();
+        $scope.showCompleteProgram = DataLanguage.currentLanguage() == 'de';
       }
     });
 
@@ -158,7 +160,14 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.updateDays = function(events) {
       var days = EventUtil.groupDays(events);
       days = EventUtil.daysToObjects(days);
-      $scope.days = $filter('orderBy')(days, function(d) { return d.day });
+      days = $filter('orderBy')(days, function(d) { return d.day });
+      if($scope.showCompleteProgram) {
+        $scope.thursdaySlots = days[0];
+        $scope.fridaySlots = days[1];
+        $scope.saturdaySlots = days[2];
+      } else {
+        $scope.saturdaySlots = days[0];
+      }
     };
 
     $scope.isFavoriteEvent = function(event) {
