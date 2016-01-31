@@ -4,8 +4,8 @@
 <ion-view>
         <ion-tabs class="tabs-royal">
 
-        <ion-tab title="Do" ng-if="showCompleteProgram">
-            <ion-view>
+        <ion-tab title="Do" hidden="{{!showCompleteProgram}}">
+            <ion-view ng-if="showCompleteProgram">
             <ion-content>
 
                 <ion-list>
@@ -49,8 +49,8 @@
             </ion-view>
         </ion-tab>
 
-        <ion-tab title="Fr" ng-if="showCompleteProgram">
-            <ion-view>
+        <ion-tab title="Fr" hidden="{{!showCompleteProgram}}">
+            <ion-view ng-if="showCompleteProgram">
             <ion-content>
 
                 <ion-list>

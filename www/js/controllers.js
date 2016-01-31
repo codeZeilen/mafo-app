@@ -116,7 +116,8 @@ angular.module('starter.controllers', ['starter.services'])
   })
 })
 
-.controller('ProgramCtrl', function($scope, $filter, Persistence, DataLanguage, ContentUpdater, EventUtil, TopicCategoryService, PlannerContent) {
+.controller('ProgramCtrl', function($scope, $filter, Persistence, $ionicTabsDelegate,
+                                    DataLanguage, ContentUpdater, EventUtil, TopicCategoryService, PlannerContent) {
 
     $scope.days = [];
 
@@ -145,8 +146,13 @@ angular.module('starter.controllers', ['starter.services'])
     });
     $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
       if(!(oldVal === newVal)) {
-        updateEvents();
         $scope.showCompleteProgram = DataLanguage.currentLanguage() == 'de';
+        if($scope.showCompleteProgram) {
+          $ionicTabsDelegate.select(0);
+        } else {
+          $ionicTabsDelegate.select(2);
+        }
+        updateEvents();
       }
     });
 
