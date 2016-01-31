@@ -45,10 +45,10 @@
             Mannheim Forum 2016
         </div>
         <ion-item nav-clear menu-close href="#/app/program" ng-show="subMenuVisible('eventInfo') && menuItemVisible('program')">
-            Programm
+            {{ 'MENU_PROGRAM' | translate }}
         </ion-item>
-        <ion-item translate nav-clear menu-close href="#/app/speakers" ng-show="subMenuVisible('eventInfo') && menuItemVisible('speakers')">
-            MENU_SPEAKERS
+        <ion-item nav-clear menu-close href="#/app/speakers" ng-show="subMenuVisible('eventInfo') && menuItemVisible('speakers')">
+            {{ 'MENU_SPEAKERS' | translate }}
         </ion-item>
         <ion-item nav-clear menu-close href="#/app/partners" ng-show="subMenuVisible('eventInfo') && menuItemVisible('partners')">
             Partner

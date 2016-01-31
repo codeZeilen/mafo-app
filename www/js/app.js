@@ -329,11 +329,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     'MENU_TITLE' : 'Menu',
     'MENU_YOUR_AREA' : 'Your Tools',
     'MENU_SPEAKERS' : 'Speakers',
+    'MENU_PROGRAM' : 'Schedule'
   };
   var translationsDe = {
     'MENU_TITLE' : 'Menü',
     'MENU_YOUR_AREA' : 'Dein Bereich',
     'MENU_SPEAKERS' : 'Referenten',
+    'MENU_PROGRAM' : 'Programm'
   };
   $translateProvider
       .translations('en', translationsEn)
