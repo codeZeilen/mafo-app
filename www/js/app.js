@@ -326,10 +326,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   $urlRouterProvider.otherwise('/app/starter');
 
   var translationsEn = {
-    'MENU_TITLE' : 'Menu'
+    'MENU_TITLE' : 'Menu',
+    'MENU_YOUR_AREA' : 'Your Tools',
+    'MENU_SPEAKERS' : 'Speakers',
   };
   var translationsDe = {
-    'MENU_TITLE' : 'Menü'
+    'MENU_TITLE' : 'Menü',
+    'MENU_YOUR_AREA' : 'Dein Bereich',
+    'MENU_SPEAKERS' : 'Referenten',
   };
   $translateProvider
       .translations('en', translationsEn)
