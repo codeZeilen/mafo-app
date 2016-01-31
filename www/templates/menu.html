@@ -83,10 +83,12 @@
             Sprachauswahl
         </div>
             <ion-item nav-clear menu-close stopEvent ng-click="setLanguageToGerman()" ng-show="subMenuVisible('language')">
-                Deutsch {{selectedLanguage}}
+                Deutsch
+                <i class="icon ion-checkmark-circled" ng-show="selectedLanguage == 'de'"></i>
             </ion-item>
             <ion-item nav-clear menu-close stopEvent ng-click="setLanguageToEnglish()" ng-show="subMenuVisible('language')">
-                English {{selectedLanguage}}
+                English
+                <i class="icon ion-checkmark-circled" ng-show="selectedLanguage == 'en'"></i>
             </ion-item>
 
       </ion-list>
