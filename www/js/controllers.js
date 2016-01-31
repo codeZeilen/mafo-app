@@ -1,12 +1,19 @@
 angular.module('starter.controllers', ['starter.services'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $ionicHistory) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $ionicHistory, DataLanguage) {
   // Form data for the login modal
   $scope.loginData = {};
   $scope.visibleSubMenus = {
       'eventInfo' : true,
       'personal' : true,
-      'socialMedia' : true
+      'socialMedia' : true,
+      'language' : true
+  };
+  $scope.visibleMenuItemsPerLanguage = {
+    'en' :
+      ['news', 'contact', 'program', 'speakers', 'map', 'faq', 'info'],
+    'de' :
+      ['planer', 'news', 'contact', 'program', 'speakers', 'partners', 'map', 'faq', 'info']
   };
 
   $scope.toggleSubMenuVisibility = function(subMenuName) {
@@ -17,6 +24,10 @@ angular.module('starter.controllers', ['starter.services'])
     return $scope.visibleSubMenus[subMenuName];
   };
 
+  $scope.menuItemVisible = function(menuItemIdentifier) {
+    return $scope.visibleMenuItemsPerLanguage[$scope.selectedLanguage].indexOf(menuItemIdentifier) > -1;
+  };
+
   $scope.toAppHome = function() {
     $ionicHistory.clearHistory();
     $ionicHistory.nextViewOptions({
@@ -25,8 +36,24 @@ angular.module('starter.controllers', ['starter.services'])
     });
   };
 
+
+  $scope.selectedLanguage = DataLanguage.currentLanguage();
+  $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
+    if(oldVal != newVal) {
+      $scope.selectedLanguage = DataLanguage.currentLanguage();
+    }
+  });
+
+  $scope.setLanguageToEnglish = function() {
+    DataLanguage.setLanguageTo('en');
+  };
+
+  $scope.setLanguageToGerman = function() {
+    DataLanguage.setLanguageTo('de');
+  };
+
   $scope.toYoutube = function() {
-    window.open('https://www.youtube.com/channel/UCqbs5sy_vxt-12SNdYGMPBA', '_system', 'location=no');
+    window.open('https://www.youtube.com/user/MannheimForum', '_system', 'location=no');
   };
 
   $scope.toFacebookEvent = function() {
@@ -37,12 +64,12 @@ angular.module('starter.controllers', ['starter.services'])
     window.open('https://www.facebook.com/MannheimForum?fref=ts', '_system', 'location=no');
   };
 
-  $scope.toXing = function() {
-    window.open('https://www.xing.com/communities/groups/mannheim-forum-6e17-1006016/about', '_system', 'location=no');
+  $scope.toInstagram = function() {
+    window.open('https://www.instagram.com/mannheimforum/', '_system', 'location=no');
   };
 })
 
-.controller('SpeakersCtrl', function($scope, Persistence) {
+.controller('SpeakersCtrl', function($scope, Persistence, DataLanguage) {
   $scope.speakers = [];
 
   $scope.lastName = function(speaker) {
@@ -53,26 +80,44 @@ angular.module('starter.controllers', ['starter.services'])
     return speaker.isShownInList == 1;
   };
 
-  Persistence.listSpeakers().then(function(speakers) {
-    $scope.speakers = speakers;
-  });
+  var updateSpeakers = function() {
+    Persistence.listSpeakers().then(function (speakers) {
+      $scope.speakers = speakers;
+    });
+  };
+
+  updateSpeakers();
+  $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
+    if(oldVal != newVal) {
+      updateSpeakers();
+    }
+  })
 })
 
-.controller('SpeakerCtrl', function($scope, $stateParams, Persistence) {
+.controller('SpeakerCtrl', function($scope, $stateParams, Persistence, DataLanguage) {
   $scope.eventsForSpeaker = [];
   $scope.speaker = [];
 
-  Persistence.getSpeaker($stateParams.speakerId).then(function(speaker) {
-    $scope.speaker = speaker;
-  });
-
-  Persistence.eventsForSpeaker($stateParams.speakerId)
-    .then(function(events) {
-      $scope.eventsForSpeaker = events;
+  var updateSpeaker = function() {
+    Persistence.eventsForSpeaker($stateParams.speakerId)
+        .then(function(events) {
+          $scope.eventsForSpeaker = events;
     });
+    Persistence.getSpeaker($stateParams.speakerId).then(function(speaker) {
+      $scope.speaker = speaker;
+    });
+  };
+
+  updateSpeaker();
+  $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
+    if(oldVal != newVal) {
+      updateSpeaker();
+    }
+  })
 })
 
-.controller('ProgramCtrl', function($scope, $filter, Persistence, ContentUpdater, EventUtil, TopicCategoryService, PlannerContent) {
+.controller('ProgramCtrl', function($scope, $filter, Persistence, $ionicTabsDelegate,
+                                    DataLanguage, ContentUpdater, EventUtil, TopicCategoryService, PlannerContent) {
 
     $scope.days = [];
 
@@ -80,36 +125,55 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.startTimes = 'startTime';
 
     $scope.categoriesNotToShow = ['Vertiefungsworkshop', 'Unternehmensworkshop'];
+    $scope.showCompleteProgram = DataLanguage.currentLanguage() == 'de';
 
     var processEvents = function(events) {
       $scope.updateDays(events);
     };
+    var updateEvents = function() {
+      Persistence.listEvents().then(processEvents);
+    };
+    updateEvents();
     $scope.$watch(function() { return ContentUpdater.eventUpdateCounter }, function(oldVal, newVal) {
       if(!(oldVal === newVal)) {
-        Persistence.listEvents().then(processEvents);
+        updateEvents();
+      }
+    });
+    $scope.$watch(ContentUpdater.eventUpdateCounter, function(oldVal, newVal) {
+      if(!(oldVal === newVal)) {
+        updateEvents();
+      }
+    });
+    $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
+      if(!(oldVal === newVal)) {
+        $scope.showCompleteProgram = DataLanguage.currentLanguage() == 'de';
+        if($scope.showCompleteProgram) {
+          $ionicTabsDelegate.select(0);
+        } else {
+          $ionicTabsDelegate.select(2);
+        }
+        updateEvents();
       }
     });
 
     $scope.topicCategoryColor = function(event) {
       return TopicCategoryService.categoryColorFromId(event.categoryId);
     };
-
     $scope.topicCategoryName = function(event) {
       return TopicCategoryService.categoryNameFromId(event.categoryId);
     };
 
-    $scope.$watch(ContentUpdater.eventUpdateCounter, function(oldVal, newVal) {
-      if(!(oldVal === newVal)) {
-        Persistence.listEvents().then(processEvents);
-      }
-    });
-
-    Persistence.listEvents().then(processEvents);
-
     $scope.updateDays = function(events) {
       var days = EventUtil.groupDays(events);
       days = EventUtil.daysToObjects(days);
-      $scope.days = $filter('orderBy')(days, function(d) { return d.day });
+      days = $filter('orderBy')(days, function(d) { return d.day });
+      if($scope.showCompleteProgram) {
+        $scope.thursdaySlots = days[0];
+        $scope.fridaySlots = days[1];
+        $scope.saturdaySlots = days[2];
+      } else {
+        $scope.saturdaySlots = days[0];
+      }
     };
 
     $scope.isFavoriteEvent = function(event) {
@@ -135,18 +199,27 @@ angular.module('starter.controllers', ['starter.services'])
 
 })
 
-.controller('EventCtrl', function($scope, $stateParams, Persistence, $sce, TopicCategoryService,MafoTimeFormatter) {
+.controller('EventCtrl', function($scope, $stateParams, DataLanguage, Persistence, $sce, TopicCategoryService, MafoTimeFormatter) {
     $scope.event = {};
     $scope.speakersForEvent = [];
     $scope.eventRoom = null;
 
-    Persistence.getEvent($stateParams.eventId).then(function(event) {
-      $scope.event = event;
+    var updateEvent = function() {
+      Persistence.getEvent($stateParams.eventId).then(function (event) {
+        $scope.event = event;
 
-      if(event.roomId) {
-        Persistence.getRoom(event.roomId).then(function(room) {
-          $scope.eventRoom = room;
-        });
+        if (event.roomId) {
+          Persistence.getRoom(event.roomId).then(function (room) {
+            $scope.eventRoom = room;
+          });
+        }
+      });
+    };
+    updateEvent();
+
+    $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
+      if(!(oldVal === newVal)) {
+        updateEvent();
       }
     });
 
@@ -181,9 +254,9 @@ angular.module('starter.controllers', ['starter.services'])
 .controller('PlannerCtrl', function($scope, Persistence, PlannerContent) {
     $scope.slots = [];
     var daysToDate = {
-      'Donnerstag' : moment("03-05-2015"),
-      'Freitag' : moment("03-06-2015"),
-      'Samstag' : moment("03-07-2015")
+      'Donnerstag' : moment("03-10-2016", "MM-DD-YYYY"),
+      'Freitag' : moment("03-11-2016", "MM-DD-YYYY"),
+      'Samstag' : moment("03-12-2016", "MM-DD-YYYY")
     };
     $scope.days = [daysToDate.Donnerstag, daysToDate.Freitag, daysToDate.Samstag];
 
@@ -441,7 +514,7 @@ angular.module('starter.controllers', ['starter.services'])
 
 })
 
-.controller('StarterCtrl', function($scope, $ionicModal, $state, Persistence, NewsInterval, ContentUpdater, MafoTimeFormatter, $q) {
+.controller('StarterCtrl', function($scope, $ionicModal, $state, Persistence, NewsInterval, ContentUpdater, MafoTimeFormatter, PlannerContent, $q) {
 
   $scope.searchConfig = {"term" : ""};
   $scope.events = [];
@@ -543,9 +616,9 @@ angular.module('starter.controllers', ['starter.services'])
     return $scope.eventCategoryNames[event.eventType];
   };
 
-    $scope.dateFormat = function(timeStampString) {
-      return MafoTimeFormatter.formatNewsDate(timeStampString).concat(" Uhr");
-    };
+  $scope.dateFormat = function(timeStampString) {
+   return MafoTimeFormatter.formatNewsDate(timeStampString).concat(" Uhr");
+  };
 })
 
 .controller('FAQCtrl', function($scope) {

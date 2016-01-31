@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngMessages', 'pascalprecht.translate'])
 
 .run(function($ionicPlatform, $rootScope, ContactRequestOutbox,
               NewsInterval, ContentUpdater, $ionicNavBarDelegate,
@@ -140,7 +140,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
     }
 })
 
-.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+.directive('mafoTranslateString', ['DataLanguage', function(DataLanguage) {
+    var _DataLanguage = DataLanguage;
+    return {
+      restrict: 'A',
+      link: function(scope, elements, attrs) {
+        angular.forEach(elements, function(element) {
+          element.textContent = element.textContent + _DataLanguage.currentLanguage();
+        })
+      }
+    }
+}])
+
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $translateProvider) {
   $ionicConfigProvider.tabs.position('bottom');
   $ionicConfigProvider.navBar.alignTitle('center');
 
@@ -312,4 +324,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
   ;
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/starter');
+
+  var translationsEn = {
+    'MENU_TITLE' : 'Menu',
+    'MENU_YOUR_AREA' : 'Your Tools',
+    'MENU_SPEAKERS' : 'Speakers',
+    'MENU_PROGRAM' : 'Schedule'
+  };
+  var translationsDe = {
+    'MENU_TITLE' : 'Menü',
+    'MENU_YOUR_AREA' : 'Dein Bereich',
+    'MENU_SPEAKERS' : 'Referenten',
+    'MENU_PROGRAM' : 'Programm'
+  };
+  $translateProvider
+      .translations('en', translationsEn)
+      .translations('de', translationsDe)
+      .preferredLanguage('de');
 });

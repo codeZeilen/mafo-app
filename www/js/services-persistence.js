@@ -1,9 +1,9 @@
 angular.module('starter.services'
 )
-.factory('Persistence', function($q, SpeakerAPI, EventAPI, EventHBTMSpeakerAPI, PartnerAPI, TopicCateogryAPI, RoomAPI, NewsAPI) {
+.factory('Persistence', function($q, $filter, DataLanguage, SpeakerAPI, EventAPI, EventHBTMSpeakerAPI, PartnerAPI, TopicCateogryAPI, RoomAPI, NewsAPI) {
   // Credits to https://github.com/bgoetzmann/ionic-persistence/
 
-  persistence.store.cordovasql.config(persistence, 'mafo_app_db', '0.0.5', 'Cache for program data of mafo', 30 * 1024 * 1024, 0);
+  persistence.store.cordovasql.config(persistence, 'mafo_app_db', '0.0.1', 'Cache for program data of mafo', 30 * 1024 * 1024, 0);
 
   var entities = {};
 
@@ -14,7 +14,10 @@ angular.module('starter.services'
     shortDescription: 'TEXT',
     longDescription: 'TEXT',
     picturePath: 'TEXT',
-    isShownInList: 'INT'
+    isShownInList: 'INT',
+    shortDescription_en: 'TEXT',
+    longDescription_en: 'TEXT',
+    isAvailableInEnglishApp: 'INT'
   });
 
   entities.Event = persistence.define('Event', {
@@ -28,7 +31,11 @@ angular.module('starter.services'
     categoryId: 'INT',
     companyId: 'INT',
     picturePath: 'TEXT',
-    eventType: 'TEXT'
+    eventType: 'TEXT',
+    name_en: 'TEXT',
+    shortDescription_en: 'TEXT',
+    longDescription_en: 'TEXT',
+    isAvailableInEnglishApp: 'INT'
   });
   entities.EVENT_TYPES = {
     MAIN: 'main',
@@ -108,7 +115,6 @@ angular.module('starter.services'
       refreshAllOf(TopicCateogryAPI, entities.TopicCategory),
       refreshAllOf(EventAPI, entities.Event)
     ]);
-
   };
 
   var getAllSpeakers = function(speakersResult) {
@@ -261,6 +267,58 @@ angular.module('starter.services'
     return result.promise;
   };
 
+  var dispatchPerLanguage = function(languageToFunction, argument) {
+    return languageToFunction[DataLanguage.currentLanguage()](argument);
+  };
+
+  var filteringEntitiesAvailableInEnglish = function(aPromise) {
+    return dispatchPerLanguage({
+      'de' : function(arg) {return arg;},
+      'en' : function(listPromise) {
+        var result = $q.defer();
+
+        listPromise.then(function(individuals) {
+          result.resolve($filter('filter')(individuals, {'isAvailableInEnglishApp' : 1}));
+        });
+
+        return result.promise;
+      }
+    }, aPromise);
+  };
+
+  var filteringSpeakerList = function(speakerListPromise) {
+    return filteringEntitiesAvailableInEnglish(speakerListPromise);
+  };
+
+  var filteringEventList = function(eventListPromise) {
+    return filteringEntitiesAvailableInEnglish(eventListPromise);
+  };
+
+  var translateEntity = function(entityPromise) {
+    return dispatchPerLanguage({
+      'de' : function(arg) {return arg;},
+      'en' : function(anEntityPromise) {
+        var result = $q.defer();
+
+        anEntityPromise.then(function(individual) {
+          var newIndividual = {};
+          for(var key in individual._data) {
+            if(individual.hasOwnProperty(key)) {
+              if(individual.hasOwnProperty(key + '_en')) {
+                newIndividual[key] = individual[key + '_en'];
+              } else {
+                newIndividual[key] = individual[key];
+              }
+            }
+          }
+          result.resolve(newIndividual);
+        });
+
+        return result.promise;
+      }
+    }, entityPromise);
+  };
+
   return {
     Entities: entities,
 
@@ -272,10 +330,10 @@ angular.module('starter.services'
     /* Speakers */
     refreshSpeakers: refreshSpeakers,
     getSpeaker: function(speakerId) {
-      return getting(entities.Speaker, speakerId);
+      return translateEntity(getting(entities.Speaker, speakerId));
     },
     listSpeakers: function() {
-      return listing(entities.Speaker, refreshSpeakers, getAllSpeakers);
+      return filteringSpeakerList(listing(entities.Speaker, refreshSpeakers, getAllSpeakers));
     },
     eventsForSpeaker: function(speakerId) {
       return listingViaHBTM(entities.EventHBTMSpeaker,
@@ -286,10 +344,10 @@ angular.module('starter.services'
     /* Events */
     refreshEvents: refreshEvents,
     getEvent: function(eventId) {
-      return getting(entities.Event, eventId);
+      return translateEntity(getting(entities.Event, eventId));
     },
     listEvents: function() {
-      return listing(entities.Event, refreshEvents, getAllEvents);
+      return filteringEventList(listing(entities.Event, refreshEvents, getAllEvents));
     },
     listSpeakersForEvent: function(eventId) {
       return listingViaHBTM(entities.EventHBTMSpeaker,
