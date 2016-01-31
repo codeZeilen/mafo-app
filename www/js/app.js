@@ -239,6 +239,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           templateUrl: "templates/program/event.html",
           controller: 'EventCtrl'
         }
+      },
+      onEnter: function($ionicTabsDelegate, DataLanguage){
+        var showCompleteProgram = DataLanguage.currentLanguage() == 'de';
+        if(showCompleteProgram) {
+          $ionicTabsDelegate.select(0);
+        } else {
+          $ionicTabsDelegate.select(2);
+        }
       }
     })
 

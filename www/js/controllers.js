@@ -125,14 +125,21 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.startTimes = 'startTime';
 
     $scope.categoriesNotToShow = ['Vertiefungsworkshop', 'Unternehmensworkshop'];
-    $scope.showCompleteProgram = DataLanguage.currentLanguage() == 'de';
-
+    var updateShowCompleteProgram = function() {
+      $scope.showCompleteProgram = DataLanguage.currentLanguage() == 'de';
+      if($scope.showCompleteProgram) {
+        $ionicTabsDelegate.select(0);
+      } else {
+        $ionicTabsDelegate.select(2);
+      }
+    };
     var processEvents = function(events) {
       $scope.updateDays(events);
     };
     var updateEvents = function() {
       Persistence.listEvents().then(processEvents);
     };
+    updateShowCompleteProgram();
     updateEvents();
     $scope.$watch(function() { return ContentUpdater.eventUpdateCounter }, function(oldVal, newVal) {
       if(!(oldVal === newVal)) {
@@ -146,12 +153,7 @@ angular.module('starter.controllers', ['starter.services'])
     });
     $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
       if(!(oldVal === newVal)) {
-        $scope.showCompleteProgram = DataLanguage.currentLanguage() == 'de';
-        if($scope.showCompleteProgram) {
-          $ionicTabsDelegate.select(0);
-        } else {
-          $ionicTabsDelegate.select(2);
-        }
+        updateShowCompleteProgram();
         updateEvents();
       }
     });
