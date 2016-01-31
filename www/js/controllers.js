@@ -69,7 +69,7 @@ angular.module('starter.controllers', ['starter.services'])
   };
 })
 
-.controller('SpeakersCtrl', function($scope, Persistence) {
+.controller('SpeakersCtrl', function($scope, Persistence, DataLanguage) {
   $scope.speakers = [];
 
   $scope.lastName = function(speaker) {
@@ -80,26 +80,43 @@ angular.module('starter.controllers', ['starter.services'])
     return speaker.isShownInList == 1;
   };
 
-  Persistence.listSpeakers().then(function(speakers) {
-    $scope.speakers = speakers;
-  });
+  var updateSpeakers = function() {
+    Persistence.listSpeakers().then(function (speakers) {
+      $scope.speakers = speakers;
+    });
+  };
+
+  updateSpeakers();
+  $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
+    if(oldVal != newVal) {
+      updateSpeakers();
+    }
+  })
 })
 
-.controller('SpeakerCtrl', function($scope, $stateParams, Persistence) {
+.controller('SpeakerCtrl', function($scope, $stateParams, Persistence, DataLanguage) {
   $scope.eventsForSpeaker = [];
   $scope.speaker = [];
 
-  Persistence.getSpeaker($stateParams.speakerId).then(function(speaker) {
-    $scope.speaker = speaker;
-  });
-
-  Persistence.eventsForSpeaker($stateParams.speakerId)
-    .then(function(events) {
-      $scope.eventsForSpeaker = events;
+  var updateSpeaker = function() {
+    Persistence.eventsForSpeaker($stateParams.speakerId)
+        .then(function(events) {
+          $scope.eventsForSpeaker = events;
     });
+    Persistence.getSpeaker($stateParams.speakerId).then(function(speaker) {
+      $scope.speaker = speaker;
+    });
+  };
+
+  updateSpeaker();
+  $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
+    if(oldVal != newVal) {
+      updateSpeaker();
+    }
+  })
 })
 
-.controller('ProgramCtrl', function($scope, $filter, Persistence, ContentUpdater, EventUtil, TopicCategoryService, PlannerContent) {
+.controller('ProgramCtrl', function($scope, $filter, Persistence, DataLanguage, ContentUpdater, EventUtil, TopicCategoryService, PlannerContent) {
 
     $scope.days = [];
 
@@ -111,27 +128,32 @@ angular.module('starter.controllers', ['starter.services'])
     var processEvents = function(events) {
       $scope.updateDays(events);
     };
+    var updateEvents = function() {
+      Persistence.listEvents().then(processEvents);
+    };
+    updateEvents();
     $scope.$watch(function() { return ContentUpdater.eventUpdateCounter }, function(oldVal, newVal) {
       if(!(oldVal === newVal)) {
-        Persistence.listEvents().then(processEvents);
+        updateEvents();
+      }
+    });
+    $scope.$watch(ContentUpdater.eventUpdateCounter, function(oldVal, newVal) {
+      if(!(oldVal === newVal)) {
+        updateEvents();
+      }
+    });
+    $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
+      if(!(oldVal === newVal)) {
+        updateEvents();
       }
     });
 
     $scope.topicCategoryColor = function(event) {
       return TopicCategoryService.categoryColorFromId(event.categoryId);
     };
-
     $scope.topicCategoryName = function(event) {
       return TopicCategoryService.categoryNameFromId(event.categoryId);
     };
-
-    $scope.$watch(ContentUpdater.eventUpdateCounter, function(oldVal, newVal) {
-      if(!(oldVal === newVal)) {
-        Persistence.listEvents().then(processEvents);
-      }
-    });
-
-    Persistence.listEvents().then(processEvents);
 
     $scope.updateDays = function(events) {
       var days = EventUtil.groupDays(events);
@@ -162,18 +184,27 @@ angular.module('starter.controllers', ['starter.services'])
 
 })
 
-.controller('EventCtrl', function($scope, $stateParams, Persistence, $sce, TopicCategoryService,MafoTimeFormatter) {
+.controller('EventCtrl', function($scope, $stateParams, DataLanguage, Persistence, $sce, TopicCategoryService, MafoTimeFormatter) {
     $scope.event = {};
     $scope.speakersForEvent = [];
     $scope.eventRoom = null;
 
-    Persistence.getEvent($stateParams.eventId).then(function(event) {
-      $scope.event = event;
+    var updateEvent = function() {
+      Persistence.getEvent($stateParams.eventId).then(function (event) {
+        $scope.event = event;
 
-      if(event.roomId) {
-        Persistence.getRoom(event.roomId).then(function(room) {
-          $scope.eventRoom = room;
-        });
+        if (event.roomId) {
+          Persistence.getRoom(event.roomId).then(function (room) {
+            $scope.eventRoom = room;
+          });
+        }
+      });
+    };
+    updateEvent();
+
+    $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
+      if(!(oldVal === newVal)) {
+        updateEvent();
       }
     });
 
