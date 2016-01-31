@@ -14,7 +14,9 @@ angular.module('starter.services'
     shortDescription: 'TEXT',
     longDescription: 'TEXT',
     picturePath: 'TEXT',
-    isShownInList: 'INT'
+    isShownInList: 'INT',
+    shortDescription_en: 'TEXT',
+    longDescription_en: 'TEXT'
   });
 
   entities.Event = persistence.define('Event', {
@@ -28,7 +30,11 @@ angular.module('starter.services'
     categoryId: 'INT',
     companyId: 'INT',
     picturePath: 'TEXT',
-    eventType: 'TEXT'
+    eventType: 'TEXT',
+    name_en: 'TEXT',
+    shortDescription_en: 'TEXT',
+    longDescription_en: 'TEXT',
+    isAvailableInEnglishApp: 'INT'
   });
   entities.EVENT_TYPES = {
     MAIN: 'main',
