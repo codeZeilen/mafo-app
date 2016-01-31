@@ -1,5 +1,5 @@
 angular.module('starter.services')
-.factory('DataLanguage', function() {
+.factory('DataLanguage', function($translate) {
   var languageFacade = {
     "chosenLanguage" : 'de'
   };
@@ -12,6 +12,7 @@ angular.module('starter.services')
   languageFacade.setLanguageTo = function(languageCode) {
     if(availableLanguages.indexOf(languageCode) > -1) {
       languageFacade.chosenLanguage = languageCode;
+      $translate.use(languageCode);
     }
     return languageFacade.chosenLanguage;
   };

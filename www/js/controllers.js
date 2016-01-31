@@ -9,6 +9,12 @@ angular.module('starter.controllers', ['starter.services'])
       'socialMedia' : true,
       'language' : true
   };
+  $scope.visibleMenuItemsPerLanguage = {
+    'en' :
+      ['news', 'contact', 'program', 'speakers', 'map', 'faq', 'info'],
+    'de' :
+      ['planer', 'news', 'contact', 'program', 'speakers', 'partners', 'map', 'faq', 'info']
+  };
 
   $scope.toggleSubMenuVisibility = function(subMenuName) {
     $scope.visibleSubMenus[subMenuName] = !$scope.visibleSubMenus[subMenuName];
@@ -16,6 +22,10 @@ angular.module('starter.controllers', ['starter.services'])
 
   $scope.subMenuVisible = function(subMenuName) {
     return $scope.visibleSubMenus[subMenuName];
+  };
+
+  $scope.menuItemVisible = function(menuItemIdentifier) {
+    return $scope.visibleMenuItemsPerLanguage[$scope.selectedLanguage].indexOf(menuItemIdentifier) > -1;
   };
 
   $scope.toAppHome = function() {
