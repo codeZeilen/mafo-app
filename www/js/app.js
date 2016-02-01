@@ -337,13 +337,41 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     'MENU_TITLE' : 'Menu',
     'MENU_YOUR_AREA' : 'Your Tools',
     'MENU_SPEAKERS' : 'Speakers',
-    'MENU_PROGRAM' : 'Schedule'
+    'MENU_PROGRAM' : 'Schedule',
+
+    'CONTACT_TITLE' : 'Contact',
+    'CONTACT_INTRO' : 'Bei Notfällen erreichst du uns immer über unsere „Nummer gegen Kummer“:',
+    'CONTACT_TAB_CONTACT' : 'Contact',
+    'CONTACT_TAB_PARTICIPATE' : 'Participate',
+    'CONTACT_PARTICIPATE_QUESTION' : 'You would like to participate?',
+    'CONTACT_PARTICIPATE_INTRO' : 'Dir gefällt das Mannheim Forum und du möchtest auch gerne bei der Organisation des Events mitwirken? Schreibe uns einfach über dieses Kontaktformular, wir freuen uns auf deine Nachricht. Über die E-Mail, die du in dem Kontaktformular angibst, werden wir uns zeitnah nach dem Forum mit dir in Verbindung setzen.',
+    'CONTACT_PARTICIPATE_FORM_EMPTY_ERROR' : 'Alle Felder müssen ausgefüllt sein.',
+    'CONTACT_PARTICIPATE_FORM_SUCCESS_MESSAGE' : 'Ihre Daten wurden gespeichert.',
+    'CONTACT_PARTICIPATE_FORM_FIELD_FIRSTNAME' : 'Vorname',
+    'CONTACT_PARTICIPATE_FORM_FIELD_LASTNAME' : 'Nachname',
+    'CONTACT_PARTICIPATE_FORM_FIELD_EMAIL' : 'EMail',
+    'CONTACT_PARTICIPATE_FORM_FIELD_MOTIVATION' : 'Warum möchtest du mithelfen das Mannheim Forum 2017 umzusetzen?',
+    'CONTACT_PARTICIPATE_FORM_SEND_BUTTON' : 'Absenden'
   };
   var translationsDe = {
     'MENU_TITLE' : 'Menü',
     'MENU_YOUR_AREA' : 'Dein Bereich',
     'MENU_SPEAKERS' : 'Referenten',
-    'MENU_PROGRAM' : 'Programm'
+    'MENU_PROGRAM' : 'Programm',
+
+    'CONTACT_TITLE' : 'Kontakt',
+    'CONTACT_INTRO' : 'Bei Notfällen erreichst du uns immer über unsere „Nummer gegen Kummer“:',
+    'CONTACT_TAB_CONTACT' : 'Kontakt',
+    'CONTACT_TAB_PARTICIPATE' : 'Mitmachen',
+    'CONTACT_PARTICIPATE_QUESTION' : 'Du möchtest mitmachen?',
+    'CONTACT_PARTICIPATE_INTRO' : 'Dir gefällt das Mannheim Forum und du möchtest auch gerne bei der Organisation des Events mitwirken? Schreibe uns einfach über dieses Kontaktformular, wir freuen uns auf deine Nachricht. Über die E-Mail, die du in dem Kontaktformular angibst, werden wir uns zeitnah nach dem Forum mit dir in Verbindung setzen.',
+    'CONTACT_PARTICIPATE_FORM_EMPTY_ERROR' : 'Alle Felder müssen ausgefüllt sein.',
+    'CONTACT_PARTICIPATE_FORM_SUCCESS_MESSAGE' : 'Ihre Daten wurden gespeichert.',
+    'CONTACT_PARTICIPATE_FORM_FIELD_FIRSTNAME' : 'Vorname',
+    'CONTACT_PARTICIPATE_FORM_FIELD_LASTNAME' : 'Nachname',
+    'CONTACT_PARTICIPATE_FORM_FIELD_EMAIL' : 'EMail',
+    'CONTACT_PARTICIPATE_FORM_FIELD_MOTIVATION' : 'Warum möchtest du mithelfen das Mannheim Forum 2017 umzusetzen?',
+    'CONTACT_PARTICIPATE_FORM_SEND_BUTTON' : 'Absenden'
   };
   $translateProvider
       .translations('en', translationsEn)

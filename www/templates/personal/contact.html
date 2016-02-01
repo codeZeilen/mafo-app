@@ -1,16 +1,16 @@
 <ion-header-bar class="bar bar-subheader">
-    <h2 class="title">Kontakt</h2>
+    <h2 class="title">{{'CONTACT_TITLE' | translate}}</h2>
 </ion-header-bar>
 
 <ion-view>
     <ion-tabs class="tabs-royal">
-        <ion-tab title="Kontakt">
+        <ion-tab title="{{'CONTACT_TAB_CONTACT' | translate}}">
             <ion-view>
                 <ion-content>
                     <div class="card">
                         <div class="item item-icon-left item-text-wrap">
                             <i class="icon ion-ios7-telephone"></i>
-                            Bei Notfällen erreichst du uns immer über unsere „Nummer gegen Kummer“: <strong>0157/54812371</strong>.
+                            {{'CONTACT_INTRO' | translate}}<strong>0157/54812371</strong>.
                         </div>
                     </div>
 
@@ -31,7 +31,7 @@
                             Vorstand
                         </div>
                         <div class="item item-text-wrap">
-                            Ben Christian, Nina Böhm, Gabriel Bartke, Sarah Lämmlin
+                            Simon Krause, Lukas Bäuerle, Jakob Krämer, Iliana Chimarrides
                         </div>
                         <div class="item item-divider">
                             Registernummer
@@ -44,7 +44,7 @@
             </ion-view>
         </ion-tab>
 
-        <ion-tab title="Mitmachen">
+        <ion-tab title="{{'CONTACT_TAB_PARTICIPATE' | translate}}">
             <ion-view>
                 <ion-content>
                     <form
@@ -54,30 +54,27 @@
                          novalidate="">
 
                         <div class="item item-divider ">
-                            Du möchtest mitmachen?
+                            {{'CONTACT_PARTICIPATE_QUESTION' | translate}}
                         </div>
 
                         <div class="item item-text-wrap">
-                            <p>Dir gefällt das Mannheim Forum und du möchtest auch gerne bei der Organisation des Events
-                            mitwirken? Schreibe uns einfach über dieses Kontaktformular, wir freuen uns auf deine Nachricht.
-                            Über die E-Mail, die du in dem Kontaktformular angibst, werden wir uns zeitnah nach dem Forum mit
-                            dir in Verbindung setzen.</p>
+                            <p>{{'CONTACT_PARTICIPATE_INTRO' | translate}}</p>
                         </div>
 
                         <div class="item form-errors"
                              ng-messages="contactForm.$error"
                              ng-show="contactForm.$submitted">
-                            <div class="form-error" ng-message="required">Alle Felder müssen ausgefüllt sein.</div>
+                            <div class="form-error" ng-message="required">{{'CONTACT_PARTICIPATE_FORM_EMPTY_ERROR' | translate}}</div>
                         </div>
                         <div class="item form-errors"
                              ng-show="dataWasSaved">
-                            <div class="form-success" ng-show="dataWasSaved">Ihre Daten wurden gespeichert.</div>
+                            <div class="form-success" ng-show="dataWasSaved">{{'CONTACT_PARTICIPATE_FORM_SUCCESS_MESSAGE' | translate}}</div>
                         </div>
 
                         <label class="item item-input">
                             <input type="text"
                                    name="firstname"
-                                   placeholder="Vorname"
+                                   placeholder="{{'CONTACT_PARTICIPATE_FORM_FIELD_FIRSTNAME' | translate}}"
                                    ng-model="message.firstName"
                                    ng-required="true" />
                         </label>
@@ -85,7 +82,7 @@
                         <label class="item item-input">
                             <input type="text"
                                    name="lastname"
-                                   placeholder="Nachname"
+                                   placeholder="{{'CONTACT_PARTICIPATE_FORM_FIELD_LASTNAME' | translate}}"
                                    ng-model="message.lastName"
                                    ng-required="true" />
                         </label>
@@ -93,21 +90,21 @@
                         <label class="item item-input">
                             <input type="text"
                                    name="email"
-                                   placeholder="EMail"
+                                   placeholder="{{'CONTACT_PARTICIPATE_FORM_FIELD_EMAIL' | translate}}"
                                    ng-model="message.email"
                                    ng-required="true" />
 
                         </label>
 
                         <label class="item item-input">
-                            <textarea placeholder="Warum möchtest du mithelfen das Mannheim Forum 2016 umzusetzen?"
+                            <textarea placeholder="{{'CONTACT_PARTICIPATE_FORM_FIELD_MOTIVATION' | translate}}"
                                       name="messageContent"
                                       rows="4"
                                       ng-required="true"
                                       ng-model="message.message"></textarea>
                         </label>
 
-                        <input type="submit" value="Absenden" class="button button-block button-positive activated" />
+                        <input type="submit" value="{{'CONTACT_PARTICIPATE_FORM_SEND_BUTTON' | translate}}" class="button button-block button-positive activated" />
 
                     </form>
                 </ion-content>
