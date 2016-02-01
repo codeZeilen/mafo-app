@@ -381,8 +381,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     'EVENT_TITLE' : 'Programm',
     'EVENT_WORKSHOP_LABEL' : 'Workshop',
     'EVENT_DESCRIPTION_TITLE' : 'Beschreibung',
-    'EVENT_SPEAKERS_LIST_TITLE' : 'Sprecher'
+    'EVENT_SPEAKERS_LIST_TITLE' : 'Sprecher',
 
+    'MAP_TITLE' : 'Lageplan',
+    'MAP_UPPER_FLOOR' : 'OG',
+    'MAP_GROUND_FLOOR' : 'EG',
+    'MAP_ROOM_LIST_TITLE' : 'Räume',
   };
   $translateProvider
       .translations('en', translationsEn)

@@ -1,19 +1,19 @@
 <ion-header-bar class="bar bar-subheader">
-    <h2 class="title">Lageplan</h2>
+    <h2 class="title">{{'MAP_TITLE' | translate}}</h2>
 </ion-header-bar>
 <ion-view>
     <ion-content scroll="false">
         <div class="row">
             <div class="col col-50 map-col">
                 <a ng-href="#/app/room/eg"><img src="img/assets/mfschedule/room/Lageplan_EG_grau.jpg" /></a>
-                <div class="map-caption">EG</div>
+                <div class="map-caption">{{'MAP_GROUND_FLOOR' | translate}}</div>
             </div>
             <div class="col col-50 map-col" ng-href="#/app/room/og">
                 <a ng-href="#/app/room/og"><img src="img/assets/mfschedule/room/Lageplan_OG_grau.jpg" /></a>
-                <div class="map-caption">OG</div>
+                <div class="map-caption">{{'MAP_UPPER_FLOOR' | translate}}</div>
             </div>
         </div>
-        <div class="item item-divider"> Räume </div>
+        <div class="item item-divider"> {{'MAP_ROOM_LIST_TITLE' | translate}} </div>
         <ion-scroll map-list id="map-room-list" class="map-room-scroll" direction="y" has-bouncing="false">
             <ion-list>
                 <ion-item   class="item-text-wrap" ng-repeat="room in rooms | orderBy : 'name'"
