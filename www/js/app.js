@@ -351,7 +351,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     'CONTACT_PARTICIPATE_FORM_FIELD_LASTNAME' : 'Nachname',
     'CONTACT_PARTICIPATE_FORM_FIELD_EMAIL' : 'EMail',
     'CONTACT_PARTICIPATE_FORM_FIELD_MOTIVATION' : 'Warum möchtest du mithelfen das Mannheim Forum 2017 umzusetzen?',
-    'CONTACT_PARTICIPATE_FORM_SEND_BUTTON' : 'Absenden'
+    'CONTACT_PARTICIPATE_FORM_SEND_BUTTON' : 'Absenden',
+
+    'EVENT_TITLE' : 'Programm',
+    'EVENT_WORKSHOP_LABEL' : 'Workshop',
+    'EVENT_DESCRIPTION_TITLE' : 'Beschreibung',
+    'EVENT_SPEAKERS_LIST_TITLE' : 'Sprecher'
   };
   var translationsDe = {
     'MENU_TITLE' : 'Menü',
@@ -371,7 +376,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     'CONTACT_PARTICIPATE_FORM_FIELD_LASTNAME' : 'Nachname',
     'CONTACT_PARTICIPATE_FORM_FIELD_EMAIL' : 'EMail',
     'CONTACT_PARTICIPATE_FORM_FIELD_MOTIVATION' : 'Warum möchtest du mithelfen das Mannheim Forum 2017 umzusetzen?',
-    'CONTACT_PARTICIPATE_FORM_SEND_BUTTON' : 'Absenden'
+    'CONTACT_PARTICIPATE_FORM_SEND_BUTTON' : 'Absenden',
+
+    'EVENT_TITLE' : 'Programm',
+    'EVENT_WORKSHOP_LABEL' : 'Workshop',
+    'EVENT_DESCRIPTION_TITLE' : 'Beschreibung',
+    'EVENT_SPEAKERS_LIST_TITLE' : 'Sprecher'
+
   };
   $translateProvider
       .translations('en', translationsEn)

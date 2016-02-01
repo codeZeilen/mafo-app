@@ -1,5 +1,5 @@
 <ion-header-bar class="bar bar-subheader">
-    <h2 class="title">Programm</h2>
+    <h2 class="title">{{'EVENT_TITLE' | translate}}</h2>
 </ion-header-bar>
 <ion-view>
     <ion-content>
@@ -11,7 +11,7 @@
                         {{topicCategoryName(event)}}
                     </span>
                     <span ng-if="isWorkshop(event)">
-                        Workshop
+                        {{'EVENT_WORKSHOP_LABEL' | translate}}
                     </span>
                 </p>
             </div>
@@ -29,14 +29,14 @@
             </div>
 
             <div class="item item-divider" ng-if="event.longDescription">
-                Beschreibung
+                {{'EVENT_DESCRIPTION_TITLE' | translate}}
             </div>
             <div class="item" ng-if="event.longDescription">
                 <p class="item-long-description" dynamic-content="event.longDescription"></p>
             </div>
 
             <div class="item item-divider" ng-if="speakersForEvent.length > 0">
-                Sprecher
+                {{'EVENT_SPEAKERS_LIST_TITLE' | translate}}
             </div>
             <ion-item class="item item-view-association-list"  ng-repeat="speaker in speakersForEvent" ng-href="#/app/speakers/{{speaker.serverId}}">
                 {{speaker.title}} {{speaker.name}}
