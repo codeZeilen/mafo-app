@@ -369,6 +369,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     'SPEAKER_EVENTS_LIST_TITLE' : 'Veranstaltungen',
 
     'SPEAKERS_TITLE' : 'Referenten',
+
+    'EVENTINFO_TITLE' : 'Eventinformationen',
+
+    'SCHEDULE_TITLE' : 'Programm',
   };
   var translationsDe = {
     'MENU_TITLE' : 'Menü',
@@ -406,6 +410,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     'SPEAKER_EVENTS_LIST_TITLE' : 'Veranstaltungen',
 
     'SPEAKERS_TITLE' : 'Referenten',
+
+    'EVENTINFO_TITLE' : 'Eventinformationen',
+
+    'SCHEDULE_TITLE' : 'Programm',
   };
   $translateProvider
       .translations('en', translationsEn)
