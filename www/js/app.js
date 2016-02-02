@@ -356,7 +356,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     'EVENT_TITLE' : 'Programm',
     'EVENT_WORKSHOP_LABEL' : 'Workshop',
     'EVENT_DESCRIPTION_TITLE' : 'Beschreibung',
-    'EVENT_SPEAKERS_LIST_TITLE' : 'Sprecher'
+    'EVENT_SPEAKERS_LIST_TITLE' : 'Sprecher',
+
+    'MAP_TITLE' : 'Lageplan',
+    'MAP_UPPER_FLOOR' : 'OG',
+    'MAP_GROUND_FLOOR' : 'EG',
+    'MAP_ROOM_LIST_TITLE' : 'Räume',
+
+    'ROOM_TITLE' : 'Lageplan',
+
+    'SPEAKER_TITLE' : 'Referenten',
+    'SPEAKER_EVENTS_LIST_TITLE' : 'Veranstaltungen',
+
+    'SPEAKERS_TITLE' : 'Referenten',
   };
   var translationsDe = {
     'MENU_TITLE' : 'Menü',
@@ -387,6 +399,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     'MAP_UPPER_FLOOR' : 'OG',
     'MAP_GROUND_FLOOR' : 'EG',
     'MAP_ROOM_LIST_TITLE' : 'Räume',
+
+    'ROOM_TITLE' : 'Lageplan',
+
+    'SPEAKER_TITLE' : 'Referenten',
+    'SPEAKER_EVENTS_LIST_TITLE' : 'Veranstaltungen',
+
+    'SPEAKERS_TITLE' : 'Referenten',
   };
   $translateProvider
       .translations('en', translationsEn)

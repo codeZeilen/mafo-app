@@ -1,5 +1,5 @@
 <ion-header-bar class="bar bar-subheader">
-    <h2 class="title">Referenten</h2>
+    <h2 class="title">{{'SPEAKER_TITLE' | translate}}</h2>
 </ion-header-bar>
 <ion-view>
     <ion-content>
@@ -23,7 +23,7 @@
             </div>
 
             <div class="item item-divider" ng-if="eventsForSpeaker.length > 0">
-                Veranstaltungen
+                {{'SPEAKER_EVENTS_LIST_TITLE' | translate}}
             </div>
 
             <ion-item class="item item-view-association-list" ng-repeat="event in eventsForSpeaker" ng-href="#/app/events/{{event.serverId}}">
