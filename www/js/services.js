@@ -566,14 +566,17 @@ angular.module('starter.services', ['ngResource'])
 
     var categoryColors = {};
     var categoryNames = {};
+    var englishCategoryNames = {};
 
     var updater = function() {
       Persistence.listCategories().then(function(categories) {
         categoryColors = {};
         categoryNames = {};
+        englishCategoryNames = {};
         angular.forEach(categories, function(category) {
           categoryColors[category.serverId] = '#' + category.color;
           categoryNames[category.serverId] = category.name;
+          englishCategoryNames[category.serverId] = category.name_en;
         });
       });
     };
@@ -587,8 +590,12 @@ angular.module('starter.services', ['ngResource'])
       categoryColorFromId : function(categoryId) {
         return categoryColors[categoryId];
       },
-      categoryNameFromId : function(categoryId) {
-        return categoryNames[categoryId];
+      categoryNameFromId : function(categoryId, languageCode) {
+        if(languageCode == 'en') {
+          return englishCategoryNames[categoryId];
+        } else {
+          return categoryNames[categoryId];
+        }
       }
     }
 

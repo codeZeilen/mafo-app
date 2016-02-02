@@ -59,6 +59,7 @@ angular.module('starter.services'
   entities.TopicCategory = persistence.define('TopicCategory', {
     serverId: 'INT',
     name: 'TEXT',
+    name_en: 'TEXT',
     color: 'TEXT'
   });
 

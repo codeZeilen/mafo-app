@@ -162,7 +162,7 @@ angular.module('starter.controllers', ['starter.services'])
       return TopicCategoryService.categoryColorFromId(event.categoryId);
     };
     $scope.topicCategoryName = function(event) {
-      return TopicCategoryService.categoryNameFromId(event.categoryId);
+      return TopicCategoryService.categoryNameFromId(event.categoryId, DataLanguage.currentLanguage());
     };
 
     $scope.updateDays = function(events) {
