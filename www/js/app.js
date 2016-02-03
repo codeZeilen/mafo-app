@@ -361,6 +361,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     'MENU_YOUR_AREA' : 'Your Tools',
     'MENU_SPEAKERS' : 'Speakers',
     'MENU_PROGRAM' : 'Schedule',
+    'MENU_CONTACT' : 'Contact',
+    'MENU_EVENT_INFORMATION' : 'Event information',
 
     'CONTACT_TITLE' : 'Contact',
     'CONTACT_INTRO' : 'In urgent cases you can always reach us via our “helper’s hotline“:+49 15754812371',
@@ -397,6 +399,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     'MENU_YOUR_AREA' : 'Dein Bereich',
     'MENU_SPEAKERS' : 'Referenten',
     'MENU_PROGRAM' : 'Programm',
+    'MENU_CONTACT' : 'Kontakt/Mitmachen',
+    'MENU_EVENT_INFORMATION' : 'Eventinformationen',
 
     'CONTACT_TITLE' : 'Kontakt',
     'CONTACT_INTRO' : 'Bei Notfällen erreichst du uns immer über unsere „Nummer gegen Kummer“:',

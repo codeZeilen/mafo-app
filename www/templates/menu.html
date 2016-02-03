@@ -50,7 +50,7 @@
             News
         </ion-item>
         <ion-item nav-clear menu-close href="#/app/contact" ng-show="subMenuVisible('personal') && menuItemVisible('contact')">
-            Kontakt/Mitmachen
+            {{ 'MENU_CONTACT' | translate }}
         </ion-item>
 
 
@@ -73,7 +73,7 @@
             FAQ
         </ion-item>
         <ion-item nav-clear menu-close href="#/app/info" ng-show="subMenuVisible('eventInfo') && menuItemVisible('info')">
-            Eventinformationen
+            {{ 'MENU_EVENT_INFORMATION' | translate }}
         </ion-item>
 
         <div class="item item-divider" nav-clear ng-click="toggleSubMenuVisibility('socialMedia')" >
@@ -85,12 +85,16 @@
         <ion-item nav-clear menu-close stopEvent ng-click="toFacebookEvent()" ng-show="subMenuVisible('socialMedia')">
             Facebook Event
         </ion-item>
+        <ion-item ion-item nav-clear menu-close stopEvent ng-click="toInternationalFacebookEvent()" ng-show="subMenuVisible('eventInfo') && menuItemVisible('internationalFacebookEvent')">
+            Facebook International Day
+        </ion-item>
         <ion-item nav-clear menu-close stopEvent ng-click="toYoutube()" ng-show="subMenuVisible('socialMedia')">
             Youtube
         </ion-item>
         <ion-item nav-clear menu-close stopEvent ng-click="toInstagram()" ng-show="subMenuVisible('socialMedia')">
             Instagram
         </ion-item>
+
 
       </ion-list>
     </ion-content>

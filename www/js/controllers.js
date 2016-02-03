@@ -11,7 +11,7 @@ angular.module('starter.controllers', ['starter.services'])
   };
   $scope.visibleMenuItemsPerLanguage = {
     'en' :
-      ['news', 'contact', 'program', 'speakers', 'map', 'faq', 'info'],
+      ['news', 'contact', 'program', 'speakers', 'map', 'faq', 'info', 'internationalFacebookEvent'],
     'de' :
       ['planer', 'news', 'contact', 'program', 'speakers', 'partners', 'map', 'faq', 'info']
   };
@@ -57,7 +57,11 @@ angular.module('starter.controllers', ['starter.services'])
   };
 
   $scope.toFacebookEvent = function() {
-    window.open('https://www.facebook.com/events/309686525893607/?fref=ts', '_system', 'location=no');
+    window.open('https://www.facebook.com/events/1545289825790215/', '_system', 'location=no');
+  };
+
+  $scope.toInternationalFacebookEvent = function() {
+    window.open('https://www.facebook.com/events/487062954814467/', '_system', 'location=no');
   };
 
   $scope.toFacebookPage = function() {
