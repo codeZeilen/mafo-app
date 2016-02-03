@@ -630,54 +630,108 @@ angular.module('starter.controllers', ['starter.services'])
   };
 })
 
-.controller('FAQCtrl', function($scope) {
-    $scope.questions = [
+.controller('FAQCtrl', function($scope, DataLanguage) {
+    $scope.questions_de = [
       {
         question: "Wo kann ich einchecken?",
-        answer  : "Am Check-In - den Weg zum Check-in findest Du im Schloss ausgeschildert. Über den App-Newsticker " +
-        "und die Monitore am Eingang halten wir Dich über die Öffnungszeiten des Check-Ins auf dem Laufenden."
+        answer : "Am Check-In in O 048 - den Weg zum Check-in findest Du im Schloss ausgeschildert. Die Öffnungszeiten sind am Donnerstag von 16 – 20 Uhr und am Freitag von 07:30 bis 11 Uhr."
       },
       {
         question: "Was kann mein Namenskärtchen? Und wofür dieses Bändchen? Und wenn ich es verliere?",
-        answer  : "Das Namenskärtchen ist Deine Eintrittskarte zu allen Veranstaltungen. Für die" +
-        "Abendveranstaltungen brauchst du das Bändchen." +
-        "Bei Verlust wird weder das Namenskärtchen noch das Bändchen ersetzt! Also...Nicht verlieren ;)"
+        answer : "Das Namenskärtchen ist Deine Eintrittskarte zu allen Veranstaltungen sowie zum Dinner Event im Boothaus am Freitagabend. Das Bändchen" +
+        "ist deine Eintrittskarte zur Mannheim Forum Night im Tiffany Club am Samstagabend." +
+        "Bei Verlust wird weder das Namenskärtchen noch das Bändchen ersetzt! Also beides am Besten nicht verlieren ;)"
       },{
         question: "Gibt es einen Dresscode?",
-        answer  : "Nein, einen offiziellen Dresscode gibt es beim Mannheim Forum nicht. Kleide Dich so, wie Du es für angemessen hältst und Du Dich wohlfühlst. Für die Workshops und Unternehmensgespräche empfehlen wir Dir natürlich so aufzutreten, wie es Dir passend erscheint."
+        answer : "Wir verzichten auf eine formale Kleiderordnung, jedoch empfehlen wir um den Charakter der Veranstaltung zu unterstützen seriöse Kleidung während aller Veranstaltungen, orientiert am sogenannten „Business Casual“."
       },{
         question: "Welche Veranstaltungen kann ich besuchen?",
-        answer  : "Grundsätzlich steht all unseren Teilnehmern der Besuch von Hauptveranstaltungen sowie unserer Abendveranstaltungen offen. Auch die Verpflegung mit Essen ist inklusive." +
-        "Über die Teilnahme an Workshops oder Unternehmensgesprächen wurdest Du gesondert via E-Mail informiert. Im dringenden Notfall kannst du am Info-Point nachfragen, für welche Veranstaltungen Du eine Zusage erhalten hast."
+        answer : "Grundsätzlich steht all unseren Teilnehmern der Besuch von Hauptveranstaltungen sowie unserer Abendveranstaltungen offen. Auch die Verpflegung mit Essen ist inklusive." +
+        "Über die Teilnahme an Workshops oder Unternehmensgesprächen wurdest Du gesondert via E-Mail informiert. Im dringenden Notfall kannst du am Info-Point erfragen, für welche Veranstaltungen Du eine Zusage erhalten hast."
       },{
-        question: "Hilfe, ich weiß nicht mehr zu welchen Veranstaltungen ich mich angemeldet habe. Was mache ich jetzt?",
-        answer  : "In einem solchen Notfall kannst Du Dich am Info-Point über die Veranstaltungen informieren, für die Du eine Zusage erhalten hast."
+        question: "Ich weiß nicht mehr zu welchen Veranstaltungen ich mich angemeldet habe. Was mache ich jetzt?",
+        answer : "In einem solchen Notfall kannst Du Dich am Info-Point über die Veranstaltungen informieren, für die Du eine Zusage erhalten hast."
       },{
         question: "Was mache ich, wenn ich es nicht pünktlich zu einer Veranstaltung schaffe oder eine Veranstaltung voll ist?",
-        answer  : "Falls Du zu spät kommst, verpasst Du das Beste, kannst aber noch versuchen einen Platz in der Veranstaltung zu erhalten. Es kann jedoch sein, dass es keinen Platz mehr gibt. In diesem Fall wirst Du an der Tür darüber informiert und kannst Du die Veranstaltung in der Mannheim Forum Lounge live miterleben."
-  },{
+        answer : "Falls Du zu spät kommst, verpasst Du das Beste, kannst aber noch versuchen einen Platz in der Veranstaltung zu erhalten. Es kann jedoch sein, dass es keinen Platz mehr gibt. In diesem Fall wirst Du an der Tür darüber informiert und kannst die Veranstaltung ggf. in der Mannheim Forum Lounge live miterleben."
+      },{
+        question: "Muss ich meine Bestätigungsemail zum Check-in mitbringen?",
+        answer : "Nein, stelle Dich im Check-in Raum einfach in der richtigen Schlange an (nach Nachnamen sortiert), dann werden wir Dich nach Deinem Namen fragen und stichprobenartig auch Ausweise kontrollieren, um sicher zu stellen, dass nur der Ticketinhaber sein Namenskärtchen bekommt."
+      },{
         question: "Muss ich meine Bestätigungsemail zu den Workshops mitbringen?",
-        answer  : "Nein, weise Dich einfach zu Beginn der Veranstaltung mit Deinem Namenskärtchen aus, die Referenten sind über Dein Kommen informiert."
+        answer : "Nein, weise Dich einfach zu Beginn der Veranstaltung mit Deinem Namenskärtchen aus, die Referenten sind über Dein Kommen informiert."
       },{
         question: "Kann ich persönlich mit den Rednern/Moderatoren sprechen?",
-        answer  : "Ein persönliches Gespräch unter vier Augen ist vermutlich leider nicht möglich. Bei unseren Hauptveranstaltungen gibt es aber für gewöhnlich am Ende eine Fragerunde, bei der Du Deine Fragen loswerden kannst."
+        answer : "Ein persönliches Gespräch unter vier Augen ist vermutlich leider nicht möglich. Bei unseren Hauptveranstaltungen gibt es aber für gewöhnlich am Ende eine Fragerunde, bei der Du Deine Fragen loswerden kannst."
       },{
         question: "Gibt es Anwesenheitspflicht?",
-        answer  : "Nein, wir zwingen Dich natürlich nicht, zu den einzelnen Veranstaltungen zu kommen. Wir möchten Dich allerdings bitten, zu den Workshops zu erscheinen, für die Du eine Zusage erhalten hast. Das ist den anderen Teilnehmern gegenüber nur fair, denn für manche Workshops gab es bis zu 300 Bewerber."
+        answer : "Nein, wir zwingen Dich natürlich nicht, zu den einzelnen Veranstaltungen zu kommen. Wir möchten Dich allerdings bitten, zu den Workshops zu erscheinen, für die Du uns auf die Zusage eine positive Rückmeldung gegeben hast. Das ist den anderen Teilnehmern gegenüber nur fair, denn für manche Workshops gab es bis zu 300 Bewerber."
       },{
         question: "Wer ist mein Ansprechpartner für alles?",
-        answer  : "Wir haben eine Nummer für jeden Kummer unter der Du Dich immer melden kannst: 0157 54812371."
+        answer : "Wir haben eine Nummer für jeden Kummer unter der Du Dich immer melden kannst: 0157 54812371."
       },{
-        question: "Hilfe ich verhungere - wann und wo gibt’s was zu essen?",
-        answer  : "Eigentlich den ganzen Tag und rund um die Uhr. Freitag- und Samstagmittag bieten wir Dir ein umfangreiches Buffet, dazu gibt es an beiden Tagen nachmittags Kaffee und Kuchen zwischen den Hauptveranstaltungen. Außerdem sorgen wir für kulinarische Erlebnisse bei unserem Get-Together nach der Eröffnungsveranstaltung am Donnerstag und im Bootshaus am Freitag."
+        question: "Hunger - wann und wo gibt es was zu essen?",
+        answer : "Freitag- und Samstagmittag bieten wir Dir ein umfangreiches Buffet, dazu gibt es an beiden Tagen nachmittags Kaffee und Kuchen zwischen den Hauptveranstaltungen. Außerdem sorgen wir für kulinarische Erlebnisse bei unserem Get-Together nach der Eröffnungsveranstaltung am Donnerstag und im Bootshaus am Freitag."
       },{
         question: "Was ist das Kasino? Wie sollte ich mich vorbereiten?",
-        answer  : "Am Samstag hast Du bei unserem Kasino die exklusive Möglichkeit, mit unseren Partnerunternehmen in Kontakt zu treten. Von zehn bis 14 Uhr kannst  Du Dich in der Aula an den Ständen der Unternehmen über Karrieremöglichkeiten oder das Unternehmen allgemein zu informieren." +
-        "Zur Vorbereitung kannst Du Dir <a href='#/app/partners'>hier</a> einmal unsere Partnerunternehmen ansehen."
+        answer : "Am Samstag hast Du bei unserem Kasino die exklusive Möglichkeit, mit unseren Partnerunternehmen in Kontakt zu treten. Von zehn bis 14 Uhr kannst Du Dich in der Aula an den Ständen der Unternehmen über Karrieremöglichkeiten oder das Unternehmen allgemein informieren. Zur Vorbereitung kannst Du Dir <a href='#/app/partners'>hier</a> einmal unsere Partnerunternehmen ansehen."
       },{
         question: "Wie erfahre ich von möglichen Terminänderungen?",
-        answer  : "Über unseren App-Newsticker oder am Info-Point erfährst Du alle Änderungen und wichtigen Ereignisse."
+        answer : "Über unseren App-Newsticker erfährst Du alle Änderungen und wichtigen Ereignisse."
       }
     ];
+
+    $scope.questions_en = [
+      {
+        question: "Where can I check-in?",
+        answer : "At the Check-in station in O 048 – the right way will be signposted. The check-in is open on Saturday from 08 to 11 am."
+      },{
+        question: "What is the nametag and the red wristband for? What happens if I lose it?",
+        answer : "The nametag is your ticket to all events during the day. The wristband is your ticket to the closing party at Tiffany Club. Neither of them will be reissued, so please don’t lose either of them ;)"
+      },{
+        question: "Is there a dresscode?",
+        answer : "There is no official, formal dresscode. However we suggest serious clothing during all events, based on the so-called „business casual“ to maintain and support the character of the event."
+      },{
+        question: "Which events can I go to?",
+        answer : "You can go to the English main discussion (Mannheim Forum Spezial) as well as the workshop you received a separate email about. Of course, you can use every opportunity to eat and drink that we offer (lunch, coffee/cake in the afternoon) as well as go to our closing party at Tiffany Club if you have your wristband ready. We informed you about the workshop you can go to separately via email. If you forgot which workshop that was you can ask at the info-point."
+      },{
+        question: "What happens if I come to an event late or if it is full?",
+        answer : "In case you are late you might miss the best part. However you can sneak in also after it already started if there is still seats available. You will be informed about that at the entrance. If there is no space left you can go to the Mannheim Forum Lounge and watch the live cast."
+      },{
+        question: "Do I need to bring my confirmation email to check-in or to the workshop?",
+        answer : "No, simply come to the check-in and line up in the right queue (sorted according to last names). You will be asked to tell us your name and/or to show a valid ID card. The workshop speakers know that you are coming so you don’t need any proof of admittance."
+      },{
+        question: "Can I talk to speakers/moderators personally?",
+        answer : "A personal discussion will probably not be possible. However there’s usually the chance to ask questions in the end of each event. Please use that opportunity."
+      },{
+        question: "Whom can I ask in case of questions?",
+        answer : "Please call +49 (0) 157 54812371 if you need anything or if you have any questions. We can help you with basically everything."
+      },{
+        question: "Hungry – where and when can I eat?",
+        answer : "There’s a lunch buffet on Saturday between 12 am and 2 pm at the Katakomben. In the afternoon there will be coffee and cake."
+      },{
+        question: "What is the Mannheim Forum Kasino? How can I prepare?",
+        answer : "From 10 am to 2 pm you will have the chance to meet our corporate partners personally at the Kasino, which works somewhat like a career fair. Our partners are available at various fair stands at the Aula and look forward to answer your questions about the corporations and career possibilities. Check out our partner page to see who you can meet!"
+      },{
+        question: "How am I informed in case of changes/news?",
+        answer : "Just keep following our newsticker within this App. All important information will be communicated there. Don’t worry if there will be some messages only in German – all information relevant to you will be translated and displayed in English."
+      }
+    ];
+
+    var updateQuestions = function() {
+      if(DataLanguage.currentLanguage() == 'en') {
+        $scope.questions = $scope.questions_en;
+      } else {
+        $scope.questions = $scope.questions_de;
+      }
+    };
+    $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
+      if(oldVal != newVal) {
+        updateQuestions();
+      }
+    });
+    updateQuestions();
+
+
   })
 ;
