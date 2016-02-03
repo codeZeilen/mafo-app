@@ -1,0 +1,53 @@
+<ion-header-bar class="bar bar-subheader">
+    <h2 class="title">{{'SCHEDULE_TITLE' | translate}}</h2>
+</ion-header-bar>
+<ion-view>
+        <ion-tabs class="tabs-royal">
+
+        <ion-tab title="Sa">
+            <ion-view>
+                <ion-content>
+
+                <ion-list>
+                    <div ng-repeat-start="timeslot in saturdaySlots.slots | orderBy:startTimes"></div>
+                    <div class="item item-divider">
+                        {{timeslot.displayName}}
+                    </div>
+                    <ion-item ng-repeat="event in timeslot.events" class="item-text-wrap">
+                        <div class="program-category-indicator"
+                             ng-if="event.categoryId"
+                             ng-style="{'background-color': topicCategoryColor(event)};">
+                            &#8203;
+                        </div>
+                        <div class="program-title-description">
+                            <a class="text-link" ng-href="#/app/events/{{event.serverId}}">
+                                <div class="program-event-name">{{event.name}}</div>
+                                <div>
+                                    <p>
+                                        <strong>
+                                            {{eventCategoryName(event)}}
+                                        </strong>
+                                        <span ng-if="event.categoryId && categoriesNotToShow.indexOf(topicCategoryName(event)) == -1">
+                                            {{topicCategoryName(event)}}
+                                        </span>
+                                    </p>
+
+                                </div>
+                            </a>
+                        </div>
+                        <div class="program-favorite-event">
+                            <i class="ion-icon"
+                               ng-class="{'ion-ios-star-outline': !isFavoriteEvent(event),
+                                          'ion-ios-star': isFavoriteEvent(event)}"
+                               ng-click="favoriteEvent(event);" stopEvent></i>
+                        </div>
+                    </ion-item>
+                    <div ng-repeat-end></div>
+                </ion-list>
+
+                </ion-content>
+            </ion-view>
+        </ion-tab>
+
+    </ion-tabs>
+</ion-view>

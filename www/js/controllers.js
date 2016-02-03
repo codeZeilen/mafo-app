@@ -116,7 +116,7 @@ angular.module('starter.controllers', ['starter.services'])
   })
 })
 
-.controller('ProgramCtrl', function($scope, $filter, Persistence, $ionicTabsDelegate,
+.controller('ProgramCtrl', function($scope, $filter, Persistence, $ionicTabsDelegate, $state, $ionicHistory,
                                     DataLanguage, ContentUpdater, EventUtil, TopicCategoryService, PlannerContent) {
 
     $scope.days = [];
@@ -128,18 +128,25 @@ angular.module('starter.controllers', ['starter.services'])
     var updateShowCompleteProgram = function() {
       $scope.showCompleteProgram = DataLanguage.currentLanguage() == 'de';
       if($scope.showCompleteProgram) {
-        $ionicTabsDelegate.select(0);
+        if($state.current.name != 'app.program') {
+          $ionicHistory.currentView($ionicHistory.backView());
+          $state.go('app.program', {}, {'location' : 'replace'});
+        }
       } else {
-        $ionicTabsDelegate.select(2);
+        if($state.current.name != 'app.programEn') {
+          $ionicHistory.currentView($ionicHistory.backView());
+          $state.go('app.programEn', {}, {'location' : 'replace'});
+        }
       }
     };
+    updateShowCompleteProgram();
+
     var processEvents = function(events) {
       $scope.updateDays(events);
     };
     var updateEvents = function() {
       Persistence.listEvents().then(processEvents);
     };
-    updateShowCompleteProgram();
     updateEvents();
     $scope.$watch(function() { return ContentUpdater.eventUpdateCounter }, function(oldVal, newVal) {
       if(!(oldVal === newVal)) {

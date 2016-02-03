@@ -232,20 +232,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     })
 
+    .state('app.programEn', {
+      url: "/programEn",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/program/program_en.html",
+          controller: 'ProgramCtrl'
+        }
+      }
+    })
+
     .state('app.event', {
       url: "/events/:eventId",
       views: {
         'menuContent': {
           templateUrl: "templates/program/event.html",
           controller: 'EventCtrl'
-        }
-      },
-      onEnter: function($ionicTabsDelegate, DataLanguage){
-        var showCompleteProgram = DataLanguage.currentLanguage() == 'de';
-        if(showCompleteProgram) {
-          $ionicTabsDelegate.select(0);
-        } else {
-          $ionicTabsDelegate.select(2);
         }
       }
     })
