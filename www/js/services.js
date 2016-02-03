@@ -385,39 +385,31 @@ angular.module('starter.services', ['ngResource'])
 .factory('PlannerContent', function(Persistence, $timeout, $ionicPopup) {
 
     var minutesPerSlot = 15;
-    var startHour = 8;
+    var startHour = 7;
     var endHour = 24;
 
     var fixedEvents = [
       {
         'name': 'Check-In in O048',
         'roomId': 3,
-        'startTime': moment('03-10-2016 15:00', 'MM-DD-YYYY HH:mm'),
-        'endTime':   moment('03-10-2016 19:00', 'MM-DD-YYYY HH:mm'),
+        'startTime': moment('03-10-2016 16:00', 'MM-DD-YYYY HH:mm'),
+        'endTime':   moment('03-10-2016 20:00', 'MM-DD-YYYY HH:mm'),
         'durationInMinutes' : 30,
         'isFixedEvent' : true
       },
       {
         'name': 'Check-In in O048',
         'roomId': 3,
-        'startTime': moment('03-11-2016 08:00', 'MM-DD-YYYY HH:mm'),
-        'endTime':   moment('03-11-2016 13:00', 'MM-DD-YYYY HH:mm'),
+        'startTime': moment('03-11-2016 07:00', 'MM-DD-YYYY HH:mm'),
+        'endTime':   moment('03-11-2016 11:00', 'MM-DD-YYYY HH:mm'),
         'durationInMinutes' : 30,
         'isFixedEvent' : true
       },
       {
-        'name': 'Check-In am Info-Point',
-        'roomId': 7,
-        'startTime': moment('03-11-2016 13:00', 'MM-DD-YYYY HH:mm'),
-        'endTime':   moment('03-11-2016 19:00', 'MM-DD-YYYY HH:mm'),
-        'durationInMinutes' : 30,
-        'isFixedEvent' : true
-      },
-      {
-        'name': 'Check-In am Info-Point',
+        'name': 'Check-In for Internationals at Info Point',
         'roomId': 7,
         'startTime': moment('03-12-2016 08:00', 'MM-DD-YYYY HH:mm'),
-        'endTime':   moment('03-12-2016 17:00', 'MM-DD-YYYY HH:mm'),
+        'endTime':   moment('03-12-2016 11:00', 'MM-DD-YYYY HH:mm'),
         'durationInMinutes' : 30,
         'isFixedEvent' : true
       },
