@@ -435,7 +435,7 @@ angular.module('starter.controllers', ['starter.services'])
 
 })
 
-.controller('ContactCtrl', function($scope, Persistence, ContactRequestOutbox) {
+.controller('ContactCtrl', function($scope, $state, $ionicHistory, Persistence, ContactRequestOutbox, DataLanguage) {
 
     $scope.dataWasSaved = false;
 
@@ -457,6 +457,27 @@ angular.module('starter.controllers', ['starter.services'])
         $scope.dataWasSaved = false;
       }
     };
+
+  var changeTemplate = function() {
+    if(DataLanguage.currentLanguage() == 'en') {
+      if($state.current.name != 'app.contactEn') {
+        $ionicHistory.currentView($ionicHistory.backView());
+        $state.go('app.contactEn', {}, {'location' : 'replace'});
+      }
+    } else {
+      if($state.current.name != 'app.contact') {
+        $ionicHistory.currentView($ionicHistory.backView());
+        $state.go('app.contact', {}, {'location' : 'replace'});
+      }
+    }
+  };
+
+  $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
+    if(oldVal != newVal) {
+      changeTemplate();
+    }
+  });
+  changeTemplate();
 })
 
 .controller('PartnersCtrl', function($scope, Persistence, ContentUpdater) {

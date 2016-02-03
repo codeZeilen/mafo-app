@@ -219,6 +219,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     })
 
+    .state('app.contactEn', {
+      url: "/contactEn",
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/personal/contact_en.html',
+          controller: 'ContactCtrl'
+        }
+      }
+    })
+
     /*
     Program states
      */
