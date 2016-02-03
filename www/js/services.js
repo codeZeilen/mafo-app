@@ -382,7 +382,7 @@ angular.module('starter.services', ['ngResource'])
     };
   })
 
-.factory('PlannerContent', function(Persistence, $interval, $ionicPopup) {
+.factory('PlannerContent', function(Persistence, $timeout, $ionicPopup) {
 
     var minutesPerSlot = 15;
     var startHour = 8;
@@ -434,8 +434,9 @@ angular.module('starter.services', ['ngResource'])
       if(reminderStart > moment() && !angular.isDefined(alarms[event.serverId])) {
         console.log("set alarm");
         var delayMs = reminderStart.diff(moment());
+        delayMs = Math.min(delayMs, 2147483647); // Prevents an overflow in $timeout
         var popupShown = false;
-        alarms[event.serverId] = $interval(function() {
+        alarms[event.serverId] = $timeout(function() {
           if(!popupShown) {
             popupShown = true;
             var alertPopup = $ionicPopup.alert({
@@ -445,13 +446,12 @@ angular.module('starter.services', ['ngResource'])
             alertPopup.then(function(res) {});
           }
         },
-        delayMs,
-        1);
+        delayMs);
       }
     };
     var cancelAlarm = function(event) {
       if(angular.isDefined(alarms[event.serverId])) {
-        $interval.cancel(alarms[event.serverId]);
+        $timeout.cancel(alarms[event.serverId]);
       }
     };
 
