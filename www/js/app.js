@@ -342,39 +342,34 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     'MENU_PROGRAM' : 'Schedule',
 
     'CONTACT_TITLE' : 'Contact',
-    'CONTACT_INTRO' : 'Bei Notfällen erreichst du uns immer über unsere „Nummer gegen Kummer“:',
+    'CONTACT_INTRO' : 'In urgent cases you can always reach us via our “helper’s hotline“:+49 15754812371',
     'CONTACT_TAB_CONTACT' : 'Contact',
     'CONTACT_TAB_PARTICIPATE' : 'Participate',
     'CONTACT_PARTICIPATE_QUESTION' : 'You would like to participate?',
-    'CONTACT_PARTICIPATE_INTRO' : 'Dir gefällt das Mannheim Forum und du möchtest auch gerne bei der Organisation des Events mitwirken? Schreibe uns einfach über dieses Kontaktformular, wir freuen uns auf deine Nachricht. Über die E-Mail, die du in dem Kontaktformular angibst, werden wir uns zeitnah nach dem Forum mit dir in Verbindung setzen.',
-    'CONTACT_PARTICIPATE_FORM_EMPTY_ERROR' : 'Alle Felder müssen ausgefüllt sein.',
-    'CONTACT_PARTICIPATE_FORM_SUCCESS_MESSAGE' : 'Ihre Daten wurden gespeichert.',
-    'CONTACT_PARTICIPATE_FORM_FIELD_FIRSTNAME' : 'Vorname',
-    'CONTACT_PARTICIPATE_FORM_FIELD_LASTNAME' : 'Nachname',
-    'CONTACT_PARTICIPATE_FORM_FIELD_EMAIL' : 'EMail',
-    'CONTACT_PARTICIPATE_FORM_FIELD_MOTIVATION' : 'Warum möchtest du mithelfen das Mannheim Forum 2017 umzusetzen?',
-    'CONTACT_PARTICIPATE_FORM_SEND_BUTTON' : 'Absenden',
+    'CONTACT_PARTICIPATE_INTRO' : 'You enjoyed the Mannheim Forum and you’re interested in participating in the organization of the event? Just get in touch with us via this contact form. Shortly after the Forum we’ll send an e-mail to the address you have provided in the contact form. We’re looking forward to hearing from you!',
 
-    'EVENT_TITLE' : 'Programm',
+    'CONTACT_PARTICIPATE_FORM_EMPTY_ERROR' : 'All fields have to be filled out.',
+    'CONTACT_PARTICIPATE_FORM_SUCCESS_MESSAGE' : 'Your data has been saved.',
+    'CONTACT_PARTICIPATE_FORM_FIELD_FIRSTNAME' : 'First Name',
+    'CONTACT_PARTICIPATE_FORM_FIELD_LASTNAME' : 'Last Name',
+    'CONTACT_PARTICIPATE_FORM_FIELD_EMAIL' : 'E-Mail',
+    'CONTACT_PARTICIPATE_FORM_FIELD_MOTIVATION' : 'Why do you want to take part in the realization of Mannheim Forum 2017?',
+
+    'CONTACT_PARTICIPATE_FORM_SEND_BUTTON' : 'Send',
+    'EVENT_TITLE' : 'Schedule',
     'EVENT_WORKSHOP_LABEL' : 'Workshop',
-    'EVENT_DESCRIPTION_TITLE' : 'Beschreibung',
-    'EVENT_SPEAKERS_LIST_TITLE' : 'Sprecher',
-
-    'MAP_TITLE' : 'Lageplan',
-    'MAP_UPPER_FLOOR' : 'OG',
-    'MAP_GROUND_FLOOR' : 'EG',
-    'MAP_ROOM_LIST_TITLE' : 'Räume',
-
-    'ROOM_TITLE' : 'Lageplan',
-
-    'SPEAKER_TITLE' : 'Referenten',
-    'SPEAKER_EVENTS_LIST_TITLE' : 'Veranstaltungen',
-
-    'SPEAKERS_TITLE' : 'Referenten',
-
-    'EVENTINFO_TITLE' : 'Eventinformationen',
-
-    'SCHEDULE_TITLE' : 'Programm',
+    'EVENT_DESCRIPTION_TITLE' : 'Description',
+    'EVENT_SPEAKERS_LIST_TITLE' : 'Speaker',
+    'MAP_TITLE' : 'Map',
+    'MAP_UPPER_FLOOR' : 'Upper Floor',
+    'MAP_GROUND_FLOOR' : 'Ground Floor',
+    'MAP_ROOM_LIST_TITLE' : 'Rooms',
+    'ROOM_TITLE' : 'Map',
+    'SPEAKER_TITLE' : 'Speakers',
+    'SPEAKER_EVENTS_LIST_TITLE' : 'Events',
+    'SPEAKERS_TITLE' : 'Speakers',
+    'EVENTINFO_TITLE' : 'Event information',
+    'SCHEDULE_TITLE' : 'Schedule',
   };
   var translationsDe = {
     'MENU_TITLE' : 'Menü',
