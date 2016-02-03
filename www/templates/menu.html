@@ -27,6 +27,19 @@
     </ion-header-bar>
     <ion-content>
         <ion-list>
+        <div class="item item-divider" nav-clear ng-click="toggleSubMenuVisibility('language')" >
+            Switch Language
+        </div>
+        <ion-item nav-clear menu-close stopEvent ng-click="setLanguageToGerman()" ng-show="subMenuVisible('language')">
+            Deutsch
+            <i class="icon ion-checkmark-circled" ng-show="selectedLanguage == 'de'"></i>
+        </ion-item>
+        <ion-item nav-clear menu-close stopEvent ng-click="setLanguageToEnglish()" ng-show="subMenuVisible('language')">
+            English
+            <i class="icon ion-checkmark-circled" ng-show="selectedLanguage == 'en'"></i>
+        </ion-item>
+
+
         <div translate class="item item-divider" nav-clear ng-click="toggleSubMenuVisibility('personal')" >
         MENU_YOUR_AREA
         </div>
@@ -78,18 +91,6 @@
         <ion-item nav-clear menu-close stopEvent ng-click="toInstagram()" ng-show="subMenuVisible('socialMedia')">
             Instagram
         </ion-item>
-
-        <div class="item item-divider" nav-clear ng-click="toggleSubMenuVisibility('language')" >
-            Sprachauswahl
-        </div>
-            <ion-item nav-clear menu-close stopEvent ng-click="setLanguageToGerman()" ng-show="subMenuVisible('language')">
-                Deutsch
-                <i class="icon ion-checkmark-circled" ng-show="selectedLanguage == 'de'"></i>
-            </ion-item>
-            <ion-item nav-clear menu-close stopEvent ng-click="setLanguageToEnglish()" ng-show="subMenuVisible('language')">
-                English
-                <i class="icon ion-checkmark-circled" ng-show="selectedLanguage == 'en'"></i>
-            </ion-item>
 
       </ion-list>
     </ion-content>
