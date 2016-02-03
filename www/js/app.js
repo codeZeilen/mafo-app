@@ -326,7 +326,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       url: "/info",
       views: {
         'menuContent': {
-          templateUrl: "templates/program/info.html"
+          templateUrl: "templates/program/info.html",
+          controller: 'EventInfoCtrl'
+        }
+      }
+    })
+
+    .state('app.infoEn', {
+      url: "/infoEn",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/program/info_en.html",
+          controller: 'EventInfoCtrl'
         }
       }
     })

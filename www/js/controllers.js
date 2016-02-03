@@ -630,6 +630,30 @@ angular.module('starter.controllers', ['starter.services'])
   };
 })
 
+.controller('EventInfoCtrl', function($scope, DataLanguage, $state, $ionicHistory) {
+
+  var changeTemplate = function() {
+    if(DataLanguage.currentLanguage() == 'en') {
+      if($state.current.name != 'app.infoEn') {
+        $ionicHistory.currentView($ionicHistory.backView());
+        $state.go('app.infoEn', {}, {'location' : 'replace'});
+      }
+    } else {
+      if($state.current.name != 'app.info') {
+        $ionicHistory.currentView($ionicHistory.backView());
+        $state.go('app.info', {}, {'location' : 'replace'});
+      }
+    }
+  };
+
+  $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
+    if(oldVal != newVal) {
+      changeTemplate();
+    }
+  });
+  changeTemplate();
+})
+
 .controller('FAQCtrl', function($scope, DataLanguage) {
     $scope.questions_de = [
       {
