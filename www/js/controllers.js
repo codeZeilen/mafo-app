@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['starter.services'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $ionicHistory, DataLanguage) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $ionicHistory, DataLanguage, DataLanguageSetting) {
   // Form data for the login modal
   $scope.loginData = {};
   $scope.visibleSubMenus = {
@@ -45,11 +45,11 @@ angular.module('starter.controllers', ['starter.services'])
   });
 
   $scope.setLanguageToEnglish = function() {
-    DataLanguage.setLanguageTo('en');
+    DataLanguageSetting.setLanguageTo('en');
   };
 
   $scope.setLanguageToGerman = function() {
-    DataLanguage.setLanguageTo('de');
+    DataLanguageSetting.setLanguageTo('de');
   };
 
   $scope.toYoutube = function() {

@@ -105,6 +105,11 @@ angular.module('starter.services'
     location : 'TEXT'
   });
 
+  entities.AppSettings = persistence.define('AppSettings', {
+    settingsKey : 'TEXT',
+    settingsValue : 'TEXT',
+  });
+
   persistence.debug = false;
   persistence.schemaSync();
 
@@ -474,6 +479,29 @@ angular.module('starter.services'
         persistence.flush(result.resolve);
       });
       return result.promise;
-    }
+    },
+
+    /* Settings */
+    getSetting : function(settingKey) {
+      var result = $q.defer();
+      entities.AppSettings.all().filter("settingsKey", '=', settingKey).one(null, function(results) {
+        result.resolve(results);
+      });
+      return result.promise;
+    },
+    setSetting: function(settingKey, settingValue) {
+      var result = $q.defer();
+      entities.AppSettings.all().filter("settingsKey", '=', settingKey).one(null, function(results) {
+        if(results == null) {
+          // Create new setting
+          persistence.add(new entities.AppSettings({'settingsKey' : settingKey, 'settingsValue' : settingValue}));
+        } else {
+          results.settingsValue = settingValue;
+        }
+        persistence.flush();
+        result.resolve();
+      });
+      return result.promise;
+    },
   };
 });
