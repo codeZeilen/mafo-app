@@ -188,9 +188,10 @@ p.item-long-description p
 
 /* Map */
 
-/*ion-scroll.map-room-scroll[direction=y] {
-    height: 300px;
-}*/
+ion-scroll.map-room-scroll {
+    top: auto;
+    position: relative;
+}
 
 .map-col {
     max-height: 150px;
