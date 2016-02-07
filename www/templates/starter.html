@@ -5,7 +5,7 @@
                 <i class="icon ion-ios7-search placeholder-icon"></i>
                 <input id="searchModalInput" ng-model="searchConfig.term" type="search"
                        placeholder="Suche"
-                       ng-model-options='{ debounce: 1500 }'
+                       ng-model-options='{ debounce: 2000 }'
                        ng-change="changeSearchTerm()">
             </label>
             <button ng-click="stopSearch()" class="button button-stable button-clear">
@@ -18,7 +18,7 @@
                 <ion-item
                         ng-click="exitSearch()"
                         class="item-text-wrap"
-                        ng-repeat="item in events | filter : searchConfig.term">
+                        ng-repeat="item in events | filter : searchConfig.term : compareMaFoObject">
                     <div>
                         <div class="program-category-indicator"
                              ng-if="item.categoryId"
@@ -46,7 +46,7 @@
 
                 <ion-item
                         ng-click="exitSearch()"
-                        ng-repeat="item in speakers | filter : searchConfig.term"
+                        ng-repeat="item in speakers | filter : searchConfig.term : compareMaFoObject"
                         ng-href="#/app/speakers/{{item.serverId}}" >
 
                     <div ng-if="item._type == 'Speaker'" class="item-avatar" >
@@ -65,7 +65,7 @@
                 </ion-item>
 
                 <a ng-click="exitSearch()"
-                   ng-repeat="item in partners | filter : searchConfig.term"
+                   ng-repeat="item in partners | filter : searchConfig.term : compareMaFoObject"
                    class="item item-thumbnail-left partners-list-item" ng-href="#/app/partners/{{item.serverId}}">
                     <img ng-cache
                          ng-src="https://www.mannheim-forum.org/sites/default/files/mfschedule/company/thumbs/{{item.logoPath}}" />
