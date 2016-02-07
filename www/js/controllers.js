@@ -582,9 +582,9 @@ angular.module('starter.controllers', ['starter.services'])
       Persistence.listPartners(),
       Persistence.listRooms(),
       Persistence.listSpeakers()]).then(function(results) {
-      $scope.events = results[0];
-      $scope.partners = results[1];
-      $scope.speakers = results[3];
+      $scope.events = results[0].map(function(e) { return e._data});
+      $scope.partners = results[1].map(function(e) { return e._data});
+      $scope.speakers = results[3].map(function(e) { return e._data});
     });
   };
 
@@ -624,6 +624,12 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.modal.hide().then(function() {
       cordova.plugins.Keyboard.close();
     });
+  };
+
+  $scope.compareMaFoObject = function(actual, expected) {
+    if(typeof actual === 'string') {
+      return actual.search(new RegExp(expected, "i")) > -1;
+    }
   };
 
   /* Frankenstein code to cater for all types of items */
