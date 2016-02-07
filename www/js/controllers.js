@@ -582,9 +582,21 @@ angular.module('starter.controllers', ['starter.services'])
       Persistence.listPartners(),
       Persistence.listRooms(),
       Persistence.listSpeakers()]).then(function(results) {
-      $scope.events = results[0].map(function(e) { return e._data});
-      $scope.partners = results[1].map(function(e) { return e._data});
-      $scope.speakers = results[3].map(function(e) { return e._data});
+      $scope.events = results[0].map(function(e) {
+        var d = e._data;
+        d['_type'] = e['_type'];
+        return d;
+      });
+      $scope.partners = results[1].map(function(e) {
+        var d = e._data;
+        d['_type'] = e['_type'];
+        return d;
+      });
+      $scope.speakers = results[3].map(function(e) {
+        var d = e._data;
+        d['_type'] = e['_type'];
+        return d;
+      });
     });
   };
 
