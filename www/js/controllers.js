@@ -550,7 +550,7 @@ angular.module('starter.controllers', ['starter.services'])
 
 })
 
-.controller('StarterCtrl', function($scope, $ionicModal, $state, Persistence, NewsInterval, ContentUpdater, MafoTimeFormatter, PlannerContent, $q) {
+.controller('StarterCtrl', function($scope, $ionicModal, $state, Persistence, DataLanguage, NewsInterval, ContentUpdater, MafoTimeFormatter, PlannerContent, $q) {
 
   $scope.searchConfig = {"term" : ""};
   $scope.events = [];
@@ -579,29 +579,45 @@ angular.module('starter.controllers', ['starter.services'])
   });
   updateNews();
 
+  var convertEntityToData = function(entities) {
+    return entities.map(function(e) {
+      var d = e._data;
+      d['_type'] = e['_type'];
+      return d;
+    })
+  };
   var updateSearchItems = function() {
+    if(DataLanguage.currentLanguage() == 'en') {
+      updateEnglishSearchItems();
+    } else {
+      updateGermanSearchItems();
+    }
+  };
+  var updateEnglishSearchItems = function() {
+    $q.all([Persistence.listEvents(),
+      Persistence.listSpeakers(),
+      Persistence.listRooms()]).then(function(results) {
+      $scope.events = convertEntityToData(results[0]);
+      $scope.speakers = convertEntityToData(results[1]);
+      $scope.partners = [];
+    });
+  };
+  var updateGermanSearchItems = function() {
     $q.all([Persistence.listEvents(),
       Persistence.listPartners(),
       Persistence.listRooms(),
       Persistence.listSpeakers()]).then(function(results) {
-      $scope.events = results[0].map(function(e) {
-        var d = e._data;
-        d['_type'] = e['_type'];
-        return d;
-      });
-      $scope.partners = results[1].map(function(e) {
-        var d = e._data;
-        d['_type'] = e['_type'];
-        return d;
-      });
-      $scope.speakers = results[3].map(function(e) {
-        var d = e._data;
-        d['_type'] = e['_type'];
-        return d;
-      });
+      $scope.events = convertEntityToData(results[0]);
+      $scope.partners = convertEntityToData(results[1]);
+      $scope.speakers = convertEntityToData(results[3]);
     });
   };
 
+  $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
+    if(oldVal != newVal) {
+      updateSearchItems();
+    }
+  });
   $scope.$watch(function() {
     return ContentUpdater.updateCounter;
   }, function(oldVal, newVal) {
