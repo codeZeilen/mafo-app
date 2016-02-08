@@ -28,7 +28,7 @@ angular.module('starter.services')
   return languageFacade;
 })
 
-.factory('DataLanguageSetting', function(DataLanguage, Persistence, $ionicPopup) {
+.factory('DataLanguageSetting', function(DataLanguage, Persistence, $ionicPopup, $rootScope) {
   var languageFacade = {};
 
   languageFacade.setLanguageTo = function(languageCode) {
@@ -37,30 +37,32 @@ angular.module('starter.services')
     return languageCode;
   };
 
+
+
   Persistence.getSetting('chosenLanguage').then(function(settingEntity) {
     if(settingEntity == null) {
+      var $scope = $rootScope.$new();
+      $scope.data = {};
+
       // Show alert
-      var languagePopup = $ionicPopup.show({
+      $scope.languagePopup = $ionicPopup.show({
+        scope: $scope,
         title: 'Sprachauswahl / Language Selection',
         template: '<p>Möchtest du die App für den International Day oder für die vollen drei Veranstaltungstage nutzen? Du kannst die App auch später noch umstellen.</p>' +
-        '<p>Do you want to use the app for the international day or for the complete Mannheim Forum? You can also change this setting later on.</p>',
-        buttons: [{
-          text: 'Alle drei Tage/Complete Forum',
-          type: 'button-default',
-          onTap: function(e) {
-            return 'de';
-          }
-        }, {
-          text: 'International Day',
-          type: 'button-default',
-          onTap: function(e) {
-            return 'en';
-          }
-        }]
+        '<p>Do you want to use the app for the international day or for the complete Mannheim Forum? You can also change this setting later on.</p>'
+        + '<button class="button button-block button-positive" ng-click="setDe()">Komplettes Forum</button>'
+        + '<button class="button button-block button-positive" ng-click="setEn()">International Day</button>'
       });
-      languagePopup.then(function(chosenLanguageCode) {
-        DataLanguage.setLanguageTo(chosenLanguageCode);
-      });
+
+      $scope.setEn = function() {
+        DataLanguage.setLanguageTo('en');
+        $scope.languagePopup.close();
+      };
+      $scope.setDe = function() {
+        DataLanguage.setLanguageTo('de');
+        $scope.languagePopup.close();
+      };
+
     } else {
       DataLanguage.setLanguageTo(settingEntity.settingsValue);
     }
