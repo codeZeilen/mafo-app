@@ -362,11 +362,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     'MENU_SPEAKERS' : 'Speakers',
     'MENU_PROGRAM' : 'Schedule',
     'MENU_CONTACT' : 'Contact',
-    'MENU_EVENT_INFORMATION' : 'Event information',
+    'MENU_EVENT_INFORMATION' : 'Event Information',
     'MENU_MAP' : 'Map',
 
     'CONTACT_TITLE' : 'Contact',
-    'CONTACT_INTRO' : 'In urgent cases you can always reach us via our “helper’s hotline“:+49 15754812371',
+    'CONTACT_INTRO' : 'In urgent cases you can always reach us via our “helper’s hotline“:',
     'CONTACT_TAB_CONTACT' : 'Contact',
     'CONTACT_TAB_PARTICIPATE' : 'Participate',
     'CONTACT_PARTICIPATE_QUESTION' : 'You would like to participate?',
