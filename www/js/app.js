@@ -25,6 +25,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     });
 
     $ionicPlatform.registerBackButtonAction(function() {
+      cordova.plugins.Keyboard.close();
       if (!$ionicHistory.backView()) {
         if($state.current.name != "app.starter") {
           $ionicHistory.nextViewOptions({
