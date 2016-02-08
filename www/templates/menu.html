@@ -30,13 +30,11 @@
         <div class="item item-divider" nav-clear ng-click="toggleSubMenuVisibility('language')" >
             Switch Language
         </div>
-        <ion-item class="item-avatar" nav-clear menu-close stopEvent ng-click="setLanguageToGerman()" ng-show="subMenuVisible('language')">
-            <img src="img/flag_de.png">
+        <ion-item nav-clear menu-close stopEvent ng-click="setLanguageToGerman()" ng-show="subMenuVisible('language')">
             Deutsch
             <i class="icon ion-checkmark-circled" ng-show="selectedLanguage == 'de'"></i>
         </ion-item>
-        <ion-item class="item-avatar" nav-clear menu-close stopEvent ng-click="setLanguageToEnglish()" ng-show="subMenuVisible('language')">
-            <img src="img/flag_us.png" />
+        <ion-item nav-clear menu-close stopEvent ng-click="setLanguageToEnglish()" ng-show="subMenuVisible('language')">
             English
             <i class="icon ion-checkmark-circled" ng-show="selectedLanguage == 'en'"></i>
         </ion-item>
