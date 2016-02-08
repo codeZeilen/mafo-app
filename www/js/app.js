@@ -396,7 +396,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     'SCHEDULE_TITLE' : 'Schedule',
 
     'STARTER_SEARCH_SEARCH' : 'Search',
-    'STARTER_SEARCH_Close' : 'Close'
+    'STARTER_SEARCH_CLOSE' : 'Close'
   };
   var translationsDe = {
     'MENU_TITLE' : 'Menü',
@@ -444,7 +444,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     'SCHEDULE_TITLE' : 'Programm',
 
     'STARTER_SEARCH_SEARCH' : 'Suche',
-    'STARTER_SEARCH_Close' : 'Schließen'
+    'STARTER_SEARCH_CLOSE' : 'Schließen'
   };
   $translateProvider
       .translations('en', translationsEn)

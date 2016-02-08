@@ -4,7 +4,7 @@
             <label class="item-input-wrapper">
                 <i class="icon ion-ios7-search placeholder-icon"></i>
                 <input id="searchModalInput" ng-model="searchConfig.term" type="search"
-                       placeholder="Suche"
+                       placeholder="{{'STARTER_SEARCH_SEARCH' | translate}}"
                        ng-model-options='{ debounce: 1500 }'
                        ng-change="changeSearchTerm()">
             </label>
