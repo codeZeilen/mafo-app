@@ -7,7 +7,7 @@ angular.module('starter.controllers', ['starter.services'])
       'eventInfo' : true,
       'personal' : true,
       'socialMedia' : true,
-      'language' : true
+      'language' : false,
   };
   $scope.visibleMenuItemsPerLanguage = {
     'en' :
@@ -46,10 +46,12 @@ angular.module('starter.controllers', ['starter.services'])
 
   $scope.setLanguageToEnglish = function() {
     DataLanguageSetting.setLanguageTo('en');
+    $scope.toggleSubMenuVisibility('language');
   };
 
   $scope.setLanguageToGerman = function() {
     DataLanguageSetting.setLanguageTo('de');
+    $scope.toggleSubMenuVisibility('language');
   };
 
   $scope.toYoutube = function() {
