@@ -9,7 +9,7 @@
                        ng-change="changeSearchTerm()">
             </label>
             <button ng-click="stopSearch()" class="button button-stable button-clear">
-                Schließen
+                {{'STARTER_SEARCH_CLOSE' | translate}}
             </button>
         </ion-header-bar>
         <ion-content>
@@ -119,7 +119,7 @@
             <i class="icon ion-ios7-search placeholder-icon"></i>
             <input 
                    type="search"
-                   placeholder="Suche"
+                   placeholder="{{'STARTER_SEARCH_SEARCH' | translate}}"
  		           disabled >
         </div>
     </ion-footer-bar>
