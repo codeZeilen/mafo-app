@@ -261,6 +261,22 @@ angular.module('starter.services', ['ngResource'])
       groupDays     : groupDays
     }
 })
+    
+.factory('PartnerStatus', function() {
+  var statusLabels = {'none': "Weitere Partner",
+      'premium': "Premium Partner",
+      'workshop': "Workshop Partner",
+      'flagship': "Flagship Partner",
+      'long_tem': "Long Term Partner",
+      'friends': "Circle of Friends",
+      'supply': "Supply Partner",
+      'startup': "StartUp Partner",
+};
+  
+  return {
+   'statusLabels' : statusLabels,
+  }
+})
 
 .factory('ContactRequestOutbox', function($interval, Persistence, $http, $q) {
   var intervalPromise;

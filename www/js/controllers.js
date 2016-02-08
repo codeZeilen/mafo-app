@@ -486,14 +486,22 @@ angular.module('starter.controllers', ['starter.services'])
   changeTemplate();
 })
 
-.controller('PartnersCtrl', function($scope, Persistence, ContentUpdater) {
+.controller('PartnersCtrl', function($scope, $filter, Persistence, ContentUpdater, PartnerStatus) {
   $scope.partners = [];
 
   $scope.partnerName = 'name';
 
   var updater = function() {
     Persistence.listPartners().then(function(partners) {
-      $scope.partners = partners;
+      $scope.premiumPartners = $filter('filter')(partners, {'partnerStatus' : 'premium'});
+      $scope.workshopPartners = $filter('filter')(partners, {'partnerStatus' : 'workshop'});
+      $scope.flagshipPartners = $filter('filter')(partners, {'partnerStatus' : 'flagship'});
+      $scope.longTermPartners = $filter('filter')(partners, {'partnerStatus' : 'long_term'});
+      $scope.circleOfFriendsPartners = $filter('filter')(partners, {'partnerStatus' : 'friends'});
+      $scope.startupPartners = $filter('filter')(partners, {'partnerStatus' : 'startup'});
+      $scope.supplyPartners = $filter('filter')(partners, {'partnerStatus' : 'supply'});
+
+      $scope.otherPartners = $filter('filter')(partners, {'partnerStatus' : 'none'});
     });
   };
   $scope.$watch(function() { return ContentUpdater.partnerUpdateCounter }, function(oldVal, newVal) {
@@ -502,6 +510,8 @@ angular.module('starter.controllers', ['starter.services'])
     }
   });
   updater();
+
+  $scope.partnerLabels = PartnerStatus.statusLabels;
 
 })
 

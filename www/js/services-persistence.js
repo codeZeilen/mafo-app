@@ -53,7 +53,8 @@ angular.module('starter.services'
     email: 'TEXT',
     nameOfContact: 'TEXT',
     address: 'TEXT',
-    logoPath: 'TEXT'
+    logoPath: 'TEXT',
+    partnerStatus: 'TEXT'
   });
 
   entities.TopicCategory = persistence.define('TopicCategory', {
