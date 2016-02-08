@@ -396,7 +396,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     'SCHEDULE_TITLE' : 'Schedule',
 
     'STARTER_SEARCH_SEARCH' : 'Search',
-    'STARTER_SEARCH_CLOSE' : 'Close'
+    'STARTER_SEARCH_CLOSE' : 'Close',
+
+    'STARTER_NEWS_INTRO' : 'Check out the latest news in our news ticker - we keep you up-to-date with the most important information about the Mannheim Forum.',
+    'STARTER_NEWS_NO_NEWS_INFO' : 'There are no news yet.'
   };
   var translationsDe = {
     'MENU_TITLE' : 'Menü',
@@ -444,7 +447,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     'SCHEDULE_TITLE' : 'Programm',
 
     'STARTER_SEARCH_SEARCH' : 'Suche',
-    'STARTER_SEARCH_CLOSE' : 'Schließen'
+    'STARTER_SEARCH_CLOSE' : 'Schließen',
+    'STARTER_NEWS_INTRO' : 'Über den App-Newsticker halten wir dich rund um die Uhr mit den wichtigsten Neuigkeiten rund um das Mannheim Forum auf dem Laufenden.',
+    'STARTER_NEWS_NO_NEWS_INFO' : 'Momentan gibt es noch keine News.'
   };
   $translateProvider
       .translations('en', translationsEn)
