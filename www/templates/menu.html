@@ -57,7 +57,7 @@
         <div class="item item-divider" nav-clear ng-click="toggleSubMenuVisibility('eventInfo')" >
             Mannheim Forum 2016
         </div>
-        <ion-item nav-clear menu-close href="#/app/program" ng-show="subMenuVisible('eventInfo') && menuItemVisible('program')">
+        <ion-item nav-clear menu-close href="{{selectedLanguage == 'de' ? '#/app/program' : '#/app/programEn'}}" ng-show="subMenuVisible('eventInfo') && menuItemVisible('program')">
             {{ 'MENU_PROGRAM' | translate }}
         </ion-item>
         <ion-item nav-clear menu-close href="#/app/speakers" ng-show="subMenuVisible('eventInfo') && menuItemVisible('speakers')">
@@ -72,7 +72,7 @@
         <ion-item nav-clear menu-close href="#/app/faq" ng-show="subMenuVisible('eventInfo') && menuItemVisible('faq')">
             FAQ
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/info" ng-show="subMenuVisible('eventInfo') && menuItemVisible('info')">
+        <ion-item nav-clear menu-close href="{{selectedLanguage == 'de' ? '#/app/info' : '#/app/infoEn'}}" ng-show="subMenuVisible('eventInfo') && menuItemVisible('info')">
             {{ 'MENU_EVENT_INFORMATION' | translate }}
         </ion-item>
 
