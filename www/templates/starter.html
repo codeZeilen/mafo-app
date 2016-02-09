@@ -100,7 +100,7 @@
                 </div>
             </div>
 
-            <div class="card" ng-repeat="newsItem in news | orderBy : 'createdAt' : true | limitTo : 7" ng-click="gotoItem(newsItem.serverId)">
+            <div class="card" ng-repeat="newsItem in news | orderBy : 'createdAt' : true | limitTo : 5" ng-click="gotoItem(newsItem.serverId)">
                 <div class="item item-divider item-text-wrap item-icon-right">
                     <i class="icon ion-ios-arrow-right"></i>
                     {{newsItem.title}}
