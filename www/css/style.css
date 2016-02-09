@@ -107,8 +107,8 @@ p.item-long-description p
 }
 
 .partners-list-item a img {
-    max-height: 90%;
-    max-width: 90%;
+    max-height: 80%;
+    max-width: 80%;
     height: auto !important;
 }
 
