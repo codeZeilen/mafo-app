@@ -422,7 +422,7 @@ angular.module('starter.services', ['ngResource'])
         'isFixedEvent' : true
       },
       {
-        'name': 'Check-In for Internationals at Info Point',
+        'name': 'Check-In for Internationals in O 048',
         'roomId': 7,
         'startTime': moment('03-12-2016 08:00', 'MM-DD-YYYY HH:mm'),
         'endTime':   moment('03-12-2016 11:00', 'MM-DD-YYYY HH:mm'),
