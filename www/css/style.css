@@ -107,8 +107,9 @@ p.item-long-description p
 }
 
 .partners-list-item a img {
-    max-height: 70px;
-    max-width: 70px;
+    max-height: 90%;
+    max-width: 90%;
+    height: auto !important;
 }
 
 /* Person view symbol */
