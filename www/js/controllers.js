@@ -655,15 +655,13 @@ angular.module('starter.controllers', ['starter.services'])
   };
 
   $scope.stopSearch = function() {
-    $scope.modal.hide().then(function() {
-      cordova.plugins.Keyboard.close();
-    });
+    cordova.plugins.Keyboard.close();
+    $scope.modal.hide();
   };
 
   $scope.exitSearch = function() {
-    $scope.modal.hide().then(function() {
-      cordova.plugins.Keyboard.close();
-    });
+    cordova.plugins.Keyboard.close();
+    $scope.modal.hide();
   };
 
   $scope.compareMaFoObject = function(actual, expected) {
