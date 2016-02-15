@@ -596,6 +596,9 @@ angular.module('starter.controllers', ['starter.services'])
       return d;
     })
   };
+  var filterSpeakersToShow = function(speakers) {
+    return $filter('filter')(speakers, {isShownInList : 1});
+  };
   var updateSearchItems = function() {
     if(DataLanguage.currentLanguage() == 'en') {
       updateEnglishSearchItems();
@@ -607,9 +610,9 @@ angular.module('starter.controllers', ['starter.services'])
     $q.all([Persistence.listEvents(),
       Persistence.listSpeakers(),
       Persistence.listRooms()]).then(function(results) {
-      $scope.events = convertEntityToData(results[0]);
-      $scope.speakers = convertEntityToData(results[1]);
-      $scope.partners = [];
+        $scope.events = convertEntityToData(results[0]);
+        $scope.speakers = filterSpeakersToShow(convertEntityToData(results[1]));
+        $scope.partners = [];
     });
   };
   var updateGermanSearchItems = function() {
@@ -619,7 +622,7 @@ angular.module('starter.controllers', ['starter.services'])
       Persistence.listSpeakers()]).then(function(results) {
       $scope.events = convertEntityToData(results[0]);
       $scope.partners = convertEntityToData(results[1]);
-      $scope.speakers = convertEntityToData(results[3]);
+      $scope.speakers = filterSpeakersToShow(convertEntityToData(results[3]));
     });
   };
 
