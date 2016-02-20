@@ -37,8 +37,6 @@ angular.module('starter.services')
     return languageCode;
   };
 
-
-
   Persistence.getSetting('chosenLanguage').then(function(settingEntity) {
     if(settingEntity == null) {
       var $scope = $rootScope.$new();
@@ -55,16 +53,16 @@ angular.module('starter.services')
       });
 
       $scope.setEn = function() {
-        DataLanguage.setLanguageTo('en');
+        languageFacade.setLanguageTo('en');
         $scope.languagePopup.close();
       };
       $scope.setDe = function() {
-        DataLanguage.setLanguageTo('de');
+        languageFacade.setLanguageTo('de');
         $scope.languagePopup.close();
       };
 
     } else {
-      DataLanguage.setLanguageTo(settingEntity.settingsValue);
+      languageFacade.setLanguageTo(settingEntity.settingsValue);
     }
   });
 
