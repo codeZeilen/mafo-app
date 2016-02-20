@@ -49,7 +49,7 @@
         <ion-item nav-clear menu-close href="#/app/news" ng-show="subMenuVisible('personal') && menuItemVisible('news')">
             News
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/contact" ng-show="subMenuVisible('personal') && menuItemVisible('contact')">
+        <ion-item nav-clear menu-close href="{{selectedLanguage == 'de' ? '#/app/contact' : '#/app/contactEn'}}" ng-show="subMenuVisible('personal') && menuItemVisible('contact')">
             {{ 'MENU_CONTACT' | translate }}
         </ion-item>
 
