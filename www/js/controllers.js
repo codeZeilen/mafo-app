@@ -560,7 +560,7 @@ angular.module('starter.controllers', ['starter.services'])
 
 })
 
-.controller('StarterCtrl', function($scope, $ionicModal, $state, Persistence, DataLanguage, NewsInterval, ContentUpdater, MafoTimeFormatter, PlannerContent, $q) {
+.controller('StarterCtrl', function($scope, $ionicModal, $state, $filter, Persistence, DataLanguage, NewsInterval, ContentUpdater, MafoTimeFormatter, PlannerContent, $q) {
 
   $scope.searchConfig = {"term" : ""};
   $scope.events = [];
