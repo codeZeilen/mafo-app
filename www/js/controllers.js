@@ -337,7 +337,7 @@ angular.module('starter.controllers', ['starter.services'])
       $scope.userEvent = angular.copy(initialEvent);
     };
 
-    $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
+    $scope.$watch(DataLanguage.currentLanguage, function(newVal, oldVal) {
       if(!(oldVal === newVal)) {
         if(newVal == 'en') {
           $ionicHistory.clearHistory();
@@ -524,7 +524,7 @@ angular.module('starter.controllers', ['starter.services'])
   });
   updater();
 
-  $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
+  $scope.$watch(DataLanguage.currentLanguage, function(newVal, oldVal) {
     if(!(oldVal === newVal)) {
       if(newVal == 'en') {
         $ionicHistory.clearHistory();
