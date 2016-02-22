@@ -266,7 +266,7 @@ angular.module('starter.controllers', ['starter.services'])
     };
 })
 
-.controller('PlannerCtrl', function($scope, Persistence, PlannerContent) {
+.controller('PlannerCtrl', function($scope, DataLanguage, $state, $ionicHistory, Persistence, PlannerContent) {
     $scope.slots = [];
     var daysToDate = {
       'Donnerstag' : moment("03-10-2016", "MM-DD-YYYY"),
@@ -336,6 +336,19 @@ angular.module('starter.controllers', ['starter.services'])
       $scope.dataWasSaved = true;
       $scope.userEvent = angular.copy(initialEvent);
     };
+
+    $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
+      if(!(oldVal === newVal)) {
+        if(newVal == 'en') {
+          $ionicHistory.clearHistory();
+          $ionicHistory.nextViewOptions({
+            disableAnimate: false,
+            disableBack: true
+          });
+          $state.go('app.starter');
+        }
+      }
+    });
 
 })
 
@@ -486,7 +499,7 @@ angular.module('starter.controllers', ['starter.services'])
   changeTemplate();
 })
 
-.controller('PartnersCtrl', function($scope, $filter, Persistence, ContentUpdater, PartnerStatus) {
+.controller('PartnersCtrl', function($scope, $filter, $state, $ionicHistory, DataLanguage, Persistence, ContentUpdater, PartnerStatus) {
   $scope.partners = [];
 
   $scope.partnerName = 'name';
@@ -510,6 +523,19 @@ angular.module('starter.controllers', ['starter.services'])
     }
   });
   updater();
+
+  $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
+    if(!(oldVal === newVal)) {
+      if(newVal == 'en') {
+        $ionicHistory.clearHistory();
+        $ionicHistory.nextViewOptions({
+          disableAnimate: false,
+          disableBack: true
+        });
+        $state.go('app.starter');
+      }
+    }
+  });
 
   $scope.partnerLabels = PartnerStatus.statusLabels;
 
