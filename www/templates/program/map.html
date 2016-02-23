@@ -16,10 +16,11 @@
         <div class="item item-divider"> {{'MAP_ROOM_LIST_TITLE' | translate}} </div>
         <ion-scroll map-list id="map-room-list" class="map-room-scroll" direction="y" has-bouncing="false">
             <ion-list>
-                <ion-item   class="item-text-wrap" ng-repeat="room in rooms | orderBy : 'name'"
+                <ion-item   class="item-text-wrap" ng-repeat="room in rooms | filter : {name : '!tba'} | orderBy : 'name'"
                             ng-href="#/app/room/{{room.serverId}}">
                     {{room.name}}
                 </ion-item>
+                <ion-item></ion-item>
             </ion-list>
         </ion-scroll>
     </ion-content>
