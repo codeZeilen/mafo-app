@@ -400,7 +400,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     'STARTER_SEARCH_CLOSE' : 'Close',
 
     'STARTER_NEWS_INTRO' : 'Check out the latest news in our news ticker - we keep you up-to-date with the most important information about the Mannheim Forum.',
-    'STARTER_NEWS_NO_NEWS_INFO' : 'There are no news yet.'
+    'STARTER_NEWS_NO_NEWS_INFO' : 'There are no news yet.',
+
+
+    'Unternehmensworkshop' : 'Workshop',
+    'Workshop' : 'Workshop',
+    'Hauptveranstaltung' : 'Main Event',
+    'Rahmenprogramm' : 'Special Event',
   };
   var translationsDe = {
     'MENU_TITLE' : 'Menü',

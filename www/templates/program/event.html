@@ -8,7 +8,7 @@
                 <h2>{{event.name}}</h2>
                 <p class="item-short-description">
                     <span ng-if="event.categoryId" ng-style="{color: topicCategoryColor(event)}">
-                        {{topicCategoryName(event)}}
+                        {{topicCategoryName(event) | translate}}
                     </span>
                     <span ng-if="isWorkshop(event)">
                         {{'EVENT_WORKSHOP_LABEL' | translate}}
