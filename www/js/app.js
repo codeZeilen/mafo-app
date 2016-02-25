@@ -404,7 +404,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
 
     'Unternehmensworkshop' : 'Workshop',
-    'Workshop' : 'Workshop',
+    'Vertiefungsworkshop' : 'Workshop',
     'Hauptveranstaltung' : 'Main Event',
     'Rahmenprogramm' : 'Special Event',
   };
