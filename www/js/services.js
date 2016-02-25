@@ -406,8 +406,8 @@ angular.module('starter.services', ['ngResource'])
 
     var fixedEvents = [
       {
-        'name': 'Check-In in O048',
-        'roomId': 3,
+        'name': 'Check-In in Fuchs-Petrolub',
+        'roomId': 4,
         'startTime': moment('03-10-2016 16:00', 'MM-DD-YYYY HH:mm'),
         'endTime':   moment('03-10-2016 20:00', 'MM-DD-YYYY HH:mm'),
         'durationInMinutes' : 30,
