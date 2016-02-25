@@ -67,7 +67,7 @@ angular.module('starter.controllers', ['starter.services'])
   };
 
   $scope.toFacebookPage = function() {
-    window.open('https://www.facebook.com/MannheimForum?fref=ts', '_system', 'location=no');
+    window.open('https://www.facebook.com/MannheimForum', '_system', 'location=no');
   };
 
   $scope.toInstagram = function() {
