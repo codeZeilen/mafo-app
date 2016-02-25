@@ -617,9 +617,13 @@ angular.module('starter.controllers', ['starter.services'])
 
   var convertEntityToData = function(entities) {
     return entities.map(function(e) {
-      var d = e._data;
-      d['_type'] = e['_type'];
-      return d;
+      if(e.hasOwnProperty('_data')) {
+        var d = e._data;
+        d['_type'] = e['_type'];
+        return d;
+      } else {
+        return e;
+      }
     })
   };
   var filterSpeakersToShow = function(speakers) {
