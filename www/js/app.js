@@ -396,6 +396,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     'EVENTINFO_TITLE' : 'Event information',
     'SCHEDULE_TITLE' : 'Schedule',
 
+    'STARTER_WELCOME' : 'Welcome to the',
     'STARTER_SEARCH_SEARCH' : 'Search',
     'STARTER_SEARCH_CLOSE' : 'Close',
 
@@ -453,6 +454,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
     'SCHEDULE_TITLE' : 'Programm',
 
+    'STARTER_WELCOME' : 'Herzlich Willkommen beim',
     'STARTER_SEARCH_SEARCH' : 'Suche',
     'STARTER_SEARCH_CLOSE' : 'Schließen',
     'STARTER_NEWS_INTRO' : 'Über den App-Newsticker halten wir dich rund um die Uhr mit den wichtigsten Neuigkeiten rund um das Mannheim Forum auf dem Laufenden.',
