@@ -430,8 +430,9 @@ angular.module('starter.services', ['ngResource'])
       }
       var reminderStart = moment(event.startTime);
       reminderStart.subtract(moment.duration(10, 'minutes'));
-
+      
       if(reminderStart > moment() && !angular.isDefined(alarms[event.serverId])) {
+        console.log("set alarm");
         var delayMs = reminderStart.diff(moment());
         var popupShown = false;
         alarms[event.serverId] = $interval(function() {

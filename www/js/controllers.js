@@ -441,7 +441,7 @@ angular.module('starter.controllers', ['starter.services'])
 
 })
 
-.controller('StarterCtrl', function($scope, $ionicModal, $state, Persistence, NewsInterval, ContentUpdater, MafoTimeFormatter, $q) {
+.controller('StarterCtrl', function($scope, $ionicModal, $state, Persistence, NewsInterval, ContentUpdater, MafoTimeFormatter, PlannerContent, $q) {
 
   $scope.searchConfig = {"term" : ""};
   $scope.events = [];
@@ -543,9 +543,9 @@ angular.module('starter.controllers', ['starter.services'])
     return $scope.eventCategoryNames[event.eventType];
   };
 
-    $scope.dateFormat = function(timeStampString) {
-      return MafoTimeFormatter.formatNewsDate(timeStampString).concat(" Uhr");
-    };
+  $scope.dateFormat = function(timeStampString) {
+   return MafoTimeFormatter.formatNewsDate(timeStampString).concat(" Uhr");
+  };
 })
 
 .controller('FAQCtrl', function($scope) {
