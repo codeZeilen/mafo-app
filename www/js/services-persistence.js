@@ -301,6 +301,22 @@ angular.module('starter.services'
     return filteringEntitiesAvailableInEnglish(eventListPromise);
   };
 
+  var translatingEntityList = function(entityListPromise) {
+    var overallPromise = $q.defer();
+    entityListPromise.then(function(individuals) {
+      var promises = [];
+      angular.forEach(individuals, function(individual) {
+        var aPromise = $q.defer();
+        aPromise.resolve(individual);
+        promises.push(translateEntity(aPromise.promise));
+      });
+      $q.all(promises).then(function(translatedIndividuals) {
+        overallPromise.resolve(translatedIndividuals);
+      });
+    });
+    return overallPromise.promise;
+  };
+
   var translateEntity = function(entityPromise) {
     return dispatchPerLanguage({
       'de' : function(arg) {return arg;},
@@ -340,7 +356,7 @@ angular.module('starter.services'
       return translateEntity(getting(entities.Speaker, speakerId));
     },
     listSpeakers: function() {
-      return filteringSpeakerList(listing(entities.Speaker, refreshSpeakers, getAllSpeakers));
+      return translatingEntityList(filteringSpeakerList(listing(entities.Speaker, refreshSpeakers, getAllSpeakers)));
     },
     eventsForSpeaker: function(speakerId) {
       return listingViaHBTM(entities.EventHBTMSpeaker,
@@ -354,7 +370,9 @@ angular.module('starter.services'
       return translateEntity(getting(entities.Event, eventId));
     },
     listEvents: function() {
-      return filteringEventList(listing(entities.Event, refreshEvents, getAllEvents));
+      return translatingEntityList(
+          filteringEventList(
+              listing(entities.Event, refreshEvents, getAllEvents)));
     },
     listSpeakersForEvent: function(eventId) {
       return listingViaHBTM(entities.EventHBTMSpeaker,
