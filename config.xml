@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ionicframework.mafoapp" version="1.4" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.ionicframework.mafoapp" version="1.5.0"
+xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" >
     <name>Mannheim Forum</name>
     <description>
         Die offizielle App des Mannheim Forums
