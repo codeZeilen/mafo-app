@@ -261,3 +261,7 @@ td.mafo-planner-time {
 .mafo-planner-fixed-event {
     background: rgba(226, 221, 218, 0.50);
 }
+
+.pany {
+    overflow-y: scroll;
+}
