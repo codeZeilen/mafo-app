@@ -4,7 +4,7 @@ angular.module('starter.services', ['ngResource'])
 
     // route part => { attributeName, entityName }
     return {
-      "contentUpdateBaseURL": "https://www.mannheim-forum.org/api/mannheim-forum-schedule/%s/last_update_timestamp",
+      "contentUpdateBaseURL": "https://anmeldung.mannheim-forum.org/api/mannheim-forum-schedule/%s/last_update_timestamp",
       "contentUpdateConfiguration": {
         "events" :
         {
@@ -285,7 +285,7 @@ angular.module('starter.services', ['ngResource'])
     Persistence.listContactRequests().then(function(requests) {
       var promises = requests.map(function(request) {
         var result = $q.defer();
-        $http.post("https://www.mannheim-forum.org/api/app_contact_request", request)
+        $http.post("https://anmeldung.mannheim-forum.org/api/app_contact_request", request)
           .success(function() {
             Persistence.removeContactRequest(request);
             result.resolve();
@@ -331,34 +331,35 @@ angular.module('starter.services', ['ngResource'])
 })
 
 .factory('SpeakerAPI', function($resource) {
-    return $resource('https://www.mannheim-forum.org/api/mannheim-forum-schedule/speakers/:speakerId');
+    return $resource('https://anmeldung.mannheim-forum.org/api/mannheim-forum-schedule/speakers/:speakerId');
 })
 
 .factory('EventAPI', function($resource) {
-  return $resource('https://www.mannheim-forum.org/api/mannheim-forum-schedule/events/:eventId');
+  return $resource('https://anmeldung.mannheim-forum.org/api/mannheim-forum-schedule/events/:eventId');
 })
 
   .factory('EventHBTMSpeakerAPI', function($resource) {
-    return $resource('https://www.mannheim-forum.org/api/mannheim-forum-schedule/event_speakers/:eventId');
+    return $resource('https://anmeldung.mannheim-forum.org/api/mannheim-forum-schedule/event_speakers/:eventId');
   })
 
   .factory('PartnerAPI', function($resource) {
-    return $resource('https://www.mannheim-forum.org/api/mannheim-forum-schedule/partners/:partnerId');
+    return $resource('https://anmeldung.mannheim-forum.org/api/mannheim-forum-schedule/partners/:partnerId');
   })
 
   .factory('TopicCateogryAPI', function($resource) {
-    return $resource('https://www.mannheim-forum.org/api/mannheim-forum-schedule/topic_categories/:partnerId');
+    return $resource('https://anmeldung.mannheim-forum.org/api/mannheim-forum-schedule/topic_categories/:partnerId');
   })
 
   .factory('RoomAPI', function($resource) {
-    return $resource('https://www.mannheim-forum.org/api/mannheim-forum-schedule/rooms/:roomId');
+    return $resource('https://anmeldung.mannheim-forum.org/api/mannheim-forum-schedule/rooms/:roomId');
   })
 
   .factory('NewsAPI', function($http, $q, $sanitize) {
     var processNewsItemConents = function(newsItems) {
       angular.forEach(newsItems, function(newsItem) {
         newsItem.content = $sanitize(newsItem.content);
-        newsItem.content = newsItem.content.replace(/\/sites\/default\//, "https://www.mannheim-forum.org/sites/default/");
+        newsItem.content = newsItem.content.replace(/\/sites\/default\//,
+"https://anmeldung.mannheim-forum.org/sites/default/");
         newsItem.content = newsItem.content.replace(/img/, "img ng-cache");
         newsItem.content = newsItem.content.replace(/src=/, "ng-src=");
         var regex = /href="([\S]+)"/g;
@@ -372,7 +373,7 @@ angular.module('starter.services', ['ngResource'])
       'query': function(callback) {
         var result = $q.defer();
 
-        $http.get('https://www.mannheim-forum.org/api/mannheim-forum-schedule/news')
+        $http.get('https://anmeldung.mannheim-forum.org/api/mannheim-forum-schedule/news')
           .success(function(requestResult) {
             result.resolve(processNewsItemConents(angular.fromJson(requestResult)));
           })
@@ -385,7 +386,7 @@ angular.module('starter.services', ['ngResource'])
       'refreshFrom': function($timestamp) {
         var result = $q.defer();
 
-        $http.get('https://www.mannheim-forum.org/api/mannheim-forum-schedule/news_since/' + $timestamp)
+        $http.get('https://anmeldung.mannheim-forum.org/api/mannheim-forum-schedule/news_since/' + $timestamp)
           .success(function(requestResult) {
             result.resolve(processNewsItemConents(angular.fromJson(requestResult)));
           })

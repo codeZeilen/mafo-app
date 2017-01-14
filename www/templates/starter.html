@@ -51,7 +51,7 @@
 
                     <div ng-if="item._type == 'Speaker'" class="item-avatar" >
                             <img ng-cache
-                                 ng-src="https://www.mannheim-forum.org/sites/default/files/mfschedule/speaker/thumbs/{{item.picturePath}}"
+                                 ng-src="https://anmeldung.mannheim-forum.org/sites/default/files/mfschedule/speaker/thumbs/{{item.picturePath}}"
                                  ng-if="item.picturePath" />
                             <img ng-cache
                                  ng-src="img/person_placeholder_thumb.png"
@@ -68,7 +68,7 @@
                    ng-repeat="item in partners | filter : searchConfig.term : compareMaFoObject"
                    class="item item-thumbnail-left partners-list-item" ng-href="#/app/partners/{{item.serverId}}">
                     <img ng-cache
-                         ng-src="https://www.mannheim-forum.org/sites/default/files/mfschedule/company/thumbs/{{item.logoPath}}" />
+                         ng-src="https://anmeldung.mannheim-forum.org/sites/default/files/mfschedule/company/thumbs/{{item.logoPath}}" />
                     <span>
                             {{item.name}}
                     </span>
