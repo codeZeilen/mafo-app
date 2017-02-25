@@ -37,7 +37,7 @@ angular.module('starter.services')
     return languageCode;
   };
 
-  Persistence.getSetting('chosenLanguage').then(function(settingEntity) {
+  /*Persistence.getSetting('chosenLanguage').then(function(settingEntity) {
     if(settingEntity == null) {
       var $scope = $rootScope.$new();
       $scope.data = {};
@@ -64,7 +64,8 @@ angular.module('starter.services')
     } else {
       languageFacade.setLanguageTo(settingEntity.settingsValue);
     }
-  });
+  });*/
+  languageFacade.setLanguageTo('de');
 
   return languageFacade;
 });

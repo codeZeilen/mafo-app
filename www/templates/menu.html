@@ -27,19 +27,6 @@
     </ion-header-bar>
     <ion-content>
         <ion-list>
-        <div class="item item-divider" nav-clear ng-click="toggleSubMenuVisibility('language')" >
-            Switch Language
-        </div>
-        <ion-item nav-clear menu-close stopEvent ng-click="setLanguageToGerman()" ng-show="subMenuVisible('language')">
-            Deutsch
-            <i class="icon ion-checkmark-circled" ng-show="selectedLanguage == 'de'"></i>
-        </ion-item>
-        <ion-item nav-clear menu-close stopEvent ng-click="setLanguageToEnglish()" ng-show="subMenuVisible('language')">
-            English
-            <i class="icon ion-checkmark-circled" ng-show="selectedLanguage == 'en'"></i>
-        </ion-item>
-
-
         <div translate class="item item-divider" nav-clear ng-click="toggleSubMenuVisibility('personal')" >
         MENU_YOUR_AREA
         </div>
@@ -55,7 +42,7 @@
 
 
         <div class="item item-divider" nav-clear ng-click="toggleSubMenuVisibility('eventInfo')" >
-            Mannheim Forum 2016
+            Mannheim Forum
         </div>
         <ion-item nav-clear menu-close href="{{selectedLanguage == 'de' ? '#/app/program' : '#/app/programEn'}}" ng-show="subMenuVisible('eventInfo') && menuItemVisible('program')">
             {{ 'MENU_PROGRAM' | translate }}
@@ -84,9 +71,6 @@
         </ion-item>
         <ion-item nav-clear menu-close stopEvent ng-click="toFacebookEvent()" ng-show="subMenuVisible('socialMedia')">
             Facebook Event
-        </ion-item>
-        <ion-item ion-item nav-clear menu-close stopEvent ng-click="toInternationalFacebookEvent()" ng-show="subMenuVisible('eventInfo') && menuItemVisible('internationalFacebookEvent')">
-            Facebook International Day
         </ion-item>
         <ion-item nav-clear menu-close stopEvent ng-click="toYoutube()" ng-show="subMenuVisible('socialMedia')">
             Youtube
