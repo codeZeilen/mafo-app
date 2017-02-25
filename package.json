@@ -15,10 +15,15 @@
     "shelljs": "^0.3.0"
   },
   "cordovaPlugins": [
-    "org.apache.cordova.splashscreen",
     "https://github.com/VitaliiBlagodir/cordova-plugin-datepicker",
     "https://github.com/native5/cordova-android-plugins.git",
-    "com.ionic.keyboard",
-    "org.apache.cordova.device"
+    "ionic-plugin-keyboard",
+    "cordova-plugin-device",
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-crosswalk-webview",
+    "cordova-plugin-whitelist",
+    "cordova-plugin-file",
+    "cordova-plugin-file-transfer",
+    "cordova-plugin-inappbrowser"
   ]
 }
