@@ -59,7 +59,7 @@ angular.module('starter.controllers', ['starter.services'])
   };
 
   $scope.toFacebookEvent = function() {
-    window.open('https://www.facebook.com/events/1545289825790215/', '_system', 'location=no');
+    window.open('https://www.facebook.com/events/351612011884757/', '_system', 'location=no');
   };
 
   $scope.toInternationalFacebookEvent = function() {
