@@ -506,11 +506,11 @@ angular.module('starter.controllers', ['starter.services'])
 
   var updater = function() {
     Persistence.listPartners().then(function(partners) {
-      $scope.premiumPartners = $filter('filter')(partners, {'partnerStatus' : 'premium'});
-      $scope.workshopPartners = $filter('filter')(partners, {'partnerStatus' : 'workshop'});
-      $scope.flagshipPartners = $filter('filter')(partners, {'partnerStatus' : 'flagship'});
-      $scope.longTermPartners = $filter('filter')(partners, {'partnerStatus' : 'long_term'});
-      $scope.circleOfFriendsPartners = $filter('filter')(partners, {'partnerStatus' : 'friends'});
+      $scope.platinPartners = $filter('filter')(partners, {'partnerStatus' : 'platin'});
+      $scope.goldPartners = $filter('filter')(partners, {'partnerStatus' : 'gold'});
+      $scope.silverPartners = $filter('filter')(partners, {'partnerStatus' : 'silver'});
+      $scope.bronzePartners = $filter('filter')(partners, {'partnerStatus' : 'bronze'});
+      $scope.mediaPartners = $filter('filter')(partners, {'partnerStatus' : 'media'});
       $scope.startupPartners = $filter('filter')(partners, {'partnerStatus' : 'startup'});
       $scope.supplyPartners = $filter('filter')(partners, {'partnerStatus' : 'supply'});
 

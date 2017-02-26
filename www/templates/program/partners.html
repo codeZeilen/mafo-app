@@ -4,55 +4,44 @@
 <ion-view>
     <ion-content>
         <ion-list>
-            <div class="item item-divider" ng-if="premiumPartners.length > 0">
-                Premium Partner
+            <div class="item item-divider" ng-if="platinPartners.length > 0">
+                Platin Partner
             </div>
             <ion-item class="partners-list-item item-thumbnail-left"
-                      ng-repeat="partner in premiumPartners | orderBy : partnerName"
+                      ng-repeat="partner in platinPartners | orderBy : partnerName"
                       ng-href="#/app/partners/{{partner.serverId}}">
                 <img ng-cache
                      ng-src="https://anmeldung.mannheim-forum.org/sites/default/files/mfschedule/company/thumbs/{{partner.logoPath}}" />
                 {{partner.name}}
             </ion-item>
 
-            <div class="item item-divider" ng-if="workshopPartners.length > 0">
-                Workshop Partner
+            <div class="item item-divider" ng-if="goldPartners.length > 0">
+                Gold Partner
             </div>
             <ion-item class="partners-list-item item-thumbnail-left"
-                      ng-repeat="partner in workshopPartners | orderBy : partnerName"
+                      ng-repeat="partner in goldPartners | orderBy : partnerName"
                       ng-href="#/app/partners/{{partner.serverId}}">
                 <img ng-cache
                      ng-src="https://anmeldung.mannheim-forum.org/sites/default/files/mfschedule/company/thumbs/{{partner.logoPath}}" />
                 {{partner.name}}
             </ion-item>
 
-            <div class="item item-divider" ng-if="flagshipPartners.length > 0">
-                Flagship Partner
+            <div class="item item-divider" ng-if="silverPartners.length > 0">
+		Silber Partner
             </div>
             <ion-item class="partners-list-item item-thumbnail-left"
-                      ng-repeat="partner in flagshipPartners | orderBy : partnerName"
+                      ng-repeat="partner in silverPartners | orderBy : partnerName"
                       ng-href="#/app/partners/{{partner.serverId}}">
                 <img ng-cache
                      ng-src="https://anmeldung.mannheim-forum.org/sites/default/files/mfschedule/company/thumbs/{{partner.logoPath}}" />
                 {{partner.name}}
             </ion-item>
 
-            <div class="item item-divider" ng-if="longTermPartners.length > 0">
-                Long Term Partner
+            <div class="item item-divider" ng-if="bronzePartners.length > 0">
+                Bronze Partner
             </div>
             <ion-item class="partners-list-item item-thumbnail-left"
-                      ng-repeat="partner in longTermPartners | orderBy : partnerName"
-                      ng-href="#/app/partners/{{partner.serverId}}">
-                <img ng-cache
-                     ng-src="https://anmeldung.mannheim-forum.org/sites/default/files/mfschedule/company/thumbs/{{partner.logoPath}}" />
-                {{partner.name}}
-            </ion-item>
-
-            <div class="item item-divider" ng-if="circleOfFriendsPartners.length > 0">
-                Circle of Friends
-            </div>
-            <ion-item class="partners-list-item item-thumbnail-left"
-                      ng-repeat="partner in circleOfFriendsPartners | orderBy : partnerName"
+                      ng-repeat="partner in bronzePartners | orderBy : partnerName"
                       ng-href="#/app/partners/{{partner.serverId}}">
                 <img ng-cache
                      ng-src="https://anmeldung.mannheim-forum.org/sites/default/files/mfschedule/company/thumbs/{{partner.logoPath}}" />
@@ -60,7 +49,7 @@
             </ion-item>
 
             <div class="item item-divider" ng-if="startupPartners.length > 0">
-                StartUp Partner
+                StartUp Partner 
             </div>
             <ion-item class="partners-list-item item-thumbnail-left"
                       ng-repeat="partner in startupPartners | orderBy : partnerName"
@@ -71,10 +60,21 @@
             </ion-item>
 
             <div class="item item-divider" ng-if="supplyPartners.length > 0">
-                Supply Partner
+                Supply Partner 
             </div>
             <ion-item class="partners-list-item item-thumbnail-left"
                       ng-repeat="partner in supplyPartners | orderBy : partnerName"
+                      ng-href="#/app/partners/{{partner.serverId}}">
+                <img ng-cache
+                     ng-src="https://anmeldung.mannheim-forum.org/sites/default/files/mfschedule/company/thumbs/{{partner.logoPath}}" />
+                {{partner.name}}
+            </ion-item>
+
+            <div class="item item-divider" ng-if="mediaPartners.length > 0">
+                Media Partner
+            </div>
+            <ion-item class="partners-list-item item-thumbnail-left"
+                      ng-repeat="partner in mediaPartners | orderBy : partnerName"
                       ng-href="#/app/partners/{{partner.serverId}}">
                 <img ng-cache
                      ng-src="https://anmeldung.mannheim-forum.org/sites/default/files/mfschedule/company/thumbs/{{partner.logoPath}}" />
