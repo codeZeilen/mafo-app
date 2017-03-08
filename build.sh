@@ -1,4 +1,4 @@
-# ionic build android --release
+ionic build android --release
 ARCH=$1
 VERSION=$2
 cp platforms/android/build/outputs/apk/android-${ARCH}-release-unsigned.apk ../mafo-app-package/mf-new-${ARCH}-alpha-signed.apk
