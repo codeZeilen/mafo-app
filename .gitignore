@@ -7,3 +7,5 @@ plugins/
 .idea/
 build/
 *.apk
+resources/android
+resources/ios
