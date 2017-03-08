@@ -54,6 +54,10 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.toggleSubMenuVisibility('language');
   };
 
+  $scope.toWebpage = function() {
+    window.open('https://www.mannheim-forum.org', '_system', 'location=no');
+  };
+
   $scope.toYoutube = function() {
     window.open('https://www.youtube.com/user/MannheimForum', '_system', 'location=no');
   };
@@ -758,51 +762,51 @@ angular.module('starter.controllers', ['starter.services'])
 
 .controller('FAQCtrl', function($scope, DataLanguage) {
     $scope.questions_de = [
-      {
-        question: "Wo kann ich einchecken?",
-        answer : "Am Donnerstag, den 16.03., kannst Du ab 16:30 Uhr im Rosengarten einchecken. Freitags und Samstags finden die Veranstaltungen im Schloss statt, wo in O 048 auch ein Check-In Schalter aufgebaut ist."
-      },
-      {
-        question: "Was kann mein Namenskärtchen? Und wofür dieses Bändchen?",
-        answer : "Das Namenskärtchen gewährt Einlass zu allen Veranstaltungen sowie dem Bootshausevent. Wir bitten dich während des gesamten Events das Namenskärtchen und Bändchen zu tragen. Das Bändchen dient als Eintrittskarte für die Abschlussparty und zeigt darüber hinaus an, wann Du am Mittagessen teilnehmen kannst. Weiß steht für 12 bis 13 Uhr und rot für 13 bis 14 Uhr."
-      },{
-        question: "Gibt es einen Dresscode?",
-        answer : "Wir verzichten auf eine formale Kleiderordnung. Jedoch empfehlen wir, um den Charakter der Veranstaltung zu unterstützen, seriöse Kleidung während aller Veranstaltungen, orientiert am sogenannten „Business Casual“."
-      },{
-        question: "Welche Veranstaltungen kann ich besuchen?",
-        answer : "Grundsätzlich steht all unseren Teilnehmern der Besuch von Hauptveranstaltungen sowie unserer Abendveranstaltungen offen. Auch die Verpflegung ist inklusive." +
-        "Über die Teilnahme an Workshops oder Unternehmensgesprächen wurdest Du gesondert via E-Mail informiert."
-      },{
-        question: "Ich weiß nicht mehr zu welchen Veranstaltungen ich mich angemeldet habe. Was mache ich jetzt?",
-        answer : "In einem solchen Notfall kannst Du Dich am Info-Point über die Veranstaltungen informieren, für die Du eine Zusage erhalten hast. Wir empfehlen Dir aber mit der App schon im Voraus deinen persönlichen Stundenplan zu erstellen."
-      },{
-        question: "Was mache ich, wenn ich es nicht pünktlich zu einer Veranstaltung schaffe oder eine Veranstaltung voll ist?",
-        answer : "Wir bitten alle Teilnehmer um Pünktlichkeit, um die jeweilige Veranstaltung nicht zu stören. Gelegentlich kann es sein, dass es keinen Platz mehr gibt. In diesem Fall wirst Du an der Tür darüber informiert und kannst die Veranstaltung ggf. in der Mannheim Forum Lounge live miterleben."
-      },{
-        question: "Muss ich meine Bestätigungsemail zum Check-in mitbringen?",
-        answer : "Nein, beim Check-In im Rosengarten stellst Du dich einfach in der richtigen Schlange an (nach Nachnamen sortiert). Um sicherzugehen, dass nur der Ticketinhaber sein Namenskärtchen bekommt, bitten wir Dich deinen Ausweis parat zu halten. Um das richtige Bändchen zu erhalten, musst Du zum Check-In außerdem deinen Stundenplan mitnehmen, den Du im voraus dafür erstellen musst. Für uns ist es wichtig zu wissen, an welchen Workshops du teilnehmen wirst."
-      },{
-        question: "Muss ich meine Bestätigungsemail zu den Workshops mitbringen?",
-        answer : "Nein, weise Dich einfach zu Beginn der Veranstaltung mit Deinem Namenskärtchen aus, die Referenten sind über Dein Kommen informiert."
-      },{
-        question: "Kann ich persönlich mit den Rednern/Moderatoren sprechen?",
-        answer : "Ein persönliches Gespräch unter vier Augen ist vermutlich leider nicht möglich. Bei unseren Hauptveranstaltungen gibt es aber für gewöhnlich am Ende eine Fragerunde, bei der Du Deine Fragen loswerden kannst."
-      },{
-        question: "Gibt es Anwesenheitspflicht?",
-        answer : "Nein. Wir möchten Dich allerdings bitten, zu den Workshops zu erscheinen, für die Du uns eine positive Rückmeldung gegeben hast. Falls Du nicht teilnehmen kannst, gebe uns rechtzeitig Bescheid, sodass die Teilnehmern auf den Wartelisten die Chance bekommen nachzurücken. Das ist den anderen Teilnehmern gegenüber nur fair."
-      },{
-        question: "Wer ist mein Ansprechpartner für alles?",
-        answer : "Wir sind vor dem Event unter participants@mannheim-forum.org erreichbar und während des Events gibt es einen ausgeschilderten Infopoint, wo wir Dir gerne bei allen Deinen Fragen und Problemen helfen. Außerdem kannst Du natürlich jederzeit die Mitglieder des Teams ansprechen, wenn Du ihnen über den Weg läufst."
-      },{
-        question: "Hunger - wann und wo gibt es was zu essen?",
-        answer : "Freitag- und Samstagmittag bieten wir Dir ein umfangreiches Mittagessen. Es ist sehr wichtig, dass wenn Du ein weißes Bändchen bekommen hast, zwischen 12 und 13 Uhr essen gehst und wenn du ein rotes Bändchen hast von 13 bis 14 Uhr. Während des gesamten Events bieten wir Euch an zwei Getränkestationen die Möglichkeit jederzeit Euren Durst zu stillen. Außerdem sorgen wir für ein kulinarisches Erlebniss im Bootshaus am Freitag."
-      },{
-        question: "Was ist das Kasino? Wie sollte ich mich vorbereiten?",
-        answer : "An zwei Veranstaltungstagen hast Du bei unserem Kasino die exklusive Möglichkeit, mit unseren Partnerunternehmen in Kontakt zu treten und Dich über Karrieremöglichkeiten oder das Unternehmen allgemein informieren. Zur Vorbereitung kannst Du Dir <a href='#/app/partners'>hier</a> einmal unsere Partnerunternehmen ansehen."
-      },{
-        question: "Wie erfahre ich von möglichen Terminänderungen?",
-        answer : "Über unseren App-Newsticker erfährst Du alle Änderungen und wichtigen Ereignisse."
-      }
+{
+question: "Wo kann ich einchecken?",
+answer : "Am Donnerstag, den 16.03., kannst Du ab 16:30 Uhr im Rosengarten einchecken. Freitags und Samstags finden die Veranstaltungen im Schloss statt, wo in O 048 auch ein Check-In Schalter aufgebaut ist."
+},
+{
+question: "Was kann mein Namenskärtchen? Und wofür gibt es dieses Bändchen?",
+answer : "Das Namenskärtchen gewährt Dir Einlass zu allen Veranstaltungen sowie dem Bootshausevent. Wir bitten Dich während des gesamten Events das Namenskärtchen und das Bändchen zu tragen. Das Bändchen dient als Eintrittskarte für die Abschlussparty und zeigt darüber hinaus an, wann Du am Mittagessen teilnehmen kannst. Weiß steht für 12 bis 13 Uhr und Rot für 13 bis 14 Uhr."
+},{
+question: "Gibt es einen Dresscode?",
+answer : "Wir verzichten auf eine formale Kleiderordnung. Jedoch empfehlen wir, um den Charakter der Veranstaltung zu unterstützen, seriöse Kleidung während allen Veranstaltungen, orientiert am sogenannten „Business Casual“."
+},{
+question: "Welche Veranstaltungen kann ich besuchen?",
+answer : "Grundsätzlich steht all unseren Teilnehmern der Besuch von Hauptveranstaltungen sowie unserer Abendveranstaltungen offen. Auch die Verpflegung ist inklusive." 
++ "Über die Teilnahme an Workshops oder Unternehmensgesprächen wurdest Du gesondert via E-Mail informiert."
+},{
+question: "Ich weiß nicht mehr zu welchen Veranstaltungen ich mich angemeldet habe. Was mache ich jetzt?",
+answer : "In einem solchen Fall kannst Du Dich am Info-Point über die Veranstaltungen informieren, für die Du eine Zusage erhalten hast. Wir empfehlen Dir aber mit der App schon im Voraus Deinen persönlichen Event-Plan zu erstellen."
+},{
+question: "Was mache ich, wenn ich es nicht pünktlich zu einer Veranstaltung schaffe oder eine Veranstaltung voll ist?",
+answer : "Wir bitten alle Teilnehmer um Pünktlichkeit, um die jeweilige Veranstaltung nicht zu stören. Gelegentlich kann es sein, dass es keinen Platz mehr im Veranstaltungssaal gibt. In diesem Fall wirst Du an der Tür darüber informiert und kannst die Veranstaltung ggf. in der Mannheim Forum Lounge live miterleben."
+},{
+question: "Muss ich meine Bestätigungsemail zum Check-in mitbringen?",
+answer : "Nein, beim Check-In im Rosengarten stellst Du Dich einfach in der richtigen Schlange an (nach Nachnamen sortiert). Um sicherzugehen, dass nur der Ticketinhaber sein Namenskärtchen bekommt, bitten wir Dich Deinen Ausweis parat zu halten. Um das richtige Bändchen zu erhalten, solltest Du zum Check-In außerdem Deinen Eventplan mitnehmen, den Du im Voraus dafür erstellt hast. Für uns ist es wichtig zu wissen, an welchen Workshops Du teilnehmen wirst, damit Du stressfrei zum Mittagessen kannst."
+},{
+question: "Muss ich meine Bestätigungsemail zu den Workshops mitbringen?",
+answer : "Nein, weise Dich einfach zu Beginn der Veranstaltung mit Deinem Namenskärtchen aus, die Referenten sind über Dein Kommen informiert."
+},{
+question: "Kann ich persönlich mit den Rednern/Moderatoren sprechen?",
+answer : "Ein persönliches Gespräch unter vier Augen ist vermutlich leider nicht möglich. Bei unseren Hauptveranstaltungen gibt es aber für gewöhnlich am Ende eine Fragerunde, bei der Du Deine Fragen loswerden kannst."
+},{
+question: "Gibt es Anwesenheitspflicht?",
+answer : "Nein. Wir möchten Dich allerdings bitten, zu den Workshops zu erscheinen, für die Du uns eine positive Rückmeldung gegeben hast. Falls Du nicht teilnehmen kannst, gebe uns rechtzeitig Bescheid, sodass die Teilnehmer auf den Wartelisten die Chance bekommen nachzurücken. Das ist den anderen Teilnehmern gegenüber nur fair."
+},{
+question: "Wer ist mein Ansprechpartner für sonstige Fragen und Probleme?",
+answer : "Wir sind vor dem Event unter participants@mannheim-forum.org erreichbar und während des Events gibt es einen ausgeschilderten Infopoint, wo wir Dir gerne bei allen Deinen Fragen und Problemen helfen. Außerdem kannst Du natürlich jederzeit die Mitglieder des Teams ansprechen, wenn Du ihnen über den Weg läufst."
+},{
+question: "Hunger - wann und wo gibt es etwas zu essen?",
+answer : "Freitag- und Samstagmittag bieten wir Dir ein umfangreiches Mittagessen. Es ist sehr wichtig, dass Du zwischen 12 und 13 Uhr essen gehst, wenn Du ein weißes Bändchen erhalten hast. Hast Du ein rotes Bändchen bekommen, bist Du von 13 bis 14 Uhr zum Essen eingeteilt. Während des gesamten Events bieten wir Dir an zwei Getränkestationen die Möglichkeit jederzeit Deinen Durst zu stillen. Außerdem sorgen wir freitags für ein kulinarisches Erlebnis im Bootshaus."
+},{
+question: "Was ist das Kasino? Wie sollte ich mich vorbereiten?",
+answer : "An zwei Veranstaltungstagen hast Du bei unserem Kasino die exklusive Möglichkeit, mit unseren Partnerunternehmen in Kontakt zu treten und Dich über Karrieremöglichkeiten oder das Unternehmen allgemein informieren. Zur Vorbereitung kannst Du Dir <a href='#/app/partners'>hier</a> einmal unsere Partnerunternehmen ansehen."
+},{
+question: "Wie erfahre ich von möglichen Terminänderungen?",
+answer : "Über unseren App-Newsticker erfährst Du alle Änderungen und wichtigen Ereignisse."
+}
     ];
 
     $scope.questions_en = [

@@ -66,6 +66,9 @@
         <div class="item item-divider" nav-clear ng-click="toggleSubMenuVisibility('socialMedia')" >
             Social Media
         </div>
+        <ion-item nav-clear menu-close stopEvent ng-click="toWebpage()" ng-show="subMenuVisible('socialMedia')">
+            Webseite            
+        </ion-item>
         <ion-item nav-clear menu-close stopEvent ng-click="toFacebookPage()" ng-show="subMenuVisible('socialMedia')">
             Facebook
         </ion-item>
