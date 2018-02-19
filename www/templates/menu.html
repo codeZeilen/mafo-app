@@ -27,39 +27,30 @@
     </ion-header-bar>
     <ion-content>
         <ion-list>
-        <div translate class="item item-divider" nav-clear ng-click="toggleSubMenuVisibility('personal')" >
-        MENU_YOUR_AREA
-        </div>
-        <ion-item nav-clear menu-close href="#/app/planner" ng-show="subMenuVisible('personal') && menuItemVisible('planer')">
-            Planer
-        </ion-item>
-        <ion-item nav-clear menu-close href="#/app/news" ng-show="subMenuVisible('personal') && menuItemVisible('news')">
-            News
-        </ion-item>
-        <ion-item nav-clear menu-close href="{{selectedLanguage == 'de' ? '#/app/contact' : '#/app/contactEn'}}" ng-show="subMenuVisible('personal') && menuItemVisible('contact')">
-            {{ 'MENU_CONTACT' | translate }}
-        </ion-item>
-
-
-        <div class="item item-divider" nav-clear ng-click="toggleSubMenuVisibility('eventInfo')" >
-            Mannheim Forum
-        </div>
-        <ion-item nav-clear menu-close href="{{selectedLanguage == 'de' ? '#/app/program' : '#/app/programEn'}}" ng-show="subMenuVisible('eventInfo') && menuItemVisible('program')">
-            {{ 'MENU_PROGRAM' | translate }}
-        </ion-item>
-        <ion-item nav-clear menu-close href="#/app/speakers" ng-show="subMenuVisible('eventInfo') && menuItemVisible('speakers')">
-            {{ 'MENU_SPEAKERS' | translate }}
-        </ion-item>
-        <ion-item nav-clear menu-close href="#/app/partners" ng-show="subMenuVisible('eventInfo') && menuItemVisible('partners')">
-            Partner
-        </ion-item>
-        <ion-item nav-clear menu-close href="#/app/map" ng-show="subMenuVisible('eventInfo') && menuItemVisible('map')">
-            {{ 'MENU_MAP' | translate }}
-        </ion-item>
-        <ion-item nav-clear menu-close href="#/app/faq" ng-show="subMenuVisible('eventInfo') && menuItemVisible('faq')">
-            FAQ
-        </ion-item>
-
+            <ion-item nav-clear menu-close href="#/app/planner" ng-show="subMenuVisible('personal') && menuItemVisible('planer')">
+                Planer
+            </ion-item>
+            <ion-item nav-clear menu-close href="#/app/news" ng-show="subMenuVisible('personal') && menuItemVisible('news')">
+                News
+            </ion-item>
+            <ion-item nav-clear menu-close href="{{selectedLanguage == 'de' ? '#/app/contact' : '#/app/contactEn'}}" ng-show="subMenuVisible('personal') && menuItemVisible('contact')">
+                {{ 'MENU_CONTACT' | translate }}
+            </ion-item>
+            <ion-item nav-clear menu-close href="{{selectedLanguage == 'de' ? '#/app/program' : '#/app/programEn'}}" ng-show="subMenuVisible('eventInfo') && menuItemVisible('program')">
+                {{ 'MENU_PROGRAM' | translate }}
+            </ion-item>
+            <ion-item nav-clear menu-close href="#/app/speakers" ng-show="subMenuVisible('eventInfo') && menuItemVisible('speakers')">
+                {{ 'MENU_SPEAKERS' | translate }}
+            </ion-item>
+            <ion-item nav-clear menu-close href="#/app/partners" ng-show="subMenuVisible('eventInfo') && menuItemVisible('partners')">
+                Partner
+            </ion-item>
+            <ion-item nav-clear menu-close href="#/app/map" ng-show="subMenuVisible('eventInfo') && menuItemVisible('map')">
+                {{ 'MENU_MAP' | translate }}
+            </ion-item>
+            <ion-item nav-clear menu-close href="#/app/faq" ng-show="subMenuVisible('eventInfo') && menuItemVisible('faq')">
+                FAQ
+            </ion-item>
       </ion-list>
     </ion-content>
   </ion-side-menu>
