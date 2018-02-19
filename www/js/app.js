@@ -4,7 +4,12 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngMessages', 'pascalprecht.translate'])
+angular.module('starter', [
+  'ionic',
+  'starter.controllers',
+  'starter.services',
+  'ngMessages',
+  'pascalprecht.translate'])
 
 .run(function($ionicPlatform, $rootScope, ContactRequestOutbox,
               NewsInterval, ContentUpdater, $ionicNavBarDelegate,
@@ -27,7 +32,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     $ionicPlatform.registerBackButtonAction(function() {
       cordova.plugins.Keyboard.close();
       if (!$ionicHistory.backView()) {
-        if($state.current.name != "app.starter") {
+        if($state.current.name !== "app.starter") {
           $ionicHistory.nextViewOptions({
             disableAnimate: false,
             disableBack: true

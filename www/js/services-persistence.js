@@ -1,5 +1,5 @@
-angular.module('starter.services'
-)
+angular.module('starter.services')
+
 .factory('Persistence', function($q, $filter, DataLanguage, SpeakerAPI, EventAPI, EventHBTMSpeakerAPI, PartnerAPI, TopicCateogryAPI, RoomAPI, NewsAPI) {
   // Credits to https://github.com/bgoetzmann/ionic-persistence/
 
