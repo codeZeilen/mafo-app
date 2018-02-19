@@ -142,7 +142,7 @@ angular.module('starter.services')
     // if no timestamps available then initialize the thing
     var contentInitialized = $q.defer();
 
-    if(storedTimeStamps.length == 0) {
+    if(storedTimeStamps.length === 0) {
       ContentInitializer.init().then(function(storedTimeStamps) {
         contentInitialized.resolve(storedTimeStamps);
       });

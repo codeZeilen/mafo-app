@@ -28,7 +28,7 @@ angular.module('starter.services')
 
         sending(function() {
           Persistence.listContactRequests().then(function(requests) {
-            if(requests.length == 0) {
+            if(requests.length === 0) {
               stopRetry();
             }
           })

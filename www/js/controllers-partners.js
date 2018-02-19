@@ -27,7 +27,7 @@ angular.module('starter.controllers')
 
   $scope.$watch(DataLanguage.currentLanguage, function(newVal, oldVal) {
     if(!(oldVal === newVal)) {
-      if(newVal == 'en') {
+      if(newVal === 'en') {
         $ionicHistory.clearHistory();
         $ionicHistory.nextViewOptions({
           disableAnimate: false,

@@ -44,7 +44,7 @@ angular.module('starter.controllers')
     return $filter('filter')(speakers, {isShownInList : 1});
   };
   var updateSearchItems = function() {
-    if(DataLanguage.currentLanguage() == 'en') {
+    if(DataLanguage.currentLanguage() === 'en') {
       updateEnglishSearchItems();
     } else {
       updateGermanSearchItems();
@@ -94,7 +94,7 @@ angular.module('starter.controllers')
   $scope.startSearch = function() {
     $scope.modal.show().then(function() {
       document.getElementById('searchModalInput').focus();
-      if(device.platform == "Android") {
+      if(device.platform === "Android") {
         cordova.plugins.Keyboard.show();
       }
     });

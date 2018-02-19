@@ -91,7 +91,7 @@ angular.module('starter.services')
       return categoryColors[categoryId];
     },
     categoryNameFromId : function(categoryId, languageCode) {
-      if(languageCode == 'en') {
+      if(languageCode === 'en') {
         return englishCategoryNames[categoryId];
       } else {
         return categoryNames[categoryId];

@@ -3,13 +3,13 @@ angular.module('starter.controllers')
 .controller('EventInfoCtrl', function($scope, DataLanguage, $state, $ionicHistory) {
 
   var changeTemplate = function() {
-    if(DataLanguage.currentLanguage() == 'en') {
-      if($state.current.name != 'app.infoEn') {
+    if(DataLanguage.currentLanguage() === 'en') {
+      if($state.current.name !== 'app.infoEn') {
         $ionicHistory.currentView($ionicHistory.backView());
         $state.go('app.infoEn', {}, {'location' : 'replace'});
       }
     } else {
-      if($state.current.name != 'app.info') {
+      if($state.current.name !== 'app.info') {
         $ionicHistory.currentView($ionicHistory.backView());
         $state.go('app.info', {}, {'location' : 'replace'});
       }
@@ -17,7 +17,7 @@ angular.module('starter.controllers')
   };
 
   $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
-    if(oldVal != newVal) {
+    if(oldVal !== newVal) {
       changeTemplate();
     }
   });
@@ -111,14 +111,14 @@ angular.module('starter.controllers')
   ];
 
   var updateQuestions = function() {
-    if(DataLanguage.currentLanguage() == 'en') {
+    if(DataLanguage.currentLanguage() === 'en') {
       $scope.questions = $scope.questions_en;
     } else {
       $scope.questions = $scope.questions_de;
     }
   };
   $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
-    if(oldVal != newVal) {
+    if(oldVal !== newVal) {
       updateQuestions();
     }
   });

@@ -73,7 +73,7 @@ angular.module('starter.controllers')
 
   $scope.$watch(DataLanguage.currentLanguage, function(newVal, oldVal) {
     if(!(oldVal === newVal)) {
-      if(newVal == 'en') {
+      if(newVal === 'en') {
         $ionicHistory.clearHistory();
         $ionicHistory.nextViewOptions({
           disableAnimate: false,
@@ -98,7 +98,7 @@ angular.module('starter.controllers')
         return true;
       });
     };
-    if(event.roomId > 0 && $scope.roomsById[event.roomId].mapImagePath != "") {
+    if(event.roomId > 0 && $scope.roomsById[event.roomId].mapImagePath !== "") {
       buttons.push({text: 'Raum auf Karte zeigen'});
       buttonActions.push(function() {
         $state.go('app.room', {roomId : event.roomId});

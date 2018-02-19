@@ -217,7 +217,7 @@ angular.module('starter.services')
     var result = $q.defer();
     ResourceApi.query(function(individuals) {
       //TODO: check response
-      if(individuals.length == 0) {
+      if(individuals.length === 0) {
         // Safe-guard against wrong data. TODO: Maybe stronger
         return false;
       } else {

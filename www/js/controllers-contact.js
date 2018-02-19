@@ -24,13 +24,13 @@ angular.module('starter.controllers')
   };
 
   var changeTemplate = function() {
-    if(DataLanguage.currentLanguage() == 'en') {
-      if($state.current.name != 'app.contactEn') {
+    if(DataLanguage.currentLanguage() === 'en') {
+      if($state.current.name !== 'app.contactEn') {
         $ionicHistory.currentView($ionicHistory.backView());
         $state.go('app.contactEn', {}, {'location' : 'replace'});
       }
     } else {
-      if($state.current.name != 'app.contact') {
+      if($state.current.name !== 'app.contact') {
         $ionicHistory.currentView($ionicHistory.backView());
         $state.go('app.contact', {}, {'location' : 'replace'});
       }
@@ -38,7 +38,7 @@ angular.module('starter.controllers')
   };
 
   $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
-    if(oldVal != newVal) {
+    if(oldVal !== newVal) {
       changeTemplate();
     }
   });

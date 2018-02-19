@@ -16,7 +16,7 @@ angular.module('starter.controllers')
 
   updateSpeaker();
   $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
-    if(oldVal != newVal) {
+    if(oldVal !== newVal) {
       updateSpeaker();
     }
   })

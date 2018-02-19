@@ -10,14 +10,14 @@ angular.module('starter.controllers')
 
   $scope.categoriesNotToShow = ['Vertiefungsworkshop', 'Unternehmensworkshop'];
   var updateShowCompleteProgram = function() {
-    $scope.showCompleteProgram = DataLanguage.currentLanguage() == 'de';
+    $scope.showCompleteProgram = DataLanguage.currentLanguage() === 'de';
     if($scope.showCompleteProgram) {
-      if($state.current.name != 'app.program') {
+      if($state.current.name !== 'app.program') {
         $ionicHistory.currentView($ionicHistory.backView());
         $state.go('app.program', {}, {'location' : 'replace'});
       }
     } else {
-      if($state.current.name != 'app.programEn') {
+      if($state.current.name !== 'app.programEn') {
         $ionicHistory.currentView($ionicHistory.backView());
         $state.go('app.programEn', {}, {'location' : 'replace'});
       }
