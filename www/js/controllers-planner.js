@@ -3,9 +3,9 @@ angular.module('starter.controllers')
 .controller('PlannerCtrl', function($scope, DataLanguage, $state, $ionicHistory, Persistence, PlannerContent) {
   $scope.slots = [];
   var daysToDate = {
-    'Donnerstag' : moment("03-16-2017", "MM-DD-YYYY"),
-    'Freitag' : moment("03-17-2017", "MM-DD-YYYY"),
-    'Samstag' : moment("03-18-2017", "MM-DD-YYYY")
+    'Donnerstag' : moment("03-08-2018", "MM-DD-YYYY"),
+    'Freitag' : moment("03-09-2018", "MM-DD-YYYY"),
+    'Samstag' : moment("03-10-2018", "MM-DD-YYYY")
   };
   $scope.days = [daysToDate.Donnerstag, daysToDate.Freitag, daysToDate.Samstag];
 
