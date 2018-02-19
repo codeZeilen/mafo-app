@@ -368,7 +368,6 @@ angular.module('starter', [
     'MENU_SPEAKERS' : 'Speakers',
     'MENU_PROGRAM' : 'Schedule',
     'MENU_CONTACT' : 'Contact',
-    'MENU_EVENT_INFORMATION' : 'Event Information',
     'MENU_MAP' : 'Map',
 
     'CONTACT_TITLE' : 'Contact',
@@ -419,8 +418,7 @@ angular.module('starter', [
     'MENU_YOUR_AREA' : 'Dein Bereich',
     'MENU_SPEAKERS' : 'Referenten',
     'MENU_PROGRAM' : 'Programm',
-    'MENU_CONTACT' : 'Kontakt/Mitmachen',
-    'MENU_EVENT_INFORMATION' : 'Eventinformationen',
+    'MENU_CONTACT' : 'Kontakt',
     'MENU_MAP' : 'Lageplan',
 
 

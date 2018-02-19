@@ -59,29 +59,6 @@
         <ion-item nav-clear menu-close href="#/app/faq" ng-show="subMenuVisible('eventInfo') && menuItemVisible('faq')">
             FAQ
         </ion-item>
-        <ion-item nav-clear menu-close href="{{selectedLanguage == 'de' ? '#/app/info' : '#/app/infoEn'}}" ng-show="subMenuVisible('eventInfo') && menuItemVisible('info')">
-            {{ 'MENU_EVENT_INFORMATION' | translate }}
-        </ion-item>
-
-        <div class="item item-divider" nav-clear ng-click="toggleSubMenuVisibility('socialMedia')" >
-            Social Media
-        </div>
-        <ion-item nav-clear menu-close stopEvent ng-click="toWebpage()" ng-show="subMenuVisible('socialMedia')">
-            Webseite            
-        </ion-item>
-        <ion-item nav-clear menu-close stopEvent ng-click="toFacebookPage()" ng-show="subMenuVisible('socialMedia')">
-            Facebook
-        </ion-item>
-        <ion-item nav-clear menu-close stopEvent ng-click="toFacebookEvent()" ng-show="subMenuVisible('socialMedia')">
-            Facebook Event
-        </ion-item>
-        <ion-item nav-clear menu-close stopEvent ng-click="toYoutube()" ng-show="subMenuVisible('socialMedia')">
-            Youtube
-        </ion-item>
-        <ion-item nav-clear menu-close stopEvent ng-click="toInstagram()" ng-show="subMenuVisible('socialMedia')">
-            Instagram
-        </ion-item>
-
 
       </ion-list>
     </ion-content>
