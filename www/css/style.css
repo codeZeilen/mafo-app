@@ -187,6 +187,10 @@ p.item-long-description p
     margin-bottom: 0px;
 }
 
+.starter-social-media-buttons .col {
+    text-align: center;
+}
+
 /* Map */
 
 ion-scroll.map-room-scroll {
