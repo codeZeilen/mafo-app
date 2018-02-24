@@ -68,7 +68,6 @@ angular.module('starter', [
       attrs.$observe('src', function(src) {
           var localSrc = src.replace("https://anmeldung.mannheim-forum.org/media/", "");
 
-
           $http.get('img/assets/' + localSrc).
             success(function() {
               el[0].src = 'img/assets/' + localSrc;
