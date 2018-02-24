@@ -71,7 +71,7 @@ angular.module('starter.controllers')
   };
 
   $scope.$watch(DataLanguage.currentLanguage, function(oldVal, newVal) {
-    if(oldVal != newVal) {
+    if(oldVal !== newVal) {
       updateSearchItems();
     }
   });
@@ -130,12 +130,8 @@ angular.module('starter.controllers')
     });
   });
 
-  $scope.categoriesNotToShow = ['Vertiefungsworkshop', 'Unternehmensworkshop'];
-  $scope.eventCategoryNames = {};
-  $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.UNTERNEHMENSWORKSHOP] = 'Unternehmensworkshop';
-  $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.VERTIEFUNGSWORKSHOP] = 'Vertiefungsworkshop';
-  $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.MAIN] = 'Hauptveranstaltung';
-  $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.EVENING] = 'Rahmenprogramm';
+  $scope.categoriesNotToShow = Persistence.Entities.EVENT_TYPES_TO_HIDE;
+  $scope.eventCategoryNames = Persistence.Entities.EVENT_TYPES_LABEL_MAPPING;
 
   $scope.eventCategoryName = function(event) {
     return $scope.eventCategoryNames[event.eventType];

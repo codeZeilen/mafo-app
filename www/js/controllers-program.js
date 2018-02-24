@@ -4,11 +4,10 @@ angular.module('starter.controllers')
                                     DataLanguage, ContentUpdater, EventUtil, TopicCategoryService, PlannerContent) {
 
   $scope.days = [];
-
   $scope.dates = 'day';
   $scope.startTimes = 'startTime';
+  $scope.categoriesNotToShow = Persistence.Entities.EVENT_TYPES_TO_HIDE;
 
-  $scope.categoriesNotToShow = ['Vertiefungsworkshop', 'Unternehmensworkshop'];
   var updateShowCompleteProgram = function() {
     $scope.showCompleteProgram = DataLanguage.currentLanguage() === 'de';
     if($scope.showCompleteProgram) {
@@ -80,11 +79,8 @@ angular.module('starter.controllers')
     }
   };
 
-  $scope.eventCategoryNames = {};
-  $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.UNTERNEHMENSWORKSHOP] = 'Unternehmensworkshop';
-  $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.VERTIEFUNGSWORKSHOP] = 'Workshop';
-  $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.MAIN] = 'Hauptveranstaltung';
-  $scope.eventCategoryNames[Persistence.Entities.EVENT_TYPES.EVENING] = 'Rahmenprogramm';
+  $scope.eventCategoryNames = Persistence.Entities.EVENT_TYPES_LABEL_MAPPING;
+
 
   $scope.eventCategoryName = function(event) {
     return $scope.eventCategoryNames[event.eventType];
@@ -129,7 +125,7 @@ angular.module('starter.controllers')
   });
 
   $scope.isWorkshop = function(event) {
-    return [Persistence.Entities.EVENT_TYPES.UNTERNEHMENSWORKSHOP, Persistence.Entities.EVENT_TYPES.VERTIEFUNGSWORKSHOP]
+    return Persistence.Entities.EVENT_TYPES_WORKSHOPS
         .indexOf(event.eventType) > 0;
   };
 

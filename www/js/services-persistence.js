@@ -39,10 +39,23 @@ angular.module('starter.services')
   });
   entities.EVENT_TYPES = {
     MAIN: 'main',
-    EVENING: 'evening',
-    VERTIEFUNGSWORKSHOP: 'vworkshop',
-    UNTERNEHMENSWORKSHOP: 'uworkshop'
+    EVENING: 'evening_event',
+    OTHER: 'other_event',
+    CORPORATE_WORKSHOP: 'corporate_workshop',
+    CORPORATE_DISCUSSION: 'corporate_discussion',
+    CAREER_TALK: 'career_talk',
+    WORKSHOP: 'workshop'
   };
+  entities.EVENT_TYPES_LABEL_MAPPING = {};
+  entities.EVENT_TYPES_LABEL_MAPPING[entities.EVENT_TYPES['MAIN']] = 'Hauptveranstaltung';
+  entities.EVENT_TYPES_LABEL_MAPPING[entities.EVENT_TYPES['EVENING']] = 'Rahmenprogramm';
+  entities.EVENT_TYPES_LABEL_MAPPING[entities.EVENT_TYPES['OTHER']] = 'Andere Angebote';
+  entities.EVENT_TYPES_LABEL_MAPPING[entities.EVENT_TYPES['CORPORATE_WORKSHOP']] = 'Corporate Workshops';
+  entities.EVENT_TYPES_LABEL_MAPPING[entities.EVENT_TYPES['CORPORATE_DISCUSSION']] = 'Corporate Discussions';
+  entities.EVENT_TYPES_LABEL_MAPPING[entities.EVENT_TYPES['CAREER_TALK']] = 'Career Talks';
+  entities.EVENT_TYPES_LABEL_MAPPING[entities.EVENT_TYPES['WORKSHOP']] = 'Vertiefungsworkshops';
+  entities.EVENT_TYPES_TO_HIDE = [/* Has to be filled with labels as the decision happens in the UI.... -pre */];
+  entities.EVENT_TYPES_WORKSHOPS =[entities.EVENT_TYPES.CORPORATE_WORKSHOP, entities.EVENT_TYPES.WORKSHOP];
 
   entities.Partner = persistence.define('Partner', {
     serverId: 'INT',
