@@ -10,12 +10,8 @@ angular.module('starter.controllers')
       $scope.platinPartners = $filter('filter')(partners, {'partnerStatus' : 'platin'});
       $scope.goldPartners = $filter('filter')(partners, {'partnerStatus' : 'gold'});
       $scope.silverPartners = $filter('filter')(partners, {'partnerStatus' : 'silver'});
-      $scope.bronzePartners = $filter('filter')(partners, {'partnerStatus' : 'bronze'});
-      $scope.mediaPartners = $filter('filter')(partners, {'partnerStatus' : 'media'});
-      $scope.startupPartners = $filter('filter')(partners, {'partnerStatus' : 'startup'});
-      $scope.supplyPartners = $filter('filter')(partners, {'partnerStatus' : 'supply'});
-
-      $scope.otherPartners = $filter('filter')(partners, {'partnerStatus' : 'none'});
+      $scope.broncePartners = $filter('filter')(partners, {'partnerStatus' : 'bronce'});
+      $scope.otherPartners = $filter('filter')(partners, {'partnerStatus' : 'others'});
     });
   };
   $scope.$watch(function() { return ContentUpdater.partnerUpdateCounter }, function(oldVal, newVal) {
