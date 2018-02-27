@@ -79,6 +79,10 @@ angular.module('starter.controllers')
     }
   };
 
+  $scope.loadICS = function() {
+    window.open('https://anmeldung.mannheim-forum.org/media/schedule/mafo.ics', '_system', 'location=no');
+  };
+
   $scope.eventCategoryNames = Persistence.Entities.EVENT_TYPES_LABEL_MAPPING;
 
 
